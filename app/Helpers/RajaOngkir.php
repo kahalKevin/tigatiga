@@ -10,9 +10,13 @@ class RajaOngkir
     {
         $client = new HttpRequest;
         $url = getenv("RAJAONGKIR_URL") + "/province";
+        $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('GET', $url, [
-            $query
+            $query,
+            'headers' => [
+                'key' => $key
+            ]
         ]);
 
         return $res->getBody();
@@ -22,9 +26,13 @@ class RajaOngkir
     {
         $client = new HttpRequest;
         $url = getenv("RAJAONGKIR_URL") + "/city";
+        $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('GET', $url, [
-            $query
+            $query,
+            'headers' => [
+                'key' => $key
+            ]
         ]);
 
         return $res->getBody();
@@ -34,9 +42,13 @@ class RajaOngkir
     {
         $client = new HttpRequest;
         $url = getenv("RAJAONGKIR_URL") + "/cost";
+        $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('POST', $url, [
-            $form_params
+            $form_params,
+            'headers' => [
+                'key' => $key
+            ]
         ]);
 
         return $res->getBody();
@@ -46,9 +58,13 @@ class RajaOngkir
     {
         $client = new HttpRequest;
         $url = getenv("RAJAONGKIR_URL") + "/waybill";
+        $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('POST', $url, [
-            $form_params
+            $form_params,
+            'headers' => [
+                'key' => $key
+            ]
         ]);
 
         return $res->getBody();
