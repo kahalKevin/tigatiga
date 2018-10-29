@@ -12,3 +12,7 @@
 */
 
 Route::get('/', 'HomeController@index')->name('home.index');
+
+Route::prefix('payment')->group(function () {
+    Route::post('notification', 'PaymentController@paymentNotification');
+});
