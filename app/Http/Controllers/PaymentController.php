@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 class PaymentController extends Controller
 {
     public function paymentNotification(Request $request) {
-        $payment_type = $request->input('payment_type');
         $notification = $request->all();
+        $payment_type = $notification['payment_type'];
         $response = null;
 
         switch ($payment_type) {
@@ -22,7 +22,7 @@ class PaymentController extends Controller
                 break;
         }
 
-        return response()->json();
+        return response()->api($response);
     }
 
     private function creditCardNotification($notification) {
