@@ -26,10 +26,10 @@ class PaymentController extends Controller
     }
 
     private function creditCardNotification($notification) {
-
+        return null;
     }
 
     private function bankTransferNotification($notification) {
-
+        return null;
     }
 }
