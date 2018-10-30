@@ -13,10 +13,10 @@ class PaymentController extends Controller
 
         switch ($payment_type) {
             case 'bank_transfer':
-                $response = bankTransferNotification($notification);
+                $response = $this->bankTransferNotification($notification);
                 break;
             case 'credit_card':
-                $response = creditCardNotification($notification);
+                $response = $this->creditCardNotification($notification);
                 break;
             default:
                 break;
