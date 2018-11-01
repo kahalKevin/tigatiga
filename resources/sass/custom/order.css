@@ -1,0 +1,247 @@
+#order .box{
+	position: relative;
+	display: -webkit-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	width: 100%;
+	pointer-events: auto;
+	border-radius: 4px;
+	box-shadow: 0 0 11px 0 #000000;
+	background-color: #16161a;
+	background-clip: padding-box;
+	border: none;
+	outline: 0;
+	padding: 20px;
+	padding-bottom: 48px;
+	margin-top: 100px;
+}
+
+#order a{
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: #ffffff;
+}
+
+#order a:hover{
+  color: #e42237;
+}
+
+#order hr{
+	height: 1px;
+	background: #979797;
+	width: 100%;
+	margin-top: 40px;
+	/* margin-right: 30px; */
+	text-align: left;
+	border: none;
+}
+
+#order .btn-info{
+  background-color: #a9091d;
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.6px;
+  color: #ffffff;
+  border: transparent;
+}
+
+#order .btn-info:hover{
+  background: #a9091d;
+}
+
+#order .cust-name {
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.8px;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+#order .cust-addr-phone{
+  font-family: Roboto;
+  font-size: 12px;
+  font-weight: 300;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+#order .col-lg-3 {
+	padding-right: 0;
+}
+
+#order .col-lg-9 {
+	padding-left: 3%;
+}
+
+#order .col-md-4 {
+	padding-right: 0;
+}
+
+#order .col-md-6 {
+	padding-right: 0;
+}
+
+#order .title{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.5px;
+	color: #ffffff;
+	margin-bottom: 20px;
+	margin-top: 30px
+}
+
+#order .order-title p{
+	font-family: Roboto;
+	font-size: 18px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 2px;
+	color: #ffffff;
+	/* margin-bottom: 30px */
+}
+
+#order .quantity{
+	background-color: transparent;
+    border: none;
+    width: 100%;
+	margin-top: 10px;
+	padding: 0;
+}
+
+#order .quantity p{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.5px;
+	color: #ffffff;
+}
+
+#order .title-payment{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.5;
+	letter-spacing: 0.5px;
+	color: #ffffff;
+	margin-top: 30px
+}
+
+#order .status{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.5;
+	letter-spacing: 0.5px;
+	color: #ffffff;
+	/* margin-top: 30px */
+}
+
+#order .order-id{
+	font-family: Roboto;
+	font-size: 18px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 1.5px;
+	color: #ffffff;
+	margin-top: -8px
+}
+
+#order .order-date{
+	margin-top: -15px;
+	font-family: Roboto;
+	font-size: 12px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.4;
+	letter-spacing: 0.4px;
+	color: #ffffff;
+}
+
+#order .payment-method{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 1.5px;
+	color: #ffffff;
+}
+
+#order .price{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.29;
+	letter-spacing: 0.6px;
+	color: #ffffff;
+	margin-top: -8px;
+}
+
+/* .shipping-courier-item {
+    background: none;
+    margin-bottom: 0;
+	-webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+} */
+
+/* .shipping-img { */
+    /* margin-right: 20px; */
+/* } */
+
+.comment-desc{
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: 1.29;
+	letter-spacing: 1px;
+	color: #ffffff;
+}
+
+.tab-content{
+	margin-bottom: 20px;
+}

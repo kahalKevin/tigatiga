@@ -1,22 +1,19 @@
+//=include ./vendor/jquery.min.js
+//=include ./vendor/jquery.meanmenu.min.js
+//=include ./vendor/jquery.scrollUp.js
+//=include ./vendor/jquery.fancybox.min.js
+//=include ./vendor/jquery.nice-select.min.js
+//=include ./vendor/jquery-ui.min.js
+//=include ./vendor/owl.carousel.min.js
+//=include ./vendor/bootstrap.min.js
+//=include ./vendor/plugins.js
+//=include ./vendor/main.js
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+$(document).ready(function() {
+    console.log("jQuery Ready!");
+});
 
-require('./bootstrap');
-
-window.Vue = require('vue');
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
-const app = new Vue({
-    el: '#app'
+$("#login-register .close").click(function() {
+    $("#login-register .dropdown.categorie-search-box").fadeOut("slow");
+    // $("#login-register .dropdown.categorie-search-box").css("display", "none");
 });

@@ -1,0 +1,98 @@
+#order-tracking .col-lg-10{
+	margin: 0 auto;
+}
+
+#order-tracking .header{
+	text-align: center;
+	margin-top: 80px;
+}
+
+#order-tracking .title{
+	font-family: Roboto;
+	font-size: 36px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	color: #ffffff;
+}
+
+#order-tracking .sub-title{
+	font-family: Roboto;
+	font-size: 12px;
+	font-weight: 300;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.6px;
+	text-align: center;
+	color: #ffffff;
+}
+
+#order-tracking input{
+	border-color: transparent;
+	border-radius: 4px;
+	box-shadow: 0 0 11px 0 #000000;
+	background-color: #16161a;
+	width: 260px;
+	margin: 0 auto;
+	display: inline-block;
+}
+
+#order-tracking .btn-info{
+	margin-top: -3px;
+	margin-left: 15px;
+	width: 145px;
+	height: 39px;
+	border-color: transparent;
+	border-radius: 4px;
+	background-color: #a9091d;
+	font-family: Roboto;
+	font-size: 14px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 1px;
+	color: #ffffff;
+}
+
+#order-tracking hr{
+	background-color: #979797;
+	margin-top: 50px;
+}
+
+#order-tracking table{
+	border: solid 1px #000000;
+	background: transparent;
+	font-size: 14px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 0.8px;
+	color: #fff;
+}
+#order-tracking thead{
+	box-shadow: 0 0 11px 0 #000000;
+	background-color: #000000;
+}
+#order-tracking th, #order-tracking td{
+	border: none;
+	border-bottom: 1px solid #000;
+	text-align: left;
+	padding-left: 20px
+}
+
+.tracking-details{
+	font-family: Roboto;
+	font-size: 18px;
+	font-weight: 500;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: 1px;
+	color: #ffffff;
+	margin-top: 30px;
+}

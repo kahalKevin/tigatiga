@@ -1,14 +1,25 @@
+// import fonts
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
 
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+// import vendor
+@import "./vendor/animate.css";
+@import "./vendor/stroke-gap.css";
+@import "./vendor/nice-select.css";
+@import "./vendor/jquery.fancybox.css";
+@import "./vendor/jquery-ui.min.css";
+@import "./vendor/meanmenu.min.css";
+@import "./vendor/owl.carousel.min.css";
+@import "./vendor/bootstrap.min.css";
+@import "./vendor/default.css";
+@import "./vendor/responsive.css";
+@import "./vendor/style.css";
 
-// Variables
-@import 'variables';
+// import custom
+@import "./custom/main.css";
+@import "./custom/homepage.css";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import "variables";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+body {
+    font-family: "Roboto", sans-serif;
 }
