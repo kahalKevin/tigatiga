@@ -8,7 +8,7 @@
       <div class="slider-activation owl-carousel">
         <!-- Start Single Slide -->
         @foreach($home_banners as $banner)
-          <a href="#">
+          <a href="{{ $banner['_href_url'] }}">
             <div class="slide align-center-left fullscreen animation-style-01">
               <img src="{{ getenv('IMG_URL_PREFIX') . $banner['_image_url'] }}" alt="">
             </div>
