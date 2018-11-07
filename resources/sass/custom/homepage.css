@@ -41,6 +41,10 @@
     color: #a9091d;
 }
 
+#slide-homepage .owl-carousel {
+    margin-top: 44px;
+}
+
 #slider-homepage .owl-prev {
     display: none !important;
 }
