@@ -14,8 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $home_banner = HomeBanner::orderBy('created_at','desc')->get();
+        $home_banners = HomeBanner::orderBy('created_at','desc')->get();
 
-        return view('home.index', compact('home_banner'));
+        return view('home.index', compact('home_banners'));
     }
 }

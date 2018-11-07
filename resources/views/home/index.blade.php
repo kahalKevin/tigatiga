@@ -7,43 +7,13 @@
       <!-- Slider Area Start Here -->
       <div class="slider-activation owl-carousel">
         <!-- Start Single Slide -->
-        <a href="#">
-          <div class="slide align-center-left fullscreen animation-style-01 bg-image-1 ">
-            <div class="container-fluid">
-              <!-- <div class="row"> -->
-              <!-- <div class="col-lg-12"> -->
-              <!-- <div class="slider-content"> -->
-              <!-- <h6>The world’s Smallest Quadcopter</h6> -->
-              <!-- <span>ADIDAS RUNNING <br> LOREM IPSUM IS SIMPLY</span>
-                                        <div class="slide-btn small-btn">
-                                            <a href="/shop">Learn More</a>
-                                        </div>
-                                    </div> -->
-              <!-- </div> -->
-              <!-- </div> -->
+        @foreach($home_banners as $banner)
+          <a href="#">
+            <div class="slide align-center-left fullscreen animation-style-01">
+              <img src="{{ getenv('IMG_URL_PREFIX') . $banner['_image_url'] }}" alt="">
             </div>
-          </div>
-        </a>
-        <!-- End Single Slide -->
-        <!-- Start Single Slide -->
-        <a href="#">
-          <div class="slide align-center-left fullscreen animation-style-02 bg-image-2">
-            <div class="container-fluid">
-              <!-- <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="slider-content"> -->
-              <!-- <h6>The world’s Smallest Quadcopter</h6> -->
-              <!-- <span>ADIDAS RUNNING <br> LOREM IPSUM IS SIMPLY</span>
-                                        <div class="slide-btn small-btn">
-                                            <a href="/shop">Learn More</a>
-                                        </div> -->
-              <!-- </div>
-                                </div>
-                            </div> -->
-            </div>
-          </div>
-        </a>
-        <!-- End Single Slide -->
+          </a>
+        @endforeach
       </div>
       <!-- Slider Area End Here -->
     </div>
