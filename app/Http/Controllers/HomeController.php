@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Model\HomeBanner;
 
 class HomeController extends Controller
 {
@@ -13,6 +14,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home.index');
+        $home_banner = HomeBanner::orderBy('created_at','desc')->get();
+
+        return view('home.index', compact('home_banner'));
     }
 }

@@ -362,12 +362,12 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .bg-image-1 {
-    background-image: url(/../img/slide/heading-image-text.png);
+    background-image: url(/../img/slide/liga-gojek-slider.jpg);
     background-repeat: no-repeat;
     background-position: center;
 }
 .bg-image-2 {
-    background-image: url(/../img/slide/heading-image-text.png);
+    background-image: url(/../img/slide/coming-soon-slider.jpg);
     background-repeat: no-repeat;
     background-position: center;
 }
