@@ -9,7 +9,8 @@ const gulp = require("gulp"),
     cleanCSS = require("gulp-clean-css"),
     plumber = require("gulp-plumber"),
     concat = require("gulp-concat"),
-    notify = require("gulp-notify");
+    notify = require("gulp-notify"),
+    sourcemaps = require("gulp-sourcemaps");
 
 gulp.task("css", () => {
     return gulp
@@ -24,10 +25,12 @@ gulp.task("css", () => {
                 }
             })
         )
+        .pipe(sourcemaps.init())
         .pipe(sass())
         .pipe(autoprefixer())
         .pipe(cleanCSS({ compatibility: "ie8" }))
         .pipe(plumber.stop())
+        .pipe(sourcemaps.write("."))
         .pipe(gulp.dest("./public/css/"))
         .pipe(notify("CSS updated!"));
 });

@@ -82,6 +82,9 @@
         </div>
       </div>
       <!-- Row End -->
+      <div class="row d-block d-sm-none" style="text-align: center;">
+            <img src="/icon/cart-logo.svg" alt="cart-logo">
+      </div>
     </div>
     <!-- Footer Middle End -->
   </div>
@@ -94,7 +97,7 @@
             <p>© 2014. Sports Store by CrunchPress. All Right Reserved.</p>
           </div>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-6 d-none d-sm-block">
           <div class="footer-bottom-right">
             <img src="/icon/cart-logo.svg" alt="cart-logo">
           </div>

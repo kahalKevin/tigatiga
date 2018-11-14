@@ -3,12 +3,11 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\ActiveScope;
 
-class HomeBanner extends Model
+class InventoryAds extends Model
 {
-    protected $table = 'cms_tm_fe_homebanner';
+    protected $table = "cms_tm_fe_inventory_ads";
 
     protected static function boot()
     {

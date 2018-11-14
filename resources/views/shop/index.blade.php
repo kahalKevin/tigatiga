@@ -148,15 +148,10 @@
                         <div class="col-lg-9 order-2 order-lg-1 mt-all-30" id="sort">
                             <div class="grid-list-top universal-padding d-md-flex justify-content-md-between align-items-center mb-30">
                                 <div class="grid-list-view d-flex align-items-center  mb-sm-15">
+                            
                                     <div class="toolbar-sorter d-md-flex align-items-center">
-                                        <label>Sort By:</label>
-                                        <select class="sorter wide" style="display: none;">
-                                            <option value="Position">Relevance</option>
-                                            <option value="Product Name">Neme, A to Z</option>
-                                            <option value="Product Name">Neme, Z to A</option>
-                                            <option value="Price">Price low to heigh</option>
-                                            <option value="Price">Price heigh to low</option>
-                                        </select>
+                                        <div class="d-block d-sm-none" style="color: white; margin-bottom: 10px;">Sort By:</div>
+                                        <label class="d-none d-sm-block">Sort By:</label>
                                         <div class="nice-select sorter wide" tabindex="0">
                                             <span class="current">Position</span>
                                             <ul class="list">

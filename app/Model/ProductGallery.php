@@ -3,17 +3,21 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Builder;
 use App\Scopes\ActiveScope;
 
-class HomeBanner extends Model
+class ProductGallery extends Model
 {
-    protected $table = 'cms_tm_fe_homebanner';
+    protected $table = "cms_tm_product_attachment";
 
     protected static function boot()
     {
         parent::boot();
 
         static::addGlobalScope(new ActiveScope);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo('App\Model\Product', 'product_id');
     }
 }
