@@ -17,10 +17,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="small" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="small">S</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
                                                 <label class="form-check-label" for="small">(20)</label>
                                             </div>
                                         </div>
@@ -28,10 +28,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="medium" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="medium">M</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5  col-6 value-size">
                                                 <label class="form-check-label" for="medium">(23)</label>
                                             </div>
                                         </div>
@@ -39,10 +39,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="large" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="large">L</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
                                                 <label class="form-check-label" for="large">(8)</label>
                                             </div>
                                         </div>
@@ -50,10 +50,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="xtra-large" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="xtra-large">XL</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
                                                 <label class="form-check-label" for="xtra-large">(10)</label>
                                             </div>
                                         </div>
@@ -148,15 +148,10 @@
                         <div class="col-lg-9 order-2 order-lg-1 mt-all-30" id="sort">
                             <div class="grid-list-top universal-padding d-md-flex justify-content-md-between align-items-center mb-30">
                                 <div class="grid-list-view d-flex align-items-center  mb-sm-15">
+                            
                                     <div class="toolbar-sorter d-md-flex align-items-center">
-                                        <label>Sort By:</label>
-                                        <select class="sorter wide" style="display: none;">
-                                            <option value="Position">Relevance</option>
-                                            <option value="Product Name">Neme, A to Z</option>
-                                            <option value="Product Name">Neme, Z to A</option>
-                                            <option value="Price">Price low to heigh</option>
-                                            <option value="Price">Price heigh to low</option>
-                                        </select>
+                                        <div class="d-block d-sm-none" style="color: white; margin-bottom: 10px;">Sort By:</div>
+                                        <label class="d-none d-sm-block">Sort By:</label>
                                         <div class="nice-select sorter wide" tabindex="0">
                                             <span class="current">Position</span>
                                             <ul class="list">

@@ -41,7 +41,7 @@
                     @csrf
                         <div class="form-group">
                             <label class="label-form" for="email">Email</label>
-                            <input class="form-control auth" type="text" name="email" value="" placeholder="example@gmail.com">
+                            <input class="form-control auth" type="text" name="_email" value="" placeholder="example@gmail.com">
                             @if ($errors->has('_email'))
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $errors->first('_email') }}</strong>

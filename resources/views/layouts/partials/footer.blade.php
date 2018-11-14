@@ -5,7 +5,7 @@
     <div class="footer-top ptb-80">
       <div class="row">
         <!-- Single Footer Start -->
-        <div class="col mb-all-30">
+        <div class="col-md-2 col-6 mb-all-30">
           <div class="single-footer">
             <h4 class="footer-title">My Account</h4>
             <div class="footer-content">
@@ -20,7 +20,7 @@
         </div>
         <!-- Single Footer Start -->
         <!-- Single Footer Start -->
-        <div class="col mb-all-30">
+        <div class="col-md-2 col-6 mb-all-30">
           <div class="single-footer">
             <div class="single-footer">
               <h4 class="footer-title">CUSTOMER SERVICE</h4>
@@ -38,7 +38,7 @@
         </div>
         <!-- Single Footer Start -->
         <!-- Single Footer Start -->
-        <div class="col mb-all-30">
+        <div class="col-md-2 col-6 mb-all-30">
           <div class="single-footer">
             <div class="single-footer">
               <h4 class="footer-title">ONLINE SECURITY</h4>
@@ -55,7 +55,7 @@
         </div>
         <!-- Single Footer Start -->
         <!-- Single Footer Start -->
-        <div class="col mb-all-30">
+        <div class="col-md-2 col-6 mb-all-30">
           <div class="single-footer">
             <div class="single-footer">
               <h4 class="footer-title">SOCIAL</h4>
@@ -70,12 +70,12 @@
             </div>
           </div>
         </div>
-        <div class="col mb-all-30">
+        <div class="col-md-4 col-12 mb-all-30">
           <div class="single-footer">
             <div class="single-footer">
-              <h4 class="footer-title"></h4>
               <div class="footer-content">
                 <img src="/icon/verified-service@1x.png" alt="verified-service">
+                <img class="mt-30" src="/icon/cart-logo.svg" alt="cart-logo">
               </div>
             </div>
           </div>
@@ -86,22 +86,15 @@
     <!-- Footer Middle End -->
   </div>
   <!-- Footer Bottom Start -->
-  <div class="footer-bottom light-blue-bg ptb-15">
+  <!-- <div class="footer-bottom light-blue-bg"> -->
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-6">
-          <div class="footer-copyright ">
-            <p>© 2014. Sports Store by CrunchPress. All Right Reserved.</p>
+      <div class="row">
+      <div class="col-12 footer-copyright mb-30">
+            <p>© 2018 | Superstore.id | All Right Reserved</p>
           </div>
-        </div>
-        <div class="col-lg-6">
-          <div class="footer-bottom-right">
-            <img src="/icon/cart-logo.svg" alt="cart-logo">
-          </div>
-        </div>
       </div>
     </div>
-  </div>
+  <!-- </div> -->
   <!-- Footer Bottom End -->
 </footer>
 <!-- Footer Area End Here -->
