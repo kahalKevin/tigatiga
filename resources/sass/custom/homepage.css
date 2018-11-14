@@ -1,5 +1,4 @@
 .cart-box>ul>li>a span+span.total-pro {
-    height: 16px;
     background-color: #a9091d;
     color: #ffffff;
 }
@@ -71,7 +70,7 @@
     background-color: #1e1e1e;
 }
 
-.section-title {
+.section-title h1 {
     /* width: 225px; */
     height: 42px;
     font-family: Roboto;
@@ -82,6 +81,7 @@
     line-height: normal;
     letter-spacing: 1.5px;
     color: #ffffff;
+    text-transform: uppercase;
 }
 
 .section-title p {

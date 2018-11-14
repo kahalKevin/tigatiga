@@ -163,7 +163,7 @@
 .track-order-circle {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     margin-left: 15px;
 }
 
