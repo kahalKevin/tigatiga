@@ -10,14 +10,28 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
-Route::view('/test', 'test');
+\Route::group(['middleware' => 'auth'], function () {
+Route::get('logout', 'Auth\LoginController@logout');
+Route::post('/users/update-profile/{id}', 'UserController@update');
+Route::get('/', function () {
+		    return view('index');
+		});
+});
 
 Route::get('/', 'HomeController@index')->name('home.index');
 
-// Route::prefix('payment')->group(function () {
-//     Route::post('notification', 'PaymentController@paymentNotification');
-// });
+Route::prefix('payment')->group(function () {
+    Route::post('notification', 'PaymentController@paymentNotification');
+});
+
+Route::prefix('shop')->group(function () {
+    Route::get('index/{category_id}', 'ShopController@index');
+    Route::get('detail', 'ShopController@detail');
+    Route::get('checkout', 'ShopController@checkout');
+});
+
 
 Route::view('/shop', 'shop.index');
 Route::view('/shop/detail', 'shop.detail');
@@ -35,6 +49,4 @@ Route::view('/profile', 'profile.index');
 Route::view('/profile/forgot-password', 'profile.forgot-password');
 Route::view('/profile/reset-password', 'profile.reset-password');
 
-
-
-
+//Route::get('/home', 'HomeController@index')->name('home');
