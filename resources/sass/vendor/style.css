@@ -575,11 +575,13 @@ p:last-child {
     color: #fff;
     border: 1px solid transparent;
     border-radius: 20px;
+    text-transform: uppercase !important;
 }
 
 .header-menu-list>li:hover>a {
-    border-color: rgba(255, 255, 255, 0.2);
-    background: rgba(255, 255, 225, 0.1) none repeat scroll 0 0;
+    /* border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 225, 0.1) none repeat scroll 0 0; */
+    color: #a9091d;
 }
 
 .header-menu-list>li>a,
@@ -977,7 +979,7 @@ p:last-child {
     line-height: 18px;
     position: absolute;
     text-align: center;
-    top: 25px;
+    top: 14px;
     width: 18px;
 }
 

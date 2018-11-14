@@ -137,13 +137,26 @@
          <div class="col-xl-2 col-lg-2 col-6">
             <div class="cart-box">
                <ul>
+                @if (Auth::check()) 
                   <span class="register d-none d-sm-block">
-                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-login">Login</button>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-edit-profile">Hi, {{ Auth::user()->_first_name }}</button>
+                  </span>
+                  <span class="register d-none d-sm-block"> / </span>
+                  <form action="{{ url('logout') }}" method="get">
+                  @csrf
+                  <span class="register d-none d-sm-block">                
+                        <button type="submit" class="btn btn-info btn-lg">Logout</button>                
+                  </span>      
+                  </form>     
+                @else 
+                  <span class="register d-none d-sm-block">
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-login">Login</button>
                   </span>
                   <span class="register d-none d-sm-block"> / </span>
                   <span class="register d-none d-sm-block">
-                  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-register">Register</button>
-                  </span>
+                    <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-register">Register</button>
+                  </span>            
+                @endif
                   <!-- Search Box Start Here -->
                   <li class="drodown-show">
                      <a href="#"><span class="icon icon-Search"></span></a>

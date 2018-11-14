@@ -119,7 +119,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-change-address">CHANGE
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-add-new-address">CHANGE
                                     ADDRESS</button>
                             </div>
                         </div>

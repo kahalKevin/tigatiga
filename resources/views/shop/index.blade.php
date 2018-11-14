@@ -17,10 +17,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="small" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="small">S</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
                                                 <label class="form-check-label" for="small">(20)</label>
                                             </div>
                                         </div>
@@ -28,10 +28,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="medium" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="medium">M</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5  col-6 value-size">
                                                 <label class="form-check-label" for="medium">(23)</label>
                                             </div>
                                         </div>
@@ -39,10 +39,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="large" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="large">L</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
                                                 <label class="form-check-label" for="large">(8)</label>
                                             </div>
                                         </div>
@@ -50,10 +50,10 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="xtra-large" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
                                                 <label class="form-check-label" for="xtra-large">XL</label>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 value-size">
+                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
                                                 <label class="form-check-label" for="xtra-large">(10)</label>
                                             </div>
                                         </div>

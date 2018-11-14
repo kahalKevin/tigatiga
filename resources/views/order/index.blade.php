@@ -38,7 +38,7 @@
                                 <div class="col-md-6">
                                     <img src="/img/product/adidas-gazelle2.png" alt="blg11" width="75px" height="75">
                                 </div>
-                                <div class="col-md-6" style="padding-left: 0; margin-left: -30px">
+                                <div class="col-md-6">
                                     <div class="comment-desc">
                                         <p>Adidas Gazelle II Orange</p>
                                     </div>

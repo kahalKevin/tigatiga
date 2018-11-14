@@ -23,7 +23,7 @@
       <div class="container">
         <!-- Section Title Start Here -->
         <div class="section-title">
-          Get The Latest
+          <h1> Get The Latest </h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
             labore et dolore magna aliqua.</p>
         </div>
@@ -138,7 +138,7 @@
       <div class="container">
         <!-- Section Title Start Here -->
         <div class="section-title">
-          Best Product
+          <h1> Best Product </h1>
           <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
             labore et dolore magna aliqua.</p>
         </div>
@@ -239,7 +239,7 @@
           <!-- Single Service Area End Here -->
         </div>
         <br>
-        <div class="newsletter-area pb-80">
+        <div class="newsletter-area ptb-80">
           <div class="container">
             <!-- Section Title Start Here -->
             <!-- Section Title End Here -->
@@ -266,6 +266,13 @@
             </div>
           </div>
         </div>
+        <!-- Section Title Start Here -->
+        <div class="section-title">
+          <h1> Brand </h1>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+            labore et dolore magna aliqua.</p>
+        </div>
+        <!-- Section Title End Here -->
         <div class="partner-icons">
           <img src="./img/partner/rebook.png" alt="rebook" width="200" height="80">
           <img src="./img/partner/puma.png" alt="puma" width="180" height="100">

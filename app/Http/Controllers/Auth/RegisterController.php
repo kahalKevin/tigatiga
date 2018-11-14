@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
+use App\Model\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
+
+use Session;
 
 class RegisterController extends Controller
 {
@@ -28,7 +31,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -48,9 +51,10 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        Session::put('last_modal', "register");
         return Validator::make($data, [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
+            '_email' => 'required|string|email|max:255|unique:fe_tm_user',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -64,9 +68,16 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            '_first_name' => $data['name'],
+            '_last_name' => $data['name'],
+            '_email' => $data['_email'],
+            '_password' => Hash::make($data['password']),
+            '_phone' => $data['phone']            
         ]);
+    }
+
+    protected function registered(Request $request, $user)
+    {
+        \Session::flash('success_register','You have just register new account.');
     }
 }
