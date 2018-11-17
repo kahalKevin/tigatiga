@@ -4,9 +4,13 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Session;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Navigation extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['delete_at'];
     protected $table = "cms_tm_category";
 
 	public function parent() {
