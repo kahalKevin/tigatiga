@@ -18,9 +18,9 @@ class ShopController extends Controller
         return view('shop.index');
     }
 
-    public function detail(Request $request)
+    public function detail(Request $request, $slug)
     {
-        // $product = Product::where('_slug', '=', $slug)->first();
+        // $product = Product::with('productGalleries', 'productStocks')->where('_slug', '=', $slug)->first();
         // $related_products =  Product::where('category_id', '=' , $product->category_id)->limit(4)->get();
 
         return view('shop.detail');
