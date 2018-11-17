@@ -43,7 +43,7 @@
               <!-- Product Content Start -->
               <div class="pro-content">
                 <div class="pro-info">
-                  <h4><a href="shop/detail">{{ $pr->_name }}</a></h4>
+                  <h4><a href="shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
                   <p><span class="special-price">Rp. {{ number_format($pr->_price, 2) }}</span></p>
                 </div>
               </div>
@@ -54,8 +54,8 @@
         </div>
         <!-- Big drone Image Area Start -->
         <div class="dron-img opacity-img mt-80">
-          <a href="#">
-            <img class="mx-auto d-block img" src="./img/ads/ads-example.png" alt="ads-example" width="728">
+          <a href="{{ $inventory_ads->_href_url }}">
+            <img class="mx-auto d-block img" src="{{ $cmsUrl . $inventory_ads->_image_url }}" alt="ads-example" width="728">
           </a>
         </div>
         <!-- Big drone Image Area End -->
@@ -88,7 +88,7 @@
               <!-- Product Content Start -->
               <div class="pro-content">
                 <div class="pro-info">
-                  <h4><a href="shop/detail">{{ $pr->_name }}</a></h4>
+                  <h4><a href="shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
                   <p><span class="special-price">Rp. {{ number_format($pr->_price, 2) }}</span></p>
                   <!-- <del class="old-price">$80.50</del> -->
                 </div>
