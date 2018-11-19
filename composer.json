@@ -11,7 +11,8 @@
         "laravel/framework": "5.7.*",
         "laravel/tinker": "^1.0",
         "predis/predis": "^1.1",
-        "spatie/async": "^0.0.4"
+        "spatie/async": "^0.0.4",
+        "nicmart/tree": "^0.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

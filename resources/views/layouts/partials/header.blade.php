@@ -13,123 +13,7 @@
          <!-- Menu Area Start Here -->
          <div class="col-xl-8 col-lg-8 d-none d-lg-block">
             <nav class="navbar navbar-expand-lg">
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                  <ul class="navbar-nav header-menu-list" style="margin: 0 auto;">
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">
-                        Brand
-                        </a>
-                        <ul class="dropdown-menu ht-dropdown">
-                           <li>
-                              <a class="dropdown-item" href="#">Nike</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Adidas</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Specs</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Mitre</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Umbro</a>
-                           </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">
-                        Categories
-                        </a>
-                        <ul class="dropdown-menu ht-dropdown">
-                           <li>
-                              <a class="dropdown-item" href="#">Apparel</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Footwear</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Categories</a>
-                           </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">
-                        Liga Indonesia
-                        </a>
-                        <ul class="dropdown-menu ht-dropdown">
-                           <li>
-                              <a class="dropdown-item" href="#">Persija</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Persib</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Persipura</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">PSM</a>
-                           </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">
-                        Liga Internasional
-                        </a>
-                        <ul class="dropdown-menu ht-dropdown">
-                           <li class="dropdown-submenu">
-                              <a class="dropdown-item dropdown-toggle" href="#">English Premier League</a>
-                              <ul class="dropdown-menu ht-dropdown">
-                                 <li>
-                                    <a class="dropdown-item" href="#">Liverpool</a>
-                                 </li>
-                                 <li>
-                                    <a class="dropdown-item" href="#">MU</a>
-                                 </li>
-                              </ul>
-                           </li>
-                           <li class="dropdown-submenu">
-                              <a class="dropdown-item dropdown-toggle" href="#">Serie A</a>
-                              <ul class="dropdown-menu ht-dropdown">
-                                 <li>
-                                    <a class="dropdown-item" href="#">Inter Milan</a>
-                                 </li>
-                                 <li>
-                                    <a class="dropdown-item" href="#">AC Milan</a>
-                                 </li>
-                              </ul>
-                           </li>
-                           <li class="dropdown-submenu">
-                              <a class="dropdown-item dropdown-toggle" href="#">La Liga Spanyol</a>
-                              <ul class="dropdown-menu ht-dropdown">
-                                 <li>
-                                    <a class="dropdown-item" href="#">Real Madrid</a>
-                                 </li>
-                              </ul>
-                           </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link dropdown-toggle" href="http://example.com" data-toggle="dropdown">
-                        Tim Nasional
-                        </a>
-                        <ul class="dropdown-menu ht-dropdown">
-                           <li>
-                              <a class="dropdown-item" href="#">England</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Germany</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Indonesia</a>
-                           </li>
-                           <li>
-                              <a class="dropdown-item" href="#">Spanyol</a>
-                           </li>
-                        </ul>
-                    </li>
-                  </ul>
-               </div>
+                {!! cache('navigation') !!}
             </nav>
          </div>
          <!-- Menu Area End Here -->
@@ -186,7 +70,7 @@
                   </li>
                   <!-- Categorie Search Box End Here -->
                   <li class="drodown-show">
-                     <a href="#"><span class="icon icon-FullShoppingCart"></span><span class="total-pro">2</span></a>
+                     <a href="#"><span class="icon icon-FullShoppingCart"></span><span class="total-pro">45</span></a>
                      <ul class="dropdown cart-box-width">
                         <li>
                            <!-- Cart Box Start -->

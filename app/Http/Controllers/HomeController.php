@@ -36,11 +36,13 @@ class HomeController extends Controller
             ->get();
         $inventory_ads = InventoryAds::latest()
             ->first();
+        $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
         return view('home.index', compact(
             'home_banners', 
             'latest_products', 
             'best_products', 
-            'inventory_ads')
+            'inventory_ads',
+            'cmsUrl')
         );
     }
 }

@@ -34,6 +34,15 @@ class User extends Authenticatable
         '_password', '_remember_token',
     ];
 
+    public function addresses()
+    {
+        return $this->hasMany('App\Model\UserAddress', 'user_id', 'id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Model\Order', 'user_id', 'id');
+    }
     public function getAuthPassword()
     {
         return $this->_password;

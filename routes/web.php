@@ -16,8 +16,8 @@ Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
 Route::post('/users/update-profile/{id}', 'UserController@update');
 Route::get('/', function () {
-		    return view('index');
-		});
+            return view('index');
+        });
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');
@@ -27,9 +27,10 @@ Route::prefix('payment')->group(function () {
 });
 
 Route::prefix('shop')->group(function () {
-    Route::get('index/{category_id}', 'ShopController@index');
-    Route::get('detail', 'ShopController@detail');
+    Route::get('index/{slug}', 'ShopController@index');
+    Route::get('detail/{slug}', 'ShopController@detail');
     Route::get('checkout', 'ShopController@checkout');
+    Route::post('addToCart/{product_id}', 'ShopController@addToCart');
 });
 
 
