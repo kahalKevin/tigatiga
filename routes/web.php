@@ -16,8 +16,8 @@ Auth::routes();
 Route::get('logout', 'Auth\LoginController@logout');
 Route::post('/users/update-profile/{id}', 'UserController@update');
 Route::get('/', function () {
-		    return view('index');
-		});
+            return view('index');
+        });
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');
@@ -27,26 +27,27 @@ Route::prefix('payment')->group(function () {
 });
 
 Route::prefix('shop')->group(function () {
-    Route::get('index/{category_id}', 'ShopController@index');
+    Route::get('index/{slug}', 'ShopController@index');
     Route::get('detail/{slug}', 'ShopController@detail');
     Route::get('checkout', 'ShopController@checkout');
+    Route::post('addToCart/{product_id}', 'ShopController@addToCart');
 });
 
-Route::prefix('order')->group(function () {
-    Route::view('tracking', 'order.tracking');
-    Route::view('payment', 'order.payment');
-    Route::view('search', 'order.search');
-    Route::view('thanks', 'order.thanks');
-    Route::view('thanks-cc', 'order.thanks-cc');
-});
 
-Route::prefix('profile')->group(function () {
-    Route::get('/', 'ProfileController@index');
-    Route::get('order/history', 'ProfileController@orderHistory');
-    Route::view('order/history/detail', 'order.detail');
-});
+Route::view('/shop', 'shop.index');
+Route::view('/shop/detail', 'shop.detail');
+Route::view('/shop/checkout', 'shop.checkout');
 
-Route::view('forgot-password', 'profile.forgot-password');
-Route::view('reset-password', 'profile.reset-password');
+Route::view('/order', 'order.index');
+Route::view('/order/detail', 'order.detail');
+Route::view('/order/tracking', 'order.tracking');
+Route::view('/order/payment', 'order.payment');
+Route::view('/order/search', 'order.search');
+Route::view('/order/thanks', 'order.thanks');
+Route::view('/order/thanks-cc', 'order.thanks-cc');
+
+Route::view('/profile', 'profile.index');
+Route::view('/profile/forgot-password', 'profile.forgot-password');
+Route::view('/profile/reset-password', 'profile.reset-password');
 
 //Route::get('/home', 'HomeController@index')->name('home');

@@ -5,8 +5,8 @@
 <div class="service-area ptb-80" id="shop">
             <div class="container">
                 <div class="box" action="index.html" method="post">
-                    <p class="sp-title">KITS</p>
-                    <p class="sp-caption">CLOTHINGS</p>
+                    <p class="sp-title">{{ $category_parent->_name }}</p>
+                    <p class="sp-caption">{{ $category->_name }}</p>
                     <div class="row">
                         <!-- Sidebar Shopping Option Start -->
                         <div class="col-lg-3 order-2 order-lg-1 mt-all-30">
@@ -14,52 +14,21 @@
                             <div class="size mb-30" id="size">
                                 <h3 class="sidebar-title">SIZE</h3>
                                 <ul class="size-list sidbar-style">
-                                    <li class="form-check">
-                                        <div class="row">
-                                            <input class="form-check-input" value="" id="small" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
-                                                <label class="form-check-label" for="small">S</label>
+                                    @foreach ($sizes as $size)
+                                        <li class="form-check">
+                                            <div class="row">
+                                                <input class="form-check-input" value="" id="small" type="checkbox">
+                                                <div class="col-lg-5 col-md-5 col-sm-5 col-6">
+                                                    <label class="form-check-label" for="small">{{ $size->_name }}</label>
+                                                </div>
+                                                <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
+                                                    <label class="form-check-label" for="small"></label>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
-                                                <label class="form-check-label" for="small">(20)</label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="form-check">
-                                        <div class="row">
-                                            <input class="form-check-input" value="" id="medium" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
-                                                <label class="form-check-label" for="medium">M</label>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5  col-6 value-size">
-                                                <label class="form-check-label" for="medium">(23)</label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="form-check">
-                                        <div class="row">
-                                            <input class="form-check-input" value="" id="large" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
-                                                <label class="form-check-label" for="large">L</label>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
-                                                <label class="form-check-label" for="large">(8)</label>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="form-check">
-                                        <div class="row">
-                                            <input class="form-check-input" value="" id="xtra-large" type="checkbox">
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6">
-                                                <label class="form-check-label" for="xtra-large">XL</label>
-                                            </div>
-                                            <div class="col-lg-5 col-md-5 col-sm-5 col-6 value-size">
-                                                <label class="form-check-label" for="xtra-large">(10)</label>
-                                            </div>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    @endforeach
                                     <!-- <li class="form-check"> -->
-                                        <a href="#" >Show More</a>
+<!--                                         <a href="#" >Show More</a> -->
                                     <!-- </li> -->
                                 </ul>
                             </div>
@@ -100,24 +69,18 @@
                                 </ul>
                             </div>
                             <div class="size mb-30">
-                                <h3 class="sidebar-title">GENDRE</h3>
+                                <h3 class="sidebar-title">GENDER</h3>
                                 <ul class="size-list sidbar-style">
+                                    @foreach($genders as $gender)
                                     <li class="form-check">
                                         <div class="row">
                                             <input class="form-check-input" value="" id="pria" type="checkbox">
                                             <div class="col-lg-12">
-                                                <label class="form-check-label" for="pria">Pria</label>
+                                                <label class="form-check-label" for="{{ $gender->_name }}">{{ $gender->_name }}</label>
                                             </div>
                                         </div>
-                                    </li>
-                                    <li class="form-check">
-                                        <div class="row">
-                                            <input class="form-check-input" value="" id="wanita" type="checkbox">
-                                            <div class="col-lg-12">
-                                                <label class="form-check-label" for="wanita">Wanita</label>
-                                            </div>
-                                        </div>
-                                    </li>
+                                    </li>                                    
+                                    @endforeach
                                 </ul>
                             </div>
                             <div class="size mb-30" id="tag">
@@ -167,133 +130,23 @@
                             </div>
                             <div class="row">
                                 <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/converse-tshirt2.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">T-Shirt Converse White</a></h4>
-                                                <p><span class="special-price">Rp. 150.000</span></p>
+                                @foreach($products as $product)
+                                    <div class="col-lg-4 col-md-6 mb-all-40">
+                                        <div class="single-elomous-product">
+                                            <div class="pro-img">
+                                                <a href="/shop/detail/{{$product->_slug}}">
+                                                    <img class="primary-img" src="{{ $cmsUrl . $product->_image_url }}" alt="single-product">
+                                                </a>
+                                            </div>
+                                            <div class="pro-content">
+                                                <div class="pro-info">
+                                                    <h4><a href="/shop/detail/{{$product->_slug}}">{{ $product->_name }}</a></h4>
+                                                    <p><span class="special-price">Rp. {{ number_format($product->_price, 2) }}</span></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/arsenal.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">Jersey Puma Arsenal 2018/2019</a></h4>
-                                                <p><span class="special-price">Rp. 850.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/adidas-gazelle2.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">Adidas Gazelle II Orange</a></h4>
-                                                <p><span class="special-price">Rp. 500.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/tas.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">Ransel Rebool Orange</a></h4>
-                                                <p><span class="special-price">Rp. 150.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/arsenal.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">Jersey Puma Arsenal 2018/2019</a></h4>
-                                                <p><span class="special-price">Rp. 850.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/vans.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">Vans Old Skool Black</a></h4>
-                                                <p><span class="special-price">Rp. 500.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/nike-mercurial.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">Sepatu Futsal Nike Mercurial</a></h4>
-                                                <p><span class="special-price">Rp. 35.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Single Service Area Start Here -->
-                                <div class="col-lg-4 col-md-6 mb-all-40">
-                                    <div class="single-elomous-product">
-                                        <div class="pro-img">
-                                            <a href="shop-detail.html">
-                                                <img class="primary-img" src="/img/product/nb.png" alt="single-product">
-                                            </a>
-                                        </div>
-                                        <div class="pro-content">
-                                            <div class="pro-info">
-                                                <h4><a href="shop-detail.html">New Balance Running</a></h4>
-                                                <p><span class="special-price">Rp. 350.000</span></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                             <div class="shop-breadcrumb-area" id="page-area">
                                 <div class="row">
@@ -305,7 +158,7 @@
                                             <li class="float-left active">
                                                 <a href="#">1</a>
                                             </li>
-                                            <li class="float-left">
+<!--                                             <li class="float-left">
                                                 <a href="#">2</a>
                                             </li>
                                             <li class="float-left">
@@ -314,7 +167,7 @@
                                             <li class="float-left">
                                                 <a href="#">...</a>
                                             </li>
-                                            <li class="float-left next">
+ -->                                            <li class="float-left next">
                                                 <a href="#">Next</a>
                                             </li>
                                         </ul>

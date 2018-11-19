@@ -7,7 +7,7 @@ use App\Scopes\ActiveScope;
 
 class Category extends Model
 {
-    //protected $table = "cms_tm_category";
+    protected $table = "cms_tm_category";
 
     protected static function boot()
     {

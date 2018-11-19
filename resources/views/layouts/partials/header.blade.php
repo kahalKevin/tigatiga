@@ -70,7 +70,7 @@
                   </li>
                   <!-- Categorie Search Box End Here -->
                   <li class="drodown-show">
-                     <a href="#"><span class="icon icon-FullShoppingCart"></span><span class="total-pro">2</span></a>
+                     <a href="#"><span class="icon icon-FullShoppingCart"></span><span class="total-pro">45</span></a>
                      <ul class="dropdown cart-box-width">
                         <li>
                            <!-- Cart Box Start -->
