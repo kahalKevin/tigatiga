@@ -33,7 +33,6 @@ Route::prefix('shop')->group(function () {
     Route::post('addToCart/{product_id}', 'ShopController@addToCart');
 });
 
-
 Route::view('/shop', 'shop.index');
 Route::view('/shop/detail', 'shop.detail');
 Route::view('/shop/checkout', 'shop.checkout');
@@ -46,8 +45,12 @@ Route::view('/order/search', 'order.search');
 Route::view('/order/thanks', 'order.thanks');
 Route::view('/order/thanks-cc', 'order.thanks-cc');
 
-Route::view('/profile', 'profile.index');
-Route::view('/profile/forgot-password', 'profile.forgot-password');
-Route::view('/profile/reset-password', 'profile.reset-password');
+Route::prefix('profile')->group(function () {
+    Route::get('/', 'ProfileController@index');
+    Route::get('order/history', 'ProfileController@orderHistory');
+    Route::view('order/history/detail', 'order.detail');
+});
 
-//Route::get('/home', 'HomeController@index')->name('home');
+Route::view('forgot-password', 'profile.forgot-password');
+Route::view('reset-password', 'profile.reset-password');
+

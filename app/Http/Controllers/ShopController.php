@@ -63,7 +63,19 @@ class ShopController extends Controller
 
     public function checkout()
     {
-        return view('shop.checkout');
+        $province = RajaOngkir::getProvince();
+
+        $order_detail = array(
+            "customer_name" => "puspo",
+            "customer_email" => "puspo@team-company.asia",
+            "customer_phone" => "082231782659",
+            "order_id" => rand(),
+            "amount" => 10000,
+        );
+
+        $token = MidtransHelper::purchase($order_detail);
+        
+        return view('shop.checkout', compact('token'));
     }
 
     public function addToCart(Request $request, $product_id)

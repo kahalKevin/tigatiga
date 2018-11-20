@@ -9,7 +9,35 @@
             <div class="row">
                 <!-- Sidebar Shopping Option Start -->
                 <div class="col-md-9 mb-all-40">
-                    <p class="title-shipping">Shipping Courier</p>
+                <p class="title-shipping">Buyer Details</p>
+                    <div class="box-shipping-courier">
+                        <div class="mb-20">
+                            <button class="tab" data-toggle="modal" data-target="#modal-login">Login</button>
+                            <button class="tab border-bottom border-red">Buy without register</button>
+                        </div>
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Name</label>
+                                    <input type="text" class="form-control" placeholder="Type Your Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword4">Email</label>
+                                    <input type="email" class="form-control" placeholder="example@gmail.com">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Phone</label>
+                                    <input type="email" class="form-control" placeholder="+6281908xxxx">
+                                </div>
+                                <div class="form-group col-md-6 d-flex align-items-sm-end">
+                                    <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">ENTER SHIPPING ADDRESS</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <p class="title-shipping mt-30">Shipping Courier</p>
                     <div class="box-shipping-courier">
                         <div class="row mb-20">
                             <div class="col-sm-12 col-md-4 d-inline-block">
@@ -19,7 +47,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 d-inline-block">
-                                <div class="input-group justify-content-center mb-3">
+                                <div class="input-group justify-content-sm-center mb-3" style="margin-top:10px;">
                                     <label for="quantity" class="mr-20 align-self-center">Quantity :</label>
                                     <span class="input-group-prepend">
                                         <button class="btn btn-dark btn-sm" id="minus-btn">
@@ -59,25 +87,6 @@
                             </div>
                         </div>
                     </div>
-                    <p class="title-shipping mt-30">Shipping Address</p>
-                    <div class="box-shipping-courier mt-10">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="shipping-courier-item">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <p class="cust-name">Dwi Putra Faturrahman</p>
-                                            <p class="cust-address">Kantor Codigo. Graha Mitra Lantai 7 Jl. Jend. Gatot
-                                                Subroto Kav.21<br>Jakarta Selatan, Jakarta Selatan, 12930</p>
-                                            <p class="cust-phone">08382381908</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-change-address">CHANGE
-                                    ADDRESS</button>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-3">
                     <p class="title-shipping">Shopping Summary</p>
@@ -103,7 +112,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-12 form-btn">
-                                        <input id="pay" class="btn btn-info btn-lg" type="button" name="apply" value="Pay">
+                                        <input id="pay" class="btn btn-info btn-lg" type="submit" name="apply" value="Pay">
                                     </div>
                                 </div>
                             </div>
@@ -183,15 +192,44 @@
                         </div>
                     </div>
                 </div>
+                <div class="modal fade" id="modal-add-new-address" role="dialog">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <p class="modal-title">Add New Address</p>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" action="" method="post">
+                                <div class="form-group">
+                                    <label class="label-form" for="receiver-name">Receiver Name</label>
+                                    <input class="form-control auth" type="text" name="receiver-name" value="" placeholder="Type your name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-form" for="phone">Phone</label>
+                                    <input class="form-control auth" type="text" name="phone" value="" placeholder="+6281908xxxx">
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-form" for="city-distinct">City or Distinct</label>
+                                    <input class="form-control auth" type="text" name="city-distinct" value="" placeholder="Search City or District">
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-form" for="postal-code">Postal Code</label>
+                                    <input class="form-control auth" type="text" name="postal-code" value="" placeholder="Type your postal Code">
+                                </div>
+                                <div class="form-group">
+                                    <label class="label-form" for="address">Address</label>
+                                    <textarea class="form-control auth" name="address" rows="8" cols="80"></textarea>
+                                </div>
+                                <input class="btn btn-info btn-lg" type="submit" name="submit" value="SAVE">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    </div>
             </div>
         </div>
     </div>
 </div>
-<script src="{{env('MIDTRANS_SNAP_JS_URL')}}" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
-<script type="text/javascript">
-      document.getElementById('pay').onclick = function(){
-        // SnapToken acquired from previous step
-        snap.pay('{{ $token }}');
-      };
-    </script>
+
 @endsection

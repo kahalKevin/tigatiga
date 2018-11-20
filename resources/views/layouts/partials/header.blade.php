@@ -4,8 +4,8 @@
          <!-- Logo Start -->
          <div class="col-xl-2 col-lg-2 col-6">
             <div class="logo">
-               <a href="/">
-               <img src="/icon/logo.svg" alt="logo-image">
+               <a href="{{ url('/') }}">
+               <img src="{{ asset('/icon/logo.svg') }}" alt="logo-image">
                </a>
             </div>
          </div>
@@ -130,7 +130,7 @@
                                    </li>
                                 </ul>
                                 <div class="cart-actions text-center">
-                                   <a class="cart-checkout" href="checkout.html">Checkout</a>
+                                  <a href="{{ url('/shop/checkout') }}"><span class="icon icon-FullShoppingCart"></span><span class="total-pro">2</span></a>
                                 </div>
                              </div>
                           @else

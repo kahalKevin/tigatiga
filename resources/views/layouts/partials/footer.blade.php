@@ -74,8 +74,9 @@
           <div class="single-footer">
             <div class="single-footer">
               <div class="footer-content">
-                <img src="/icon/verified-service@1x.png" alt="verified-service">
-                <img class="mt-30" src="/icon/cart-logo.svg" alt="cart-logo">
+                <img src="{{ asset('/icon/verified-service@1x.png') }}" alt="verified-service">
+                <br>
+                <img class="mt-30" src="{{ asset('/icon/logo-midtrans-color.png') }}" alt="cart-logo">
               </div>
             </div>
           </div>

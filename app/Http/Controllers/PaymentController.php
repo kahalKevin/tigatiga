@@ -30,7 +30,9 @@ class PaymentController extends Controller
     }
 
     private function creditCardNotification($notification, $order) {
-        $order->status_id =  "STATUSORDER1";
+        $status = $this->getStatusPayment($notification);
+
+        $order->status_id =  $status;
         $order->_payment_at = date("Y-m-d H:i:s");
         $order->payment_gateway_id = "PAYMENTGW01";
         $order->payment_method_id = "PAYMENTMETHOD02";
@@ -54,7 +56,9 @@ class PaymentController extends Controller
     }
 
     private function bankTransferNotification($notification, $order) {
-        $order->status_id =  "STATUSORDER1";
+        $status = $this->getStatusPayment($notification);
+
+        $order->status_id =  $status;
         $order->_payment_at = date("Y-m-d H:i:s");
         $order->payment_gateway_id = "PAYMENTGW01";
         $order->payment_method_id = "PAYMENTMETHOD03";
@@ -65,5 +69,25 @@ class PaymentController extends Controller
         $order->save();
 
         return null;
+    }
+
+    private function getStatusPayment($notification)
+    {
+        $status = "STATUSORDER0";
+
+        if ($notification['transaction_status'] == 'settlement' || 
+            $notification['transaction_status'] == 'capture') {
+            if ($notification['fraud_status'] == 'challenge') {
+              $status = "STATUSORDER7";
+            } else if ($notification['fraud_status'] == 'accept') {
+              $status = "STATUSORDER1";
+            }
+        } elseif ($notification['transaction_status'] == 'cancel') {
+            $status = "STATUSORDER8";
+        } elseif ($notification['fraud_status'] == 'deny') {
+            $status = "STATUSORDER6";
+        }
+
+        return $status;
     }
 }

@@ -29,7 +29,7 @@
         </div>
         <!-- Section Title End Here -->
         <br>
-        <div class="row">  
+        <div class="row justify-content-center">  
         @foreach($latest_products as $pr)
           <div class="col-lg-3 mb-all-40">
             <div class="single-elomous-product">
@@ -53,11 +53,13 @@
         @endforeach
         </div>
         <!-- Big drone Image Area Start -->
+        @if(!empty($inventory_ads->_href_url))
         <div class="dron-img opacity-img mt-80">
           <a href="{{ $inventory_ads->_href_url }}">
             <img class="mx-auto d-block img" src="{{ $cmsUrl . $inventory_ads->_image_url }}" alt="ads-example" width="728">
           </a>
         </div>
+        @endif
         <!-- Big drone Image Area End -->
       </div>
     </div>
@@ -73,7 +75,7 @@
         </div>
         <!-- Section Title End Here -->
         <br>
-        <div class="row">
+        <div class="row justify-content-center">
         @foreach($best_products as $pr)
           <!-- Single Service Area Start Here -->
           <div class="col-lg-3  mb-all-40">
