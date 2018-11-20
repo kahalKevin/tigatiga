@@ -30,12 +30,9 @@ Route::prefix('shop')->group(function () {
     Route::get('index/{slug}', 'ShopController@index');
     Route::get('detail/{slug}', 'ShopController@detail');
     Route::get('checkout', 'ShopController@checkout');
+    Route::view('shoppingcart', 'shop.cart');
     Route::post('addToCart/{product_id}', 'ShopController@addToCart');
 });
-
-Route::view('/shop', 'shop.index');
-Route::view('/shop/detail', 'shop.detail');
-Route::view('/shop/checkout', 'shop.checkout');
 
 Route::view('/order', 'order.index');
 Route::view('/order/detail', 'order.detail');

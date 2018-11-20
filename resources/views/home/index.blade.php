@@ -35,7 +35,7 @@
             <div class="single-elomous-product">
               <!-- Product Image Start -->
               <div class="pro-img">
-                <a href="shop/detail">
+                <a href="{{ url('/') }}/shop/detail/{{ $pr->_slug }}">
                   <img class="primary-img" src="{{$cmsUrl . $pr->_image_url }}" alt="single-product">
                 </a>
               </div>
@@ -43,7 +43,7 @@
               <!-- Product Content Start -->
               <div class="pro-content">
                 <div class="pro-info">
-                  <h4><a href="shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
+                  <h4><a href="{{ url('/') }}/shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
                   <p><span class="special-price">Rp. {{ number_format($pr->_price, 2) }}</span></p>
                 </div>
               </div>
@@ -82,7 +82,7 @@
             <div class="single-elomous-product">
               <!-- Product Image Start -->
               <div class="pro-img">
-                <a href="shop/detail">
+                <a href="{{ url('/') }}/shop/detail/{{ $pr->_slug }}">
                   <img class="primary-img" src="{{$cmsUrl . $pr->_image_url }}" alt="single-product">
                 </a>
               </div>
@@ -90,7 +90,7 @@
               <!-- Product Content Start -->
               <div class="pro-content">
                 <div class="pro-info">
-                  <h4><a href="shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
+                  <h4><a href="{{ url('/') }}/shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
                   <p><span class="special-price">Rp. {{ number_format($pr->_price, 2) }}</span></p>
                   <!-- <del class="old-price">$80.50</del> -->
                 </div>

@@ -134,13 +134,13 @@
                                     <div class="col-lg-4 col-md-6 mb-all-40">
                                         <div class="single-elomous-product">
                                             <div class="pro-img">
-                                                <a href="/shop/detail/{{$product->_slug}}">
+                                                <a href="{{ url('/') }}/shop/detail/{{$product->_slug}}">
                                                     <img class="primary-img" src="{{ $cmsUrl . $product->_image_url }}" alt="single-product">
                                                 </a>
                                             </div>
                                             <div class="pro-content">
                                                 <div class="pro-info">
-                                                    <h4><a href="/shop/detail/{{$product->_slug}}">{{ $product->_name }}</a></h4>
+                                                    <h4><a href="{{ url('/') }}/shop/detail/{{$product->_slug}}">{{ $product->_name }}</a></h4>
                                                     <p><span class="special-price">Rp. {{ number_format($product->_price, 2) }}</span></p>
                                                 </div>
                                             </div>

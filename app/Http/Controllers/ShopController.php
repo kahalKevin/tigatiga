@@ -10,6 +10,8 @@ use App\Model\Size;
 use App\Model\ProductGallery;
 use App\Model\ProductStock;
 use App\Model\Cart;
+use App\Helpers\RajaOngkir;
+use App\Helpers\MidtransHelper;
 use Carbon\Carbon;
 use Response;
 use Exception;

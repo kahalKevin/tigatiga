@@ -51,12 +51,12 @@ class Navigation extends Model
                 $child = Navigation::createMenu($list, $list[$i]['id'], $level);
                 if($level == 0){
                     $fill .= '<li class="nav-item">';
-                    $fill .= '<a class="nav-link dropdown-toggle" href="/shop/index/'. $list[$i]['_slug'] .'" data-toggle="dropdown">'.$list[$i]['_name'].'</a>';
+                    $fill .= '<a class="nav-link dropdown-toggle" href="' . url('/') . '/shop/index/'. $list[$i]['_slug'] .'" data-toggle="dropdown">'.$list[$i]['_name'].'</a>';
                 } else if($child != ''){
                     $fill .= '<li class="dropdown-submenu">';
-                    $fill .= '<a class="dropdown-item dropdown-toggle" href="/shop/index/'. $list[$i]['_slug'] .'">'.$list[$i]['_name'].'</a>';
+                    $fill .= '<a class="dropdown-item dropdown-toggle" href="' . url('/') . '/shop/index/'. $list[$i]['_slug'] .'">'.$list[$i]['_name'].'</a>';
                 } else {
-                    $fill .= '<li><a class="dropdown-item" href="/shop/index/'. $list[$i]['_slug'] .'">'.$list[$i]['_name'].'</a></li>'; 
+                    $fill .= '<li><a class="dropdown-item" href="' . url('/') . '/shop/index/'. $list[$i]['_slug'] .'">'.$list[$i]['_name'].'</a></li>'; 
                 }
                 $fill .= $child;
             }

@@ -15,7 +15,7 @@
                     <div class="tab-content">
                         @for($i = 0; $i < $products_galleries->count(); $i++)
                         <div id="thumb{{ $i }}" class="tab-pane fade {{ $i === 0 ? "show active" : "" }}">
-                            <a data-fancybox="images" href="./img/product/tumblr/1.png"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
+                            <a data-fancybox="images" href="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
                                     alt="product-view"></a>
                         </div>                        
                         @endfor
@@ -93,14 +93,14 @@
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-dark btn-sm" id="minus-btn">
-                                        <img src="/icon/ico-min.svg" class="ico_minus">
+                                        <img src="{{ asset('/icon/ico-min.svg') }}" class="ico_minus">
                                     </button>
                                 </div>
                                 <input type="text" id="qty_input" name="quantity" value="1" min="1">
                                 <input type="hidden" id="price_per_item" name="price_per_item" value="{{ $product->_price }}" min="1">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-dark btn-sm" id="plus-btn">
-                                        <img src="/icon/ico-plus.svg" class="ico_plus">
+                                        <img src="{{ asset('/icon/ico-plus.svg') }}" class="ico_plus">
                                     </button>
                                 </div>
                             </div>
