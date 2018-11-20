@@ -77,7 +77,7 @@
                                 <!-- <span class="current">{{ $products_sizes[0]->size->_name }}</span> -->
                                 <select class="list" id="size_input">
                                     @for($i = 0; $i < $products_sizes->count(); $i++)                                       
-                                        <option value="{{ $products_sizes[$i]->id }}">{{ $products_sizes[$i]->size->_name }}
+                                        <option value="{{ $products_sizes[$i]->size_id }}">{{ $products_sizes[$i]->size->_name }}
                                         </option>
                                     @endfor
                                 </select>

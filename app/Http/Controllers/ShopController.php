@@ -9,6 +9,11 @@ use App\Model\Type;
 use App\Model\Size;
 use App\Model\ProductGallery;
 use App\Model\ProductStock;
+use App\Model\Cart;
+use Carbon\Carbon;
+use Response;
+use Exception;
+use Auth;
 
 class ShopController extends Controller
 {
@@ -25,7 +30,12 @@ class ShopController extends Controller
     }
 
     public function detail(Request $request, $slug)
-    {
+    {   
+                   //dd(\Session::get("user_cart_list-5bf36b6fc57d6"));
+        // $list_cart_item = \Session::get("user_cart_list-5bf36b6fc57d6");
+        // foreach($list_cart_item[0] as $cart_item){
+        //     dd($cart_item->productStocks()->get()[0]->size()->get()[0]->_name);
+        // }
         $product = Product::where('_slug', '=', $slug)->first();
         $category = Category::where('id', '=', $product->category_id)->first();
         $category_parent = Category::where('id', '=', $category->parent_category_id)->first();
@@ -33,6 +43,13 @@ class ShopController extends Controller
         $products_galleries = ProductGallery::where('product_id', '=', $product->id)->get();
         $related_products =  Product::where('category_id', '=' , $product->category_id)->limit(4)->get();
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
+
+            $session_counter_view_product = "counter_view_product-". $product->id;
+            if (!\Session::has($session_counter_view_product)) {
+            $product->_count_view = $product->_count_view + 1;
+            $product->save();
+            \Session::put($session_counter_view_product, "");
+        }
 
         return view('shop.detail')
             ->with(compact('product', 
@@ -51,6 +68,39 @@ class ShopController extends Controller
 
     public function addToCart(Request $request, $product_id)
     {
-        $avaibility = false;
+        $product_stock = ProductStock::where('product_id', '=', $product_id)->where('size_id', '=', $request->size_id)->first();
+        if($product_stock->_stock < $request->quantity){
+            throw new Exception("Stock is not available. Quantity max is ". $product_stock->_stock);
+        } else {
+            $session_user_cart = "user_cart";
+            if (!\Session::has($session_user_cart)) {
+                \Session::put($session_user_cart, uniqid());            
+            }
+
+            $cart = new Cart();
+            $cart->cart_no = \Session::get($session_user_cart);
+            $cart->product_id = $product_id;
+            $cart->product_stock_id = $product_stock->id;
+            $cart->_qty = $request->quantity;
+            $cart->created_at = Carbon::now();
+            if(Auth::guest()){
+                $session_guest_no = "guest_no";
+                if (!\Session::has($session_guest_no)) {
+                    \Session::put($session_guest_no, uniqid());            
+                }                
+                $cart->guest_no = \Session::get($session_guest_no);
+            } else {
+                $cart->user_no = Auth::user()->id;
+            } 
+            $cart->save();
+            $product_stock->_stock = $product_stock->_stock - $request->quantity;
+            $product_stock->save();
+
+            $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
+            $list_cart_user = Cart::where('cart_no', '=', \Session::get($session_user_cart))->get();
+            
+            \Session::forget($session_list_cart_user);
+            \Session::push($session_list_cart_user, $list_cart_user);
+        }
     }
 }
