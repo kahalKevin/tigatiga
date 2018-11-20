@@ -74,7 +74,11 @@ function addToCart(product_id) {
       data: {_token:$('#token').val(), size_id:size, quantity:qty}, 
       url: '/shop/addToCart/' + product_id,
       success: function(result) {
-         //location.reload();
+         alert("Success add to cart");
+         location.reload();
+      },
+      error: function (request, status, error) {
+        alert("Add to cart fail, " + request.responseJSON.message);
       }
     });
   }
