@@ -50,23 +50,9 @@
                         </div>                        
                         @endif
                         <div id="tag-detail">
-                            <ul class="instagram-img">
-                                <li>
-                                    <a href="#">#adidas</a>
-                                </li>
-                                <li>
-                                    <a href="#">#orange</a>
-                                </li>
-                                <li>
-                                    <a href="#">#gazelle</a>
-                                </li>
-                                <li>
-                                    <a href="#">#sneaker</a>
-                                </li>
-                                <li>
-                                    <a href="#">#shoes</a>
-                                </li>
-                            </ul>
+                            @foreach($product_tags as $tag)
+                                <a href="/shop/indexByTag/{{ $tag->id }}+{{ $tag->name }}">#{{ $tag->name }}</a> &nbsp&nbsp
+                            @endforeach
                         </div>
 
                         <br>

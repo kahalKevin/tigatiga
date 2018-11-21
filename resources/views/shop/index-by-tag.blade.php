@@ -5,8 +5,7 @@
 <div class="service-area ptb-80" id="shop">
             <div class="container">
                 <div class="box" action="index.html" method="post">
-                    <p class="sp-title">{{ $category_parent->_name }}</p>
-                    <p class="sp-caption">{{ $category->_name }}</p>
+                    <p class="sp-title">Tag #{{ $tag_name }}</p>                    
                     <div class="row">
                         <!-- Sidebar Shopping Option Start -->
                         <div class="col-lg-3 order-2 order-lg-1 mt-all-30">

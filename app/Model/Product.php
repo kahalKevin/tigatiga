@@ -30,6 +30,11 @@ class Product extends Model
         return $this->hasMany('App\Model\ProductStock', 'product_id', 'id');
     }
 
+    public function productTags()
+    {
+        return $this->hasMany('App\Model\ProductTag', 'product_id', 'id');
+    }
+
     public function carts()
     {
         return $this->belongsToMany('App\Model\Cart', 'product_id', 'id');
