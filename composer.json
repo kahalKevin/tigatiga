@@ -49,6 +49,14 @@
         }
     },
     "scripts": {
+        "deploy": [
+            "composer install",
+            "php artisan cache:clear",
+            "php artisan view:clear",
+            "php artisan config:clear",
+            "gulp css",
+            "gulp javascript"
+        ],
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ],

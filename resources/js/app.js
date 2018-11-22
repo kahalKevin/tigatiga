@@ -7,6 +7,7 @@
 //=include ./vendor/owl.carousel.min.js
 //=include ./vendor/bootstrap.min.js
 //=include ./vendor/plugins.js
+//=include ./vendor/slugify.js
 //=include ./vendor/main.js
 
 $(document).ready(function () {

@@ -5,7 +5,7 @@
          <div class="col-xl-2 col-lg-2 col-6">
             <div class="logo">
                <a href="{{ url('/') }}">
-               <img src="{{ asset('/icon/logo.svg') }}" alt="logo-image">
+               <img src="{{ asset('/icon/logo-supershop.png') }}" alt="logo-image" height="45">
                </a>
             </div>
          </div>
