@@ -18,7 +18,7 @@ class RajaOngkir
         $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('GET', $url, [
-            $query,
+            'query' => $query,
             'headers' => [
                 'key' => $key
             ]
@@ -42,7 +42,7 @@ class RajaOngkir
         $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('GET', $url, [
-            $query,
+            'query' => $query,
             'headers' => [
                 'key' => $key
             ]
@@ -53,13 +53,15 @@ class RajaOngkir
 
     public static function calculateCost($form_params = [])
     {
+        // city id origin 153
         $client = new HttpRequest;
         $url = getenv("RAJAONGKIR_URL") . "/cost";
         $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('POST', $url, [
-            $form_params,
+            'form_params' => $form_params,
             'headers' => [
+                'content-type' => 'application/x-www-form-urlencoded',
                 'key' => $key
             ]
         ]);

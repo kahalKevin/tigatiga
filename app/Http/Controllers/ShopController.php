@@ -14,6 +14,7 @@ use App\Model\Tag;
 use App\Model\Cart;
 use App\Helpers\RajaOngkir;
 use App\Helpers\MidtransHelper;
+use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Response;
 use Exception;
@@ -94,7 +95,7 @@ class ShopController extends Controller
     public function checkout()
     {
         $province = RajaOngkir::getProvince();
-
+        
         $order_detail = array(
             "customer_name" => "puspo",
             "customer_email" => "puspo@team-company.asia",
@@ -104,8 +105,38 @@ class ShopController extends Controller
         );
 
         $token = MidtransHelper::purchase($order_detail);
-        
+        // $orderId = DB::select("select nextseq('fe_tx_order','') FROM DUAL;");
+
         return view('shop.checkout', compact('token'));
+    }
+
+    public function getCity(Request $request){
+        $param = array();
+        if(isset($request->province)) {
+            $param['province'] = $request->province;
+        }
+        return RajaOngkir::getCity($param);
+    }
+
+    public function calculateCost(Request $request){
+        $formParam = array();
+        $formParam['origin'] = 153;
+        $formParam['destination'] = $request->destination;
+        $formParam['courier'] = $request->courier;
+        $formParam['weight'] = $request->weight;
+        return RajaOngkir::calculateCost($formParam);
+    }
+
+    public function newToken(Request $request){
+        $order_detail = array(
+            "customer_name" => "puspo",
+            "customer_email" => "puspo@team-company.asia",
+            "customer_phone" => "082231782659",
+            "order_id" => rand(),
+            "amount" => $request->amount,
+        );
+        $token = MidtransHelper::purchase($order_detail);
+        return $token;
     }
 
     public function addToCart(Request $request, $product_id)
@@ -135,8 +166,8 @@ class ShopController extends Controller
                 $cart->user_no = Auth::user()->id;
             } 
             $cart->save();
-            $product_stock->_stock = $product_stock->_stock - $request->quantity;
-            $product_stock->save();
+            // $product_stock->_stock = $product_stock->_stock - $request->quantity;
+            // $product_stock->save();
 
             $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
             $list_cart_user = Cart::where('cart_no', '=', \Session::get($session_user_cart))->get();

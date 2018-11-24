@@ -52,3 +52,7 @@ Route::prefix('profile')->group(function () {
 Route::view('forgot-password', 'profile.forgot-password');
 Route::view('reset-password', 'profile.reset-password');
 
+Route::get('shipping/city', 'ShopController@getCity');
+Route::get('shipping/cost', 'ShopController@calculateCost');
+Route::get('payment/newToken', 'ShopController@newToken');
+

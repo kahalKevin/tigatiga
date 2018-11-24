@@ -80,8 +80,6 @@
                                     <li data-value="Position" class="option">JNE Regular ( 2 Day )</li>
                                     <li data-value="Product Name" class="option">TIKI</li>
                                     <li data-value="Product Name" class="option">POS Indonesia</li>
-                                    <li data-value="Price" class="option">J&T Regular</li>
-                                    <li data-value="Price" class="option">Ninja Express</li>
                                 </ul>
                             </div>
                             </div>
