@@ -9,6 +9,8 @@ class Type extends Model
 {
     protected $table = "sys_type";
 
+    public $incrementing = false;
+
     protected static function boot()
     {
         parent::boot();

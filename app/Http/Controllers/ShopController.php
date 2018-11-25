@@ -29,13 +29,36 @@ class ShopController extends Controller
     {
         $category = Category::where('_slug', '=', $slug)->first();
         $category_parent = Category::where('id', '=', $category->parent_category_id)->first();
-        $products = Product::where('category_id', '=', $category->id)->get();
+        
+        $products_query = Product::query();
+        if($request->genderIndex != null){
+            $products_query = $products_query->whereIn('gender_allocation_id', $request->genderIndex);
+        }
+        if($request->sizeIndex != null){
+            $products_query = $products_query->whereHas('productStocks', function ($query) use ($request){
+                                $query->whereIn('size_id', $request->sizeIndex);
+                            });
+        }
+        if($category->id != null){
+            $products_query = $products_query->where('category_id', '=', $category->id);
+        }
+        if($request->priceFrom != null){
+            $priceFrom = $request->priceFrom;
+            $products_query = $products_query->where('_price', '>=', $request->priceFrom);
+        }
+        if($request->priceTo != null){
+            $priceTo = $request->priceTo;
+            $products_query = $products_query->where('_price', '<=', $request->priceTo);
+        }
+        $products = $products_query->paginate(2);
 
         $tags = $this->getAllTags();
         $genders = Type::where('category_id', '=', 11)->get();
+        $genders_selected = $request->genderIndex;
+        $sizes_selected = $request->sizeIndex;
         $sizes = Size::where('_active', '=', "1")->get();
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
-        return view('shop.index')->with(compact('products', 'category', 'genders', 'sizes', 'category_parent', 'cmsUrl', 'tags'));
+        return view('shop.index')->with(compact('products', 'category', 'genders', 'sizes', 'category_parent', 'cmsUrl', 'tags', 'genders_selected', 'priceFrom', 'priceTo', 'sizes_selected'));
     } 
 
     public function indexByTag(Request $request, $id) 
@@ -57,7 +80,7 @@ class ShopController extends Controller
 
         $query_tag = $query_tag->where('deleted_at', '=', null);
         $id_product =$query_tag->pluck('product_id')->toArray();
-        $products = Product::whereIn('id', $id_product)->get();
+        $products = Product::whereIn('id', $id_product)->paginate(2);
 
         $tags = $this->getAllTags();
         $genders = Type::where('category_id', '=', 11)->get();
