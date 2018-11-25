@@ -132,32 +132,7 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="shop-breadcrumb-area" id="page-area">
-                                <div class="row">
-                                    <div class="col-lg-12 col-md-12 col-sm-13">
-                                        <ul class="pfolio-breadcrumb-list text-center">
-                                            <li class="float-left prev">
-                                                <a href="#">Prev</a>
-                                            </li>
-                                            <li class="float-left active">
-                                                <a href="#">1</a>
-                                            </li>
-<!--                                             <li class="float-left">
-                                                <a href="#">2</a>
-                                            </li>
-                                            <li class="float-left">
-                                                <a href="#">3</a>
-                                            </li>
-                                            <li class="float-left">
-                                                <a href="#">...</a>
-                                            </li>
- -->                                            <li class="float-left next">
-                                                <a href="#">Next</a>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
+                            @include('layouts.pagination.default', ['paginator' => $products])
                         </div>
                         <!--END COLUMN -->
                     </div>
