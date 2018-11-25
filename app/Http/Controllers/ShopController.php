@@ -120,28 +120,33 @@ class ShopController extends Controller
 
     public function checkout(Request $request)
     {
-        // check if exist in current order
-        // only reload if exist
-        // create new if not exist
-        // delete this session's shopping cart
-        // prepare order data to be returned
-        // cut quantity
+        // validate if stock sufficient
         $order = new Order();
-        $shippingCost = -1;
+        $orderItems = array();
+        $shippingDetail = -1;
+        $defaultAddress = -1;
 
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
         $cart = $cart[0];
 
+        $key = \Session::get($session_user_cart);
+        if(null == \Session::get($session_user_cart)){
+            $key = $request->order_id;
+        }
         $currentOrder = Order::query()
-        ->where('cart_no', \Session::get($session_user_cart))
-        ->first();
+            ->where('cart_no', $key)
+            ->first();
 
         if(isset($cart) && !$currentOrder){
+            $totalOrder = $this->totalPriceAndWeight($cart);
             $orderId = DB::select("select nextseq('fe_tx_order','') as id FROM DUAL;");
             $order->id = $orderId[0]->id;
             $order->cart_no =$cart[0]->cart_no;
+            $order->_total_amount = $totalOrder['price'];
+            $order->_grand_total = $totalOrder['price'];
+            $order->status_id = 'STATUSORDER0';
             $order->user_id = Auth::user()->id;
             $order->_email = Auth::user()->_email;
             $order->freight_provider_id = 'FREIGHTPROVIDER01';
@@ -161,11 +166,12 @@ class ShopController extends Controller
                 $order->_kelurahan = $defaultAddress->_kelurahan;
                 $order->_kecamatan = $defaultAddress->_kecamatan;
                 $order->_kode_pos = $defaultAddress->_kode_pos;
-                $shippingCost = $this->getCost($order->ro_city_id, 'tiki', 1700);
-                // dd($shippingCost);
+                $shippingDetail = $this->getCost($order->ro_city_id, 'jne', $totalOrder['weight']);
             }
-            $idx = 0;
-            $orderItems = array();
+
+            $order->save();
+
+            $idx = 0;            
             foreach($cart as $item){
                 $detail = new OrderDetail();
                 $detail->order_id = $order->id;
@@ -177,39 +183,75 @@ class ShopController extends Controller
                 $detail->product_name = $item->products->_name;
                 $detail->product_image_url = $item->products->_image_url;
                 $detail->product_price = $item->products->_price;
+                $detail->product_fixed_price = $item->products->_price;
                 $detail->product_packaging_price = $item->products->_packaging_price;
                 $detail->product_weight = $item->products->_weight;
                 $orderItems[$idx] = $detail;
+                $detail->save();
                 $idx++;
+
+                $product_stock = ProductStock::query()
+                    ->where('product_id', $item->product_id)
+                    ->where('size_id', $item->productStocks->size_id)
+                    ->first();
+                $product_stock->_stock = $product_stock->_stock - $request->quantity;
+                $product_stock->save();
             }
-            // dd($orderItems);
+            Cart::where('cart_no', '=', $order->cart_no)->delete();
+            \Session::forget($session_list_cart_user);
         } else {
-            // dd(0);
+            $order = $currentOrder;
+            $orderItems = OrderDetail::query()
+                ->where('order_id', $order->id)
+                ->get();
+            $totalOrder = $this->totalPriceAndWeight($orderItems);
+            $defaultAddress = UserAddress::query()
+                ->where('_default', '1')
+                ->where('user_id', Auth::user()->id)
+                ->first();
+            if($defaultAddress){
+                $order->user_address_id = $defaultAddress->id;
+                $order->_address = $defaultAddress->_address;
+                $order->_receiver_name = $defaultAddress->_receiver_name;
+                $order->_receiver_phone = $defaultAddress->_receiver_phone;
+                $order->ro_city_id = $defaultAddress->ro_city_id;
+                $order->ro_province_id = $defaultAddress->ro_province_id;
+                $order->_kota = $defaultAddress->_kota;
+                $order->_kelurahan = $defaultAddress->_kelurahan;
+                $order->_kecamatan = $defaultAddress->_kecamatan;
+                $order->_kode_pos = $defaultAddress->_kode_pos;
+                $order->save();
+                $shippingDetail = $this->getCost($order->ro_city_id, 'jne', $totalOrder['weight']);
+            }
         }
-
-        if (!$currentOrder) {
-
-        } else{
-            // $currentOrder->_qty = $currentOrder->_qty + $request->quantity;
-            // $currentOrder->save();            
-        }
-
 
         $province = RajaOngkir::getProvince();
         
-        $order_detail = array(
-            "customer_name" => "puspo",
-            "customer_email" => "puspo@team-company.asia",
-            "customer_phone" => "082231782659",
-            "order_id" => rand(),
-            "amount" => 10000,
-        );
+        // $order_detail = array(
+        //     "customer_name" => "puspo",
+        //     "customer_email" => "puspo@team-company.asia",
+        //     "customer_phone" => "082231782659",
+        //     "order_id" => rand(),
+        //     "amount" => 10000,
+        // );
+        // $token = MidtransHelper::purchase($order_detail);
 
         $token = "test";
-        // $token = MidtransHelper::purchase($order_detail);
-        
 
-        return view('shop.checkout', compact('token'));
+        return view('shop.checkout', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder'));
+    }
+
+    private function totalPriceAndWeight($cart){
+        $result = array();
+        $price = 0;
+        $weight = 0;
+        foreach ($cart as $item) {
+            $price += $item->_qty * $item->products->_price;
+            $weight += $item->_qty * $item->products->_weight;
+        }
+        $result['price'] = $price;
+        $result['weight'] = $weight;
+        return $result;
     }
 
     public function checkoutGuest(Request $request)
@@ -312,8 +354,6 @@ class ShopController extends Controller
                 }
                 $cart->save();
             }
-            // $product_stock->_stock = $product_stock->_stock - $request->quantity;
-            // $product_stock->save();
 
             $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
             $list_cart_user = Cart::where('cart_no', '=', \Session::get($session_user_cart))->get();

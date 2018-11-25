@@ -11,11 +11,14 @@
                 <div class="col-md-9 mb-all-40">
                     <p class="title-shipping">Shipping Courier</p>
                     <div class="box-shipping-courier">
+
+
+                        @foreach($orderItems as $item)
                         <div class="row mb-20">
                             <div class="col-sm-12 col-md-4 d-inline-block">
-                                <img class="product-image" src="/img/product/adidas-gazelle2.png" width="61" height="63"/>
+                                <img class="product-image" src="{{ env('IMG_URL_PREFIX') . $item->products->_image_url }}" width="61" height="63"/>
                                 <div class="comment-desc">
-                                    <p>Adidas Gazelle II Orange</p>
+                                    <p>{{ $item->products->_name }}</p>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 d-inline-block">
@@ -26,7 +29,7 @@
                                             <img src="/icon/ico-min.svg" class="ico_minus">
                                         </button>
                                     </span>
-                                    <input type="text" id="qty_input" name="quantity" value="1" min="1">
+                                    <input type="text" id="qty_input" name="quantity" value="{{ $item->_qty }}" min="1">
                                     <span class="input-group-prepend">
                                         <button class="btn btn-dark btn-sm" id="plus-btn">
                                             <img src="/icon/ico-plus.svg" class="ico_plus">
@@ -37,10 +40,11 @@
                             <div class="col-sm-12 col-md-3 d-inline-block">
                                 <div class="price" name="price">
                                     <p>Total Price</p>
-                                    <p><b>Rp. 500.0000</b></p>
+                                    <p><b>Rp. {{ number_format($item->_qty * $item->product_price, 2) }}</b></p>
                                 </div>
                             </div>
-                        </div>
+                        </div>                        
+                        @endforeach
                         <div class="row">
                             <div class="col-md-3">
                                 <label class="align-content-center">Shipping Courier</label>
@@ -49,9 +53,9 @@
                             <div class="nice-select sorter wide" tabindex="0">
                                 <span class="current">JNE Regular ( 2 Day )</span>
                                 <ul class="list">
-                                    <li data-value="Position" class="option">JNE Regular ( 2 Day )</li>
-                                    <li data-value="Product Name" class="option">TIKI</li>
-                                    <li data-value="Product Name" class="option">POS Indonesia</li>
+                                    @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
+                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] }}</li>
+                                    @endforeach
                                 </ul>
                             </div>
                             </div>
@@ -63,12 +67,13 @@
                             <div class="col-md-12">
                                 <div class="shipping-courier-item">
                                     <div class="row">
+                                        @if(isset($defaultAddress))
                                         <div class="col-md-12">
-                                            <p class="cust-name">Dwi Putra Faturrahman</p>
-                                            <p class="cust-address">Kantor Codigo. Graha Mitra Lantai 7 Jl. Jend. Gatot
-                                                Subroto Kav.21<br>Jakarta Selatan, Jakarta Selatan, 12930</p>
-                                            <p class="cust-phone">08382381908</p>
+                                            <p class="cust-name">{{ $defaultAddress->_receiver_name }}</p>
+                                            <p class="cust-address">{{ $defaultAddress->_address }}<br>{{ $defaultAddress->_kota }}, {{ $defaultAddress->_kecamatan }}, {{ $defaultAddress->_kode_pos }}</p>
+                                            <p class="cust-phone">{{ $defaultAddress->_receiver_phone }}</p>
                                         </div>
+                                        @endif
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-change-address">CHANGE
@@ -83,7 +88,7 @@
                         <form class="price" action="index.html" method="post">
                             <div class="form-group">
                                 <label for="total-price">Total Price</label>
-                                <input class="form-control" type="text" name="total-price" value="Rp. 1.000.000"
+                                <input class="form-control" type="text" name="total-price" value="Rp. {{ number_format($totalOrder['price'], 2) }}"
                                     disabled>
                             </div>
                             <hr>
