@@ -10,6 +10,12 @@
                 <!-- Sidebar Shopping Option Start -->
                 <div class="col-md-9 mb-all-40">
                     <p class="title-shipping">Products In Cart</p>
+                    @if ($message = Session::get('error'))
+                    <div class="alert alert-danger alert-block">
+                        <button type="button" class="close" data-dismiss="alert">×</button> 
+                            <strong>{{ $message }}</strong>
+                    </div>
+                    @endif
                     @php
                         $total_price_all_item = 0
                     @endphp
@@ -30,13 +36,13 @@
                                 <div class="input-group justify-content-center mb-3">
                                     <label for="quantity" class="mr-20 align-self-center">Quantity :</label>
                                     <span class="input-group-prepend">
-                                        <button class="btn btn-dark btn-sm" id="minus-btn">
+                                        <button class="btn btn-dark btn-sm" id="minus-btn" onclick="window.location='{{ url("shop/cart/decrease-stock/".$cart_item->id) }}'">
                                             <img src="{{ asset('/icon/ico-min.svg') }}" class="ico_minus">
                                         </button>
                                     </span>
                                     <input type="text" id="qty_input" name="quantity" value="{{ $cart_item->_qty }}" min="1">
                                     <span class="input-group-prepend">
-                                        <button class="btn btn-dark btn-sm" id="plus-btn">
+                                        <button class="btn btn-dark btn-sm" id="plus-btn" onclick="window.location='{{ url("shop/cart/increase-stock/".$cart_item->id) }}'">
                                             <img src="{{ asset('/icon/ico-plus.svg') }}" class="ico_plus">
                                         </button>
                                     </span>
@@ -50,6 +56,7 @@
                             </div>
                         </div>
                     </div>
+                    <br>
                     @php
                         $total_price_all_item = $total_price_all_item + $total_price_per_item
                     @endphp

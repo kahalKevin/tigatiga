@@ -35,7 +35,6 @@ $(document).ready(function () {
         var counter = parseInt($("#qty_input").val()) - 1;
         if( counter >= 1 ){
         var priceTotal = document.getElementById("price_total");
-            console.log("lappet");
             $("#qty_input").val(counter);            
             priceTotal.innerHTML = (price_item * counter).toFixed(2).replace(/./g, function(c, i, a) {
                     return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
