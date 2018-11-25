@@ -162,7 +162,7 @@ class ShopController extends Controller
                 $order->_kecamatan = $defaultAddress->_kecamatan;
                 $order->_kode_pos = $defaultAddress->_kode_pos;
                 $shippingCost = $this->getCost($order->ro_city_id, 'tiki', 1700);
-                dd($shippingCost);
+                // dd($shippingCost);
             }
             $idx = 0;
             $orderItems = array();
@@ -182,7 +182,7 @@ class ShopController extends Controller
                 $orderItems[$idx] = $detail;
                 $idx++;
             }
-            dd($orderItems);
+            // dd($orderItems);
         } else {
             // dd(0);
         }
@@ -205,7 +205,8 @@ class ShopController extends Controller
             "amount" => 10000,
         );
 
-        $token = MidtransHelper::purchase($order_detail);
+        $token = "test";
+        // $token = MidtransHelper::purchase($order_detail);
         
 
         return view('shop.checkout', compact('token'));
@@ -223,7 +224,8 @@ class ShopController extends Controller
             "amount" => 10000,
         );
 
-        $token = MidtransHelper::purchase($order_detail);
+        $token = "test";
+        // $token = MidtransHelper::purchase($order_detail);
         // $orderId = DB::select("select nextseq('fe_tx_order','') FROM DUAL;");
         return view('shop.checkout_guest', compact('token'));
     }
