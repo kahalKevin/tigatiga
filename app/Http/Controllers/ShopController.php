@@ -12,6 +12,9 @@ use App\Model\ProductStock;
 use App\Model\ProductTag;
 use App\Model\Tag;
 use App\Model\Cart;
+use App\Model\UserAddress;
+use App\Model\Order;
+use App\Model\OrderDetail;
 use App\Helpers\RajaOngkir;
 use App\Helpers\MidtransHelper;
 use Illuminate\Support\Facades\DB;
@@ -92,7 +95,100 @@ class ShopController extends Controller
                            'related_products'));
     }
 
-    public function checkout()
+    public function checkout(Request $request)
+    {
+        // check if exist in current order
+        // only reload if exist
+        // create new if not exist
+        // delete this session's shopping cart
+        // prepare order data to be returned
+        // cut quantity
+        $order = new Order();
+        $shippingCost = -1;
+
+        $session_user_cart = "user_cart";
+        $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
+        $cart = \Session::get($session_list_cart_user);
+        $cart = $cart[0];
+
+        $currentOrder = Order::query()
+        ->where('cart_no', \Session::get($session_user_cart))
+        ->first();
+
+        if(isset($cart) && !$currentOrder){
+            $orderId = DB::select("select nextseq('fe_tx_order','') as id FROM DUAL;");
+            $order->id = $orderId[0]->id;
+            $order->cart_no =$cart[0]->cart_no;
+            $order->user_id = Auth::user()->id;
+            $order->_email = Auth::user()->_email;
+            $order->freight_provider_id = 'FREIGHTPROVIDER01';
+
+            $defaultAddress = UserAddress::query()
+                ->where('_default', '1')
+                ->where('user_id', Auth::user()->id)
+                ->first();
+            if($defaultAddress){
+                $order->user_address_id = $defaultAddress->id;
+                $order->_address = $defaultAddress->_address;
+                $order->_receiver_name = $defaultAddress->_receiver_name;
+                $order->_receiver_phone = $defaultAddress->_receiver_phone;
+                $order->ro_city_id = $defaultAddress->ro_city_id;
+                $order->ro_province_id = $defaultAddress->ro_province_id;
+                $order->_kota = $defaultAddress->_kota;
+                $order->_kelurahan = $defaultAddress->_kelurahan;
+                $order->_kecamatan = $defaultAddress->_kecamatan;
+                $order->_kode_pos = $defaultAddress->_kode_pos;
+                $shippingCost = $this->getCost($order->ro_city_id, 'tiki', 1700);
+                dd($shippingCost);
+            }
+            $idx = 0;
+            $orderItems = array();
+            foreach($cart as $item){
+                $detail = new OrderDetail();
+                $detail->order_id = $order->id;
+                $detail->cart_id = $item->id;
+                $detail->product_id = $item->product_id;
+                $detail->product_stock_id = $item->product_stock_id;
+                $detail->_qty = $item->_qty;
+                $detail->_note = $item->_note;
+                $detail->product_name = $item->products->_name;
+                $detail->product_image_url = $item->products->_image_url;
+                $detail->product_price = $item->products->_price;
+                $detail->product_packaging_price = $item->products->_packaging_price;
+                $detail->product_weight = $item->products->_weight;
+                $orderItems[$idx] = $detail;
+                $idx++;
+            }
+            dd($orderItems);
+        } else {
+            // dd(0);
+        }
+
+        if (!$currentOrder) {
+
+        } else{
+            // $currentOrder->_qty = $currentOrder->_qty + $request->quantity;
+            // $currentOrder->save();            
+        }
+
+
+        $province = RajaOngkir::getProvince();
+        
+        $order_detail = array(
+            "customer_name" => "puspo",
+            "customer_email" => "puspo@team-company.asia",
+            "customer_phone" => "082231782659",
+            "order_id" => rand(),
+            "amount" => 10000,
+        );
+
+        $token = MidtransHelper::purchase($order_detail);
+        
+
+        return view('shop.checkout', compact('token'));
+    }
+
+    public function checkoutGuest(Request $request)
     {
         $province = RajaOngkir::getProvince();
         
@@ -106,8 +202,15 @@ class ShopController extends Controller
 
         $token = MidtransHelper::purchase($order_detail);
         // $orderId = DB::select("select nextseq('fe_tx_order','') FROM DUAL;");
+        return view('shop.checkout_guest', compact('token'));
+    }
 
-        return view('shop.checkout', compact('token'));
+    public function cart(){
+        $session_user_cart = "user_cart";
+        $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
+        $cart = \Session::get($session_list_cart_user);
+        $cart = $cart[0];
+        return view('shop.cart')->with(compact('cart'));
     }
 
     public function getCity(Request $request){
@@ -126,6 +229,15 @@ class ShopController extends Controller
         $formParam['weight'] = $request->weight;
         return RajaOngkir::calculateCost($formParam);
     }
+
+    public function getCost($destination, $courier, $weight){
+        $formParam = array();
+        $formParam['origin'] = 153;
+        $formParam['destination'] = $destination;
+        $formParam['courier'] = $courier;
+        $formParam['weight'] = $weight;
+        return RajaOngkir::calculateCost($formParam);
+    }    
 
     public function newToken(Request $request){
         $order_detail = array(
@@ -150,22 +262,31 @@ class ShopController extends Controller
                 \Session::put($session_user_cart, uniqid());            
             }
 
-            $cart = new Cart();
-            $cart->cart_no = \Session::get($session_user_cart);
-            $cart->product_id = $product_id;
-            $cart->product_stock_id = $product_stock->id;
-            $cart->_qty = $request->quantity;
-            $cart->created_at = Carbon::now();
-            if(Auth::guest()){
-                $session_guest_no = "guest_no";
-                if (!\Session::has($session_guest_no)) {
-                    \Session::put($session_guest_no, uniqid());            
-                }                
-                $cart->guest_no = \Session::get($session_guest_no);
+            $currentData = Cart::query()
+                ->where('cart_no', \Session::get($session_user_cart))
+                ->where('product_stock_id', $product_stock->id)
+                ->first();
+            if ($currentData) {
+                $currentData->_qty = $currentData->_qty + $request->quantity;
+                $currentData->save();
             } else {
-                $cart->user_no = Auth::user()->id;
-            } 
-            $cart->save();
+                $cart = new Cart();
+                $cart->cart_no = \Session::get($session_user_cart);
+                $cart->product_id = $product_id;
+                $cart->product_stock_id = $product_stock->id;
+                $cart->_qty = $request->quantity;
+                $cart->created_at = Carbon::now();
+                if(Auth::guest()){
+                    $session_guest_no = "guest_no";
+                    if (!\Session::has($session_guest_no)) {
+                        \Session::put($session_guest_no, uniqid());
+                    }
+                    $cart->guest_no = \Session::get($session_guest_no);
+                } else {
+                    $cart->user_no = Auth::user()->id;
+                }
+                $cart->save();
+            }
             // $product_stock->_stock = $product_stock->_stock - $request->quantity;
             // $product_stock->save();
 

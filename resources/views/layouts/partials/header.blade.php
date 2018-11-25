@@ -130,7 +130,7 @@
                                    </li>
                                 </ul>
                                 <div class="cart-actions text-center">
-                                  <a href="{{ url('/shop/checkout') }}"><span class="icon icon-FullShoppingCart"></span><span class="total-pro">2</span></a>
+                                  <a href="{{ url('/shop/cart') }}"><span class="icon icon-FullShoppingCart"></span><span class="total-pro"></span></a>
                                 </div>
                              </div>
                           @else

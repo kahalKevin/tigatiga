@@ -10,12 +10,20 @@
                 <!-- Sidebar Shopping Option Start -->
                 <div class="col-md-9 mb-all-40">
                     <p class="title-shipping">Products In Cart</p>
+                    @php
+                        $total_price_all_item = 0
+                    @endphp
+                    @if(isset($cart))
+                    @foreach($cart as $cart_item)
+                    @php
+                        $total_price_per_item = $cart_item->_qty * $cart_item->products()->get()[0]->_price                        
+                    @endphp
                     <div class="box-shipping-courier">
                         <div class="row mb-20">
                             <div class="col-sm-12 col-md-4 d-inline-block">
-                                <img class="product-image" src="/img/product/adidas-gazelle2.png" width="61" height="63"/>
+                                <img class="product-image" src="{{ env('IMG_URL_PREFIX') . $cart_item->products()->get()[0]->_image_url }}" width="61" height="63"/>
                                 <div class="comment-desc">
-                                    <p>Adidas Gazelle II Orange</p>
+                                    <p>{{ $cart_item->products()->get()[0]->_name }}</p>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 d-inline-block">
@@ -26,7 +34,7 @@
                                             <img src="{{ asset('/icon/ico-min.svg') }}" class="ico_minus">
                                         </button>
                                     </span>
-                                    <input type="text" id="qty_input" name="quantity" value="1" min="1">
+                                    <input type="text" id="qty_input" name="quantity" value="{{ $cart_item->_qty }}" min="1">
                                     <span class="input-group-prepend">
                                         <button class="btn btn-dark btn-sm" id="plus-btn">
                                             <img src="{{ asset('/icon/ico-plus.svg') }}" class="ico_plus">
@@ -37,26 +45,38 @@
                             <div class="col-sm-12 col-md-3 d-inline-block">
                                 <div class="price" name="price">
                                     <p>Total Price</p>
-                                    <p><b>Rp. 500.0000</b></p>
+                                    <p><b>Rp. {{ number_format($total_price_per_item, 2) }}</b></p>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @php
+                        $total_price_all_item = $total_price_all_item + $total_price_per_item
+                    @endphp
+                    @endforeach
+                    @endif
                 </div>
                 <div class="col-md-3">
                     <p class="title-shipping">Shopping Summary</p>
                     <div class="shopping-summary">
-                        <form class="price" action="index.html" method="post">
+                        @if (Auth::check()) 
+                        <form class="price" action="/shop/checkout" method="post">
+                            @csrf
+                        @else 
+                        <form class="price" action="/shop/checkoutGuest" method="post">
+                            @csrf
+                        @endif
                             <div class="form-group">
                                 <label for="total-price">Total Price</label>
-                                <input class="form-control" type="text" name="total-price" value="Rp. 1.000.000"
+                                <input class="form-control" id="total-price" type="text" name="total-price" value="Rp. {{ number_format($total_price_all_item, 2) }}"
                                     disabled>
+                                <input type="hidden" name="totalprice" value="{{ $total_price_all_item }}">
                             </div>
                             <hr>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-12 form-btn">
-                                        <input id="pay" class="btn btn-info btn-lg" type="button" name="apply" value="CHECKOUT">
+                                        <input id="pay" class="btn btn-info btn-lg" type="submit" name="apply" value="CHECKOUT">
                                     </div>
                                 </div>
                             </div>
