@@ -22,6 +22,7 @@ use Carbon\Carbon;
 use Response;
 use Exception;
 use Auth;
+use Redirect;
 
 class ShopController extends Controller
 {
@@ -233,7 +234,57 @@ class ShopController extends Controller
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
         $cart = $cart[0];
+        $cart = $this->syncSessionCartToProductStock($cart);
+        \Session::push($session_list_cart_user, $cart);
         return view('shop.cart')->with(compact('cart'));
+    }
+
+    public function syncSessionCartToProductStock($cart){
+        $cart_sycn = collect();
+        foreach ($cart as $cart_item) {
+
+            $product_stock = ProductStock::where('product_id', '=', $cart_item->product_id)->where('id', '=', $cart_item->product_stock_id)->first();
+            if($product_stock->_stock >= $cart_item->_qty){
+                $cart_sycn->push($cart_item);
+            }
+        }
+        return $cart_sycn;
+    }
+
+    public function increaseStockCart($id){
+        $cart = Cart::where('id', '=', $id)->first();
+        $product_stock = ProductStock::where('product_id', '=', $cart->product_id)->where('id', '=', $cart->product_stock_id)->first();
+        
+        if($product_stock->_stock < $cart->_qty + 1){
+            return Redirect::back()->with('error','Max quantity is '.$product_stock->_stock);
+        }
+        $cart->_qty = $cart->_qty + 1;
+        $cart->save();
+
+        $session_user_cart = "user_cart";
+        $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
+        $list_cart_user = Cart::where('cart_no', '=', \Session::get($session_user_cart))->get();
+        
+        \Session::forget($session_list_cart_user);
+        \Session::push($session_list_cart_user, $list_cart_user);        
+        return Redirect::back();
+    }
+
+    public function decreaseStockCart($id){
+        $cart = Cart::where('id', '=', $id)->first();
+        if($cart->_qty <= 1){
+            return Redirect::back()->with('error','Min quantity is 0');
+        }
+        $cart->_qty = $cart->_qty - 1;
+        $cart->save();
+
+        $session_user_cart = "user_cart";
+        $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
+        $list_cart_user = Cart::where('cart_no', '=', \Session::get($session_user_cart))->get();
+        
+        \Session::forget($session_list_cart_user);
+        \Session::push($session_list_cart_user, $list_cart_user);        
+        return Redirect::back();
     }
 
     public function getCity(Request $request){

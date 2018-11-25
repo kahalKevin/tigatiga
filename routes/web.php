@@ -31,6 +31,8 @@ Route::prefix('shop')->group(function () {
     Route::get('indexByTag/{id}', 'ShopController@indexByTag');    
     Route::get('detail/{slug}', 'ShopController@detail');
     Route::get('cart', 'ShopController@cart');
+    Route::get('cart/increase-stock/{id}', 'ShopController@increaseStockCart');
+    Route::get('cart/decrease-stock/{id}', 'ShopController@decreaseStockCart');
     Route::post('checkout', 'ShopController@checkout');
     Route::post('checkoutGuest', 'ShopController@checkoutGuest');
     Route::view('shoppingcart', 'shop.cart');

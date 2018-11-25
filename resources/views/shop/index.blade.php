@@ -25,7 +25,7 @@
                                     @if($input != null)
                                         @foreach($input as $key => $val)
                                             @if($key != 'sizeIndex')                                        
-                                                @if($key == 'priceFrom' || $key == 'priceTo')
+                                                @if($key == 'priceFrom' || $key == 'priceTo' || $key == 'page')
                                                     <input type="hidden" name="{{ $key }}" value="{{ $val }}" /> 
                                                 @else
                                                     @foreach($val as $value)
@@ -75,10 +75,12 @@
                                                 
                                                 @if($input != null)
                                                     @foreach($input as $key => $val)
-                                                            @if($key != 'priceFrom' && $key != 'priceTo')
+                                                            @if($key != 'priceFrom' && $key != 'priceTo' && $key != 'page')
                                                                 @foreach($val as $value)
                                                                 <input type="hidden" name="{{ $key }}[]" value="{{ $value }}" />
                                                                 @endforeach
+                                                            @else
+                                                                <input type="hidden" name="{{ $key }}[]" value="{{ $val }}" />
                                                             @endif                                        
                                                     @endforeach
                                                 @endif
@@ -123,7 +125,7 @@
                                     @if($input != null)
                                         @foreach($input as $key => $val)
                                             @if($key != 'genderIndex')                                        
-                                                @if($key == 'priceFrom' || $key == 'priceTo')
+                                                @if($key == 'priceFrom' || $key == 'priceTo' || $key == 'page')
                                                     <input type="hidden" name="{{ $key }}" value="{{ $val }}" /> 
                                                 @else
                                                     @foreach($val as $value)
