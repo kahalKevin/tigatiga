@@ -4,8 +4,12 @@
 <div class="service-area ptb-80" id="shop">
             <div class="container">
                 <div class="box" action="index.html" method="post">
-                    <p class="sp-title">{{ $category_parent->_name }}</p>
-                    <p class="sp-caption">{{ $category->_name }}</p>
+                    @if(isset($category_parent))
+                        <p class="sp-title">{{ $category_parent->_name }}</p>
+                        <p class="sp-caption">{{ $category->_name }}</p>
+                        @else
+                        <p class="sp-title">{{ $category->_name }}</p>
+                        @endif
                     <div class="row">
                         <!-- Sidebar Shopping Option Start -->
                         <div class="col-lg-3 order-2 order-lg-1 mt-all-30">
@@ -14,6 +18,24 @@
                                 <h3 class="sidebar-title">SIZE</h3>
                                 <ul class="size-list sidbar-style">
                                     <form action="/shop/index/{{ $category->_slug }}" method="get">
+                                    @php 
+                                        $input = Input::get();
+                                    @endphp
+                                    
+                                    @if($input != null)
+                                        @foreach($input as $key => $val)
+                                            @if($key != 'sizeIndex')                                        
+                                                @if($key == 'priceFrom' || $key == 'priceTo')
+                                                    <input type="hidden" name="{{ $key }}" value="{{ $val }}" /> 
+                                                @else
+                                                    @foreach($val as $value)
+                                                    <input type="hidden" name="{{ $key }}[]" value="{{ $value }}" />
+                                                    @endforeach
+                                                @endif                                        
+                                            @endif
+                                        @endforeach
+                                    @endif
+                                    
                                     @php
                                         $i = 0
                                     @endphp
@@ -47,6 +69,19 @@
                                     <li class="form-check">
                                         <div class="row">
                                             <form class="price" action="/shop/index/{{ $category->_slug }}" method="get">
+                                                @php 
+                                                    $input = Input::get();
+                                                @endphp
+                                                
+                                                @if($input != null)
+                                                    @foreach($input as $key => $val)
+                                                            @if($key != 'priceFrom' && $key != 'priceTo')
+                                                                @foreach($val as $value)
+                                                                <input type="hidden" name="{{ $key }}[]" value="{{ $value }}" />
+                                                                @endforeach
+                                                            @endif                                        
+                                                    @endforeach
+                                                @endif
                                                 <div class="form-group row">
                                                     <!-- <div class="col-lg-3"> -->
                                                         <label for="from" class="col-lg-3 col-md-3 col-sm-3 col-form-label">From</label>
@@ -81,6 +116,24 @@
                                 <h3 class="sidebar-title">GENDER</h3>
                                 <form action="/shop/index/{{ $category->_slug }}" method="get">
                                 <ul class="size-list sidbar-style">
+                                    @php 
+                                        $input = Input::get();
+                                    @endphp
+                                    
+                                    @if($input != null)
+                                        @foreach($input as $key => $val)
+                                            @if($key != 'genderIndex')                                        
+                                                @if($key == 'priceFrom' || $key == 'priceTo')
+                                                    <input type="hidden" name="{{ $key }}" value="{{ $val }}" /> 
+                                                @else
+                                                    @foreach($val as $value)
+                                                    <input type="hidden" name="{{ $key }}[]" value="{{ $value }}" />
+                                                    @endforeach
+                                                @endif                                        
+                                            @endif
+                                        @endforeach
+                                    @endif
+
                                     @php
                                         $i = 0
                                     @endphp                                
