@@ -133,7 +133,7 @@ class ShopController extends Controller
         $cart = $cart[0];
 
         $key = \Session::get($session_user_cart);
-        if(null == \Session::get($session_user_cart)){
+        if(isset($request->order_id)){
             $key = $request->order_id;
         }
         $currentOrder = Order::query()
@@ -195,7 +195,7 @@ class ShopController extends Controller
                     ->where('product_id', $item->product_id)
                     ->where('size_id', $item->productStocks->size_id)
                     ->first();
-                $product_stock->_stock = $product_stock->_stock - $request->quantity;
+                $product_stock->_stock = $product_stock->_stock - $item->_qty;
                 $product_stock->save();
             }
             Cart::where('cart_no', '=', $order->cart_no)->delete();
