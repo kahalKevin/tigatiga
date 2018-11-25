@@ -67,17 +67,14 @@
                     <p class="title-shipping">Shopping Summary</p>
                     <div class="shopping-summary">
                         @if (Auth::check()) 
-                        <form class="price" action="/shop/checkout" method="post">
-                            @csrf
+                        <form class="price" action="/shop/checkout" method="get">
                         @else 
-                        <form class="price" action="/shop/checkoutGuest" method="post">
-                            @csrf
+                        <form class="price" action="/shop/checkoutGuest" method="get">
                         @endif
                             <div class="form-group">
                                 <label for="total-price">Total Price</label>
                                 <input class="form-control" id="total-price" type="text" name="total-price" value="Rp. {{ number_format($total_price_all_item, 2) }}"
                                     disabled>
-                                <input type="hidden" name="totalprice" value="{{ $total_price_all_item }}">
                             </div>
                             <hr>
                             <div class="form-group">

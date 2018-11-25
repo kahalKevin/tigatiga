@@ -81,8 +81,8 @@
                      </a>
                      <ul class="dropdown cart-box-width">
                         <li>
-                          @if(Session::has('user_cart_list-'. Session::get('user_cart')))
-                            @php
+                          @if(Session::has('user_cart_list-'. Session::get('user_cart'))!=null)
+                            @php                              
                               $total_price_all_item = 0
                             @endphp
 
@@ -103,7 +103,7 @@
                                       <a href="product-details.html">{{ $cart_item->products()->get()[0]->_name }} </a>
                                    </h6>
                                    <span class="cart-price">Rp. {{ number_format($total_price_per_item, 2) }}</span>
-                                   <span>Size: {{ $cart_item->productStocks()->get()[0]->size()->get()[0]->_name }}</span>
+                                   <span>Size: {{ $cart_item->productStocks()->count() != 0 ? $cart_item->productStocks()->get()[0]->size()->get()[0]->_name : "" }}</span>
                                 </div>
                                 <a class="del-icone" href="#">
                                 <i class="ion-close"></i>
