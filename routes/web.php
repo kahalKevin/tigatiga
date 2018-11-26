@@ -37,6 +37,7 @@ Route::prefix('shop')->group(function () {
     Route::get('checkoutGuest', 'ShopController@checkoutGuest');
     Route::view('shoppingcart', 'shop.cart');
     Route::post('addToCart/{product_id}', 'ShopController@addToCart');
+    Route::post('add-new-addres', 'ShopController@addNewAddress');
 });
 
 Route::view('/order', 'order.index');

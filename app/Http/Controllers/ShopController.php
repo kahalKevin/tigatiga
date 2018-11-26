@@ -151,11 +151,17 @@ class ShopController extends Controller
             $order->user_id = Auth::user()->id;
             $order->_email = Auth::user()->_email;
             $order->freight_provider_id = 'FREIGHTPROVIDER01';
+            $order->_address = "";
+            $order->_receiver_name = "";
+            $order->_receiver_phone = "";
+            $order->_kota = "";
+            $order->_kode_pos = "";            
 
             $defaultAddress = UserAddress::query()
                 ->where('_default', '1')
                 ->where('user_id', Auth::user()->id)
                 ->first();
+
             if($defaultAddress){
                 $order->user_address_id = $defaultAddress->id;
                 $order->_address = $defaultAddress->_address;
@@ -172,7 +178,8 @@ class ShopController extends Controller
 
             $order->save();
 
-            $idx = 0;            
+            $idx = 0;       
+
             foreach($cart as $item){
                 $detail = new OrderDetail();
                 $detail->order_id = $order->id;
@@ -227,6 +234,8 @@ class ShopController extends Controller
         }
 
         $province = RajaOngkir::getProvince();
+
+        $list_user_address = UserAddress::where('user_id', '=', Auth::user()->id)->get();
         
         // $order_detail = array(
         //     "customer_name" => "puspo",
@@ -239,7 +248,7 @@ class ShopController extends Controller
 
         $token = "test";
 
-        return view('shop.checkout', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder'));
+        return view('shop.checkout', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder', 'list_user_address'));
     }
 
     private function totalPriceAndWeight($cart){
@@ -412,6 +421,11 @@ class ShopController extends Controller
             \Session::forget($session_list_cart_user);
             \Session::push($session_list_cart_user, $list_cart_user);
         }
+    }
+
+    public function addNewAddress(Request $request)
+    {
+        $this->redirectTo = url()->previous();
     }
 
     private function getTagsSelected($id)

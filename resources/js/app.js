@@ -81,4 +81,44 @@ function addToCart(product_id) {
         alert("Add to cart fail, " + request.responseJSON.message);
       }
     });
-  }
+}
+
+$(document).ready(function() {
+    $('select[name="provinsi"]').on('change', function(){
+        var provinsi_id = $(this).val();
+        if(provinsi_id) {
+            $.ajax({
+                url: '/shipping/city?province='+provinsi_id,
+                type:"GET",
+                dataType:"json",
+                beforeSend: function(){
+                    $('#loader').css("visibility", "visible");
+                },
+
+                success:function(data) {
+                    $('select[name="city"]').empty();
+                    var option = "";
+                    var li = "";
+                    $.each(data["rajaongkir"]["results"], function(key, value, x){
+                        option = option + '<option value="'+ value["city_id"] +'">' + value["city_name"] + '</option>';
+                        li = li + '<li data-value="'+ value["city_id"] +'" class="option">' + value["city_name"] + '</li>';
+                        // var x = document.getElementById("city");
+                        // var option = document.createElement("option");
+                        // option.text = value["city_name"];
+                        // option.value = value["city_id"];
+                        // x.add(option);
+
+                        // $('select[name="city"]').append('<option value="'+ value["city_id"] +'">' + value["city_name"] + '</option>');
+                    });
+                    document.getElementById("lappetkali").innerHTML = '<select name="city" id="city" class="form-control auth city" style="display: none;"> '+option+' </select> <div class="nice-select form-control auth city" tabindex="0"> <span class="current"></span> <ul class="list"> '+li+' </ul> </div>';
+                },
+                complete: function(){
+                    $('#loader').css("visibility", "hidden");
+                }
+            });
+        } else {
+            $('select[name="club_id"]').empty();
+        }
+
+    });
+});

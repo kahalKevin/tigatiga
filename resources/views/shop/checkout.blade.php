@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
+<style type="text/css">
+.modal-body {
+    max-height: calc(100vh - 210px);
+    overflow-y: auto;
+}
+</style>
 <div class="service-area ptb-80" id="checkout">
     <div class="container">
         <div class="box" action="index.html" method="post">
@@ -25,15 +30,9 @@
                                 <div class="input-group justify-content-center mb-3">
                                     <label for="quantity" class="mr-20 align-self-center">Quantity :</label>
                                     <span class="input-group-prepend">
-                                        <button class="btn btn-dark btn-sm" id="minus-btn">
-                                            <img src="/icon/ico-min.svg" class="ico_minus">
-                                        </button>
                                     </span>
                                     <input type="text" id="qty_input" name="quantity" value="{{ $item->_qty }}" min="1">
                                     <span class="input-group-prepend">
-                                        <button class="btn btn-dark btn-sm" id="plus-btn">
-                                            <img src="/icon/ico-plus.svg" class="ico_plus">
-                                        </button>
                                     </span>
                                 </div>
                             </div>
@@ -51,12 +50,16 @@
                             </div>
                             <div class="col-md-9">
                             <div class="nice-select sorter wide" tabindex="0">
-                                <span class="current">JNE Regular ( 2 Day )</span>
-                                <ul class="list">
+                                @if(isset($defaultAddress))
+                                    <span class="current">Select Shipping Courier</span>
+                                    <ul class="list">
                                     @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
                                     <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] }}</li>
-                                    @endforeach
-                                </ul>
+                                    @endforeach                                    
+                                    </ul>
+                                @else
+                                    <span class="current">Please Add new address first</span>
+                                @endif
                             </div>
                             </div>
                         </div>
@@ -76,8 +79,13 @@
                                         @endif
                                     </div>
                                 </div>
-                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-change-address">CHANGE
-                                    ADDRESS</button>
+                                <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-change-address">
+                                @if(isset($defaultAddress))
+                                    CHANGE ADDRESS
+                                @else
+                                    ADD NEW ADDRESS
+                                @endif
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -106,7 +114,11 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-12 form-btn">
-                                        <input id="pay" class="btn btn-info btn-lg" type="button" name="apply" value="Pay">
+                                        @if(isset($defaultAddress))
+                                            <button class="btn btn-info btn-lg" name="apply" id="pay" type="submit">Pay</button>
+                                        @else
+                                            <button class="btn btn-info btn-lg" name="apply" id="pay" type="submit" disabled>Pay</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -124,24 +136,27 @@
                             </div>
                             <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-4">
-                                <div class="box">
-                                    <div class="round">
-                                    <input type="radio" name="address" value="test"/>
+                                @foreach($list_user_address as $lua)
+                                    <div class="col-md-4">
+                                        <div class="box">
+                                            <div class="round">
+                                            <input type="radio" name="address" value="test"/>
+                                            </div>
+                                            <div class="cust-name">
+                                                {{ $lua->_receiver_name }}
+                                            </div>
+                                            <div class="cust-addr-phone">
+                                                {{ $lua->_address }}
+                                            </div>
+                                            <div class="cust-addr-phone">
+                                                {{ $lua->_receiver_phone }}
+                                            </div>
+                                            <a href="shop/address/delete/{{ $lua->id }}">Delete</a>
+                                        </div>
                                     </div>
-                                    <div class="cust-name">
-                                    Dwi Putra
-                                    </div>
-                                    <div class="cust-addr-phone">
-                                    Kantor Codigo. Graha Mitra Lantai 7 Jl. Jend. Gatot Subroto Kav.21
-                                    </div>
-                                    <div class="cust-addr-phone">
-                                    08382381908
-                                    </div>
-                                    <a href="#">Delete</a>
-                                </div>
-                                </div>
-                                <div class="col-md-4">
+                                @endforeach
+                                
+<!--                                 <div class="col-md-4">
                                 <div class="box">
                                     <div class="round">
                                     <input type="radio" name="address" value="test"/>
@@ -175,11 +190,13 @@
                                     <a href="#">Delete</a>
                                 </div>
                                 </div>
-                            </div>
+ -->                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <a id="add-new-address" data-dismiss="modal" data-toggle="modal" data-target="#modal-add-new-address" href="#" class="btn btn-info">ADD NEW ADDRESS</a>
+                                    @if(isset($defaultAddress))
                                     <a id="choose-address" href="#" class="btn btn-info">CHOOSE THIS ADDRESS</a>
+                                    @endif
                                 </div>
                             </div>
                             </div>
@@ -198,7 +215,7 @@
                 <p class="modal-title">Add New Address</p>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="" method="post">
+                <form class="form-horizontal" action="/" method="post">
                     <div class="form-group">
                         <label class="label-form" for="receiver-name">Receiver Name</label>
                         <input class="form-control auth" type="text" name="receiver-name" value="" placeholder="Type your name">
@@ -208,8 +225,20 @@
                         <input class="form-control auth" type="text" name="phone" value="" placeholder="+6281908xxxx">
                     </div>
                     <div class="form-group">
-                        <label class="label-form" for="city-distinct">City or Distinct</label>
-                        <input class="form-control auth" type="text" name="city-distinct" value="" placeholder="Search City or District">
+                        <label class="label-form" for="provinsi">Province</label>
+                        <select name="provinsi" id="provinsi" class="form-control auth provinsi">
+                            <option value="">Select Province</option>
+                            @foreach($province["rajaongkir"]["results"] as $prov)
+                                <option value='{{ $prov["province_id"] }}'>{{ $prov["province"] }}</option>
+                            @endforeach
+                        </select>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="label-form" for="city">City or Distinct</label>
+                        <div id="lappetkali">
+                            <select name="city" id="city" class="form-control auth city">
+                            </select>                            
+                        </div>
                     </div>
                     <div class="form-group">
                         <label class="label-form" for="postal-code">Postal Code</label>
