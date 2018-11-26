@@ -215,10 +215,12 @@
                 <p class="modal-title">Add New Address</p>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="/" method="post">
+                <form class="form-horizontal" action="/shop/add-new-addres" method="post">
+                    @csrf
+                    <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
                     <div class="form-group">
                         <label class="label-form" for="receiver-name">Receiver Name</label>
-                        <input class="form-control auth" type="text" name="receiver-name" value="" placeholder="Type your name">
+                        <input class="form-control auth" type="text" name="receiver_name" value="" placeholder="Type your name">
                     </div>
                     <div class="form-group">
                         <label class="label-form" for="phone">Phone</label>
@@ -242,7 +244,7 @@
                     </div>
                     <div class="form-group">
                         <label class="label-form" for="postal-code">Postal Code</label>
-                        <input class="form-control auth" type="text" name="postal-code" value="" placeholder="Type your postal Code">
+                        <input class="form-control auth" type="text" name="postal_code" value="" placeholder="Type your postal Code">
                     </div>
                     <div class="form-group">
                         <label class="label-form" for="address">Address</label>

@@ -236,7 +236,6 @@ class ShopController extends Controller
         $province = RajaOngkir::getProvince();
 
         $list_user_address = UserAddress::where('user_id', '=', Auth::user()->id)->get();
-        
         // $order_detail = array(
         //     "customer_name" => "puspo",
         //     "customer_email" => "puspo@team-company.asia",
@@ -247,7 +246,6 @@ class ShopController extends Controller
         // $token = MidtransHelper::purchase($order_detail);
 
         $token = "test";
-
         return view('shop.checkout', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder', 'list_user_address'));
     }
 
@@ -425,7 +423,29 @@ class ShopController extends Controller
 
     public function addNewAddress(Request $request)
     {
-        $this->redirectTo = url()->previous();
+        $user_address = new UserAddress();
+        $user_address->user_id = Auth::user()->id;
+        $user_address->_address = $request->address;
+
+        $counter_default_address = UserAddress::where('user_id', '=', Auth::user()->id)->where('_default', '=', '1')->count();
+        if($counter_default_address = 0){
+            $user_address->_default = '1';            
+        } else {
+            $user_address->_default = '0';
+        }
+
+        $user_address->_title = "Rumah";
+        $user_address->_receiver_name = $request->receiver_name;
+        $user_address->_receiver_phone = $request->phone;
+        $user_address->ro_city_id = $request->city;
+        $user_address->ro_province_id = $request->provinsi;
+        $user_address->_kota = $request->city;
+        $user_address->_kode_pos = $request->postal_code;
+        $user_address->_active = '1';
+        $user_address->created_at = Carbon::now();
+        $user_address->save();
+
+        return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
     }
 
     private function getTagsSelected($id)
