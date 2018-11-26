@@ -446,6 +446,16 @@ class ShopController extends Controller
         $user_address->save();
 
         return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
+    } 
+
+    public function setDefaultAddress(Request $request)
+    {
+        //set all default to 0
+        UserAddress::where('user_id', '=', Auth::user()->id)->update(['_default'=>'0']);
+        $user_address = UserAddress::where('id', '=', $request->address)->first();
+        $user_address->_default = '1';
+        $user_address->save();
+        return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
     }
 
     private function getTagsSelected($id)

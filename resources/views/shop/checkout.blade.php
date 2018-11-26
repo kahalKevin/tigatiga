@@ -135,12 +135,15 @@
                                 <h4 class="modal-title">CHANGE ADDRESS</h4>
                             </div>
                             <div class="modal-body">
+                            <form class="form-horizontal" action="/shop/set-default-addres" method="post">
+                            @csrf
+                            <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
                             <div class="row">
                                 @foreach($list_user_address as $lua)
                                     <div class="col-md-4">
                                         <div class="box">
                                             <div class="round">
-                                            <input type="radio" name="address" value="test"/>
+                                            <input type="radio" name="address" value="{{ $lua->id }}" {{ $lua->_default == '1' ? "checked" : "" }}/>
                                             </div>
                                             <div class="cust-name">
                                                 {{ $lua->_receiver_name }}
@@ -154,51 +157,17 @@
                                             <a href="shop/address/delete/{{ $lua->id }}">Delete</a>
                                         </div>
                                     </div>
-                                @endforeach
-                                
-<!--                                 <div class="col-md-4">
-                                <div class="box">
-                                    <div class="round">
-                                    <input type="radio" name="address" value="test"/>
-                                    </div>
-                                    <div class="cust-name">
-                                    Dwi Putra
-                                    </div>
-                                    <div class="cust-addr-phone">
-                                    Jl. Sultan Agung Tirtayasa Gg. Pulomas III Rt. 02 Rw. 02 Ds. Kedawung
-                                    </div>
-                                    <div class="cust-addr-phone">
-                                    08382381908
-                                    </div>
-                                    <a href="#">Delete</a>
-                                </div>
-                                </div>
-                                <div class="col-md-4">
-                                <div class="box">
-                                    <div class="round">
-                                    <input type="radio" name="address" value="test"/>
-                                    </div>
-                                    <div class="cust-name">
-                                    Dwi Putra
-                                    </div>
-                                    <div class="cust-addr-phone">
-                                    Perumahan Bulak Kapal Permai Kel. Margahayu Kec. Bekasi Timur
-                                    </div>
-                                    <div class="cust-addr-phone">
-                                    08382381908
-                                    </div>
-                                    <a href="#">Delete</a>
-                                </div>
-                                </div>
- -->                            </div>
+                                @endforeach                                
+                            </div>
                             <div class="row">
                                 <div class="col-lg-12">
                                     <a id="add-new-address" data-dismiss="modal" data-toggle="modal" data-target="#modal-add-new-address" href="#" class="btn btn-info">ADD NEW ADDRESS</a>
                                     @if(isset($defaultAddress))
-                                    <a id="choose-address" href="#" class="btn btn-info">CHOOSE THIS ADDRESS</a>
+                                    <button class="btn btn-info" name="apply" id="choose-address" type="submit">CHOOSE THIS ADDRESS</button>
                                     @endif
                                 </div>
                             </div>
+                            </form>
                             </div>
                         </div>
                     </div>

@@ -38,6 +38,7 @@ Route::prefix('shop')->group(function () {
     Route::view('shoppingcart', 'shop.cart');
     Route::post('addToCart/{product_id}', 'ShopController@addToCart');
     Route::post('add-new-addres', 'ShopController@addNewAddress');
+    Route::post('set-default-addres', 'ShopController@setDefaultAddress');
 });
 
 Route::view('/order', 'order.index');
