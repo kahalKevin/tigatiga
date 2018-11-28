@@ -45,7 +45,7 @@
                   <li class="drodown-show">
                      <a href="#"><span class="icon icon-Search"></span></a>
                      <div class="dropdown categorie-search-box">
-                        <form action="#">
+                        <form id="form-header-search" action="/shop/index-search" method="get">
                            <div class="container">
                               <div class=row>
                                  <div class="col-md-2">
@@ -57,9 +57,9 @@
                                     </div>
                                  </div>
                                  <div class="col-md-10">
-                                    <input id="search-item" type="text" name="search" placeholder="I want to shop">
-                                    <input id="track-order" type="text" name="search" placeholder="Track My order">
-                                    <button>
+                                    <input id="search-item" type="text" name="searchItem" placeholder="I want to shop">
+                                    <input id="track-order" type="text" disabled="true" name="searchOrder" placeholder="Track My order">
+                                    <button type="submit" >
                                     <span class="icon icon-Search"></span>
                                     </button>
                                  </div>
