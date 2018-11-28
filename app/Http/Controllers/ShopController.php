@@ -121,7 +121,6 @@ class ShopController extends Controller
 
     public function checkout(Request $request)
     {
-        // validate if stock sufficient
         $order = new Order();
         $orderItems = array();
         $shippingDetail = -1;
@@ -141,6 +140,10 @@ class ShopController extends Controller
             ->first();
 
         if(isset($cart) && !$currentOrder){
+            $errorMessage = $this->validateProductStock($cart);
+            if($errorMessage!=""){
+                throw new Exception($errorMessage);
+            }
             $totalOrder = $this->totalPriceAndWeight($cart);
             $orderId = DB::select("select nextseq('fe_tx_order','') as id FROM DUAL;");
             $order->id = $orderId[0]->id;
@@ -236,17 +239,31 @@ class ShopController extends Controller
         $province = RajaOngkir::getProvince();
 
         $list_user_address = UserAddress::where('user_id', '=', Auth::user()->id)->get();
-        // $order_detail = array(
-        //     "customer_name" => "puspo",
-        //     "customer_email" => "puspo@team-company.asia",
-        //     "customer_phone" => "082231782659",
-        //     "order_id" => rand(),
-        //     "amount" => 10000,
-        // );
-        // $token = MidtransHelper::purchase($order_detail);
+        $order_detail = array(
+            "customer_name" => "puspo",
+            "customer_email" => "puspo@team-company.asia",
+            "customer_phone" => "082231782659",
+            "order_id" => rand(),
+            "amount" => 10000,
+        );
+        $token = MidtransHelper::purchase($order_detail);
 
-        $token = "test";
         return view('shop.checkout', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder', 'list_user_address'));
+    }
+
+    private function validateProductStock($cart){
+        $errorMessage = "";
+        foreach($cart as $item){
+            $product_stock = ProductStock::query()
+                ->where('product_id', $item->product_id)
+                ->where('size_id', $item->productStocks->size_id)
+                ->first();
+            if($product_stock->_stock < $item->_qty){
+                $errorMessage = "Stock is not available. Quantity max is ". $product_stock->_stock;
+                break;
+            }
+        }
+        return $errorMessage;
     }
 
     private function totalPriceAndWeight($cart){
@@ -286,6 +303,7 @@ class ShopController extends Controller
         $cart = \Session::get($session_list_cart_user);
         $cart = $cart[0];
         $cart = $this->syncSessionCartToProductStock($cart);
+        \Session::forget($session_list_cart_user);
         \Session::push($session_list_cart_user, $cart);
         return view('shop.cart')->with(compact('cart'));
     }
@@ -297,6 +315,10 @@ class ShopController extends Controller
             $product_stock = ProductStock::where('product_id', '=', $cart_item->product_id)->where('id', '=', $cart_item->product_stock_id)->first();
             if($product_stock->_stock >= $cart_item->_qty){
                 $cart_sycn->push($cart_item);
+            } else {
+                Cart::where('cart_no', $cart_item->cart_no)
+                    ->where('product_stock_id', $product_stock->id)
+                    ->delete();
             }
         }
         return $cart_sycn;
@@ -384,7 +406,15 @@ class ShopController extends Controller
         } else {
             $session_user_cart = "user_cart";
             if (!\Session::has($session_user_cart)) {
-                \Session::put($session_user_cart, uniqid());            
+                \Session::put($session_user_cart, uniqid());
+            } else {
+                $key = \Session::get($session_user_cart);
+                $savedOrder = Order::query()
+                    ->where('cart_no', $key)
+                    ->first();
+                if($savedOrder){
+                    \Session::put($session_user_cart, uniqid());
+                }
             }
 
             $currentData = Cart::query()
