@@ -90,6 +90,25 @@ function addToCart(product_id) {
     });
 }
 
+function paymentLoggedIn() {
+    // var grandTotal = $("#grand_total").val();
+    var shippingCost = 70000;
+    var custName = "samplename";
+    var custPhone = "08123182731";
+    var orderId = "ORDER20181128000000142";
+    $.ajax({
+      type: "POST",
+      data: {_token:$('#token').val(), shipping:shippingCost, name:custName, phone:custPhone, orderId:orderId},
+      url: '/payment/newToken/',
+      success: function(result) {
+        snap.pay(result);
+      },
+      error: function (request, status, error) {
+        alert("Fail get Token, " + error);
+      }
+    });
+}
+
 $(document).ready(function() {
     $('select[name="provinsi"]').on('change', function(){
         var provinsi_id = $(this).val();

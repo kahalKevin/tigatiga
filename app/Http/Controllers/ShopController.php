@@ -419,14 +419,22 @@ class ShopController extends Controller
     }    
 
     public function newToken(Request $request){
+        $currentOrder = Order::query()
+            ->where('id', $request->orderId)
+            ->where('status_id', 'STATUSORDER0')
+            ->first();
+        $grandTotal = $currentOrder->_total_amount + $request->shipping;
         $order_detail = array(
-            "customer_name" => "puspo",
-            "customer_email" => "puspo@team-company.asia",
-            "customer_phone" => "082231782659",
-            "order_id" => rand(),
-            "amount" => $request->amount,
+            "customer_name" => $request->name,
+            "customer_email" => $currentOrder->_email,
+            "customer_phone" => $request->phone,
+            "order_id" => $currentOrder->id,
+            "amount" => $grandTotal,
         );
         $token = MidtransHelper::purchase($order_detail);
+        $currentOrder->_freight_amount = $request->shipping;
+        $currentOrder->_grand_total = $grandTotal;
+        $currentOrder->save();
         return $token;
     }
 

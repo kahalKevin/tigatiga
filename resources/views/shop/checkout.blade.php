@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 <style type="text/css">
 .modal-body {
     max-height: calc(100vh - 210px);
@@ -115,7 +116,7 @@
                                 <div class="row">
                                     <div class="col-lg-12 form-btn">
                                         @if(isset($defaultAddress))
-                                            <button class="btn btn-info btn-lg" name="apply" id="pay" type="submit">Pay</button>
+                                            <button class="btn btn-info btn-lg" name="apply" id="pay" type="button">Pay</button>
                                         @else
                                             <button class="btn btn-info btn-lg" name="apply" id="pay" type="submit" disabled>Pay</button>
                                         @endif
@@ -228,8 +229,7 @@
 <script src="{{env('MIDTRANS_SNAP_JS_URL')}}" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
 <script type="text/javascript">
   document.getElementById('pay').onclick = function(){
-    // SnapToken acquired from previous step
-    snap.pay('{{ $token }}');
+    paymentLoggedIn();
   };
 </script>
 @endsection

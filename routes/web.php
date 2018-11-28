@@ -61,5 +61,5 @@ Route::view('reset-password', 'profile.reset-password');
 
 Route::get('shipping/city', 'ShopController@getCity');
 Route::get('shipping/cost', 'ShopController@calculateCost');
-Route::get('payment/newToken', 'ShopController@newToken');
+Route::post('payment/newToken', 'ShopController@newToken');
 
