@@ -28,6 +28,7 @@ Route::prefix('payment')->group(function () {
 
 Route::prefix('shop')->group(function () {
     Route::get('index/{slug}', 'ShopController@index');
+    Route::get('index-search', 'ShopController@indexSearch');
     Route::get('indexByTag/{id}', 'ShopController@indexByTag');    
     Route::get('detail/{slug}', 'ShopController@detail');
     Route::get('cart', 'ShopController@cart');

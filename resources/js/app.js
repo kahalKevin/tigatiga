@@ -54,6 +54,9 @@ $(document).ready(function () {
         $('#track-order-title').addClass('title-active');
         $('#search-item').css('display', 'none');
         $('#track-order').css('display', 'block');
+        $("#track-order").prop('disabled', false);
+        $("#search-item").prop('disabled', true);
+        $('#form-header-search').attr('action', '#');
     });
 
     $('#search-item-title').click(function () {
@@ -62,6 +65,10 @@ $(document).ready(function () {
         $('#search-item-title').addClass('title-active');
         $('#track-order').css('display', 'none');
         $('#search-item').css('display', 'block');
+        $("#track-order").prop('disabled', true);
+        $("#search-item").prop('disabled', false);
+        $('#form-header-search').attr('action', 'shop/index-search');
+        
     });
 });
 

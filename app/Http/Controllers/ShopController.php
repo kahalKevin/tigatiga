@@ -60,6 +60,38 @@ class ShopController extends Controller
         $sizes = Size::where('_active', '=', "1")->get();
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
         return view('shop.index')->with(compact('products', 'category', 'genders', 'sizes', 'category_parent', 'cmsUrl', 'tags', 'genders_selected', 'priceFrom', 'priceTo', 'sizes_selected'));
+    }
+
+    public function indexSearch(Request $request) 
+    {
+        $keyword = $request->searchItem;
+        $products_query = Product::query();
+        $products_query = $products_query->where('_name','LIKE', '%'.$keyword.'%');
+        if($request->genderIndex != null){
+            $products_query = $products_query->whereIn('gender_allocation_id', $request->genderIndex);
+        }
+        if($request->sizeIndex != null){
+            $products_query = $products_query->whereHas('productStocks', function ($query) use ($request){
+                                $query->whereIn('size_id', $request->sizeIndex);
+                            });
+        }
+        if($request->priceFrom != null){
+            $priceFrom = $request->priceFrom;
+            $products_query = $products_query->where('_price', '>=', $request->priceFrom);
+        }
+        if($request->priceTo != null){
+            $priceTo = $request->priceTo;
+            $products_query = $products_query->where('_price', '<=', $request->priceTo);
+        }
+        $products = $products_query->paginate(2);
+
+        $tags = $this->getAllTags();
+        $genders = Type::where('category_id', '=', 11)->get();
+        $genders_selected = $request->genderIndex;
+        $sizes_selected = $request->sizeIndex;
+        $sizes = Size::where('_active', '=', "1")->get();
+        $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
+        return view('shop.index-search')->with(compact('products', 'keyword', 'genders', 'sizes', 'cmsUrl', 'tags', 'genders_selected', 'priceFrom', 'priceTo', 'sizes_selected'));
     } 
 
     public function indexByTag(Request $request, $id) 
