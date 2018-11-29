@@ -78,9 +78,8 @@ function addToCart(product_id) {
     let formData = $('form').serializeArray();
     $.ajax({    
       type: "POST",
-      data: {_token:$('#token').val(), size_id:size, quantity:qty}, 
-      url: '/shop/addToCart/' + product_id,
-      // url: URL + '/shop/addToCart/' + product_id,
+      data: {_token:$('#token').val(), size_id:size, quantity:qty},
+      url: URL + '/shop/addToCart/' + product_id,
       success: function(result) {
          alert("Success add to cart");
          location.reload();
@@ -115,7 +114,7 @@ $(document).ready(function() {
         var provinsi_id = $(this).val();
         if(provinsi_id) {
             $.ajax({
-                url: '/shipping/city?province='+provinsi_id,
+                url: URL + '/shipping/city?province='+provinsi_id,
                 type:"GET",
                 dataType:"json",
                 beforeSend: function(){

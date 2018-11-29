@@ -67,9 +67,9 @@
                     <p class="title-shipping">Shopping Summary</p>
                     <div class="shopping-summary">
                         @if (Auth::check()) 
-                        <form class="price" action="/shop/checkout" method="get">
+                        <form class="price" action="{{ url('/') }}/shop/checkout" method="get">
                         @else 
-                        <form class="price" action="/shop/checkoutGuest" method="get">
+                        <form class="price" action="{{ url('/') }}/shop/checkoutGuest" method="get">
                         @endif
                             <div class="form-group">
                                 <label for="total-price">Total Price</label>

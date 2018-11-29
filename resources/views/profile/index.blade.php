@@ -10,7 +10,7 @@
             <p class="mp-name">
               Hi, {{ Auth::user()->full_name }}
             </p>
-            <a href="#"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
+            <a href="{{ url('/') }}/profile"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
             <hr>
             <a href="#"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order History</a>
             <hr>
@@ -82,58 +82,26 @@
             <div class="myaccount-title">
               <p>My Address</p>
             </div>
-            <div class="row" id="my-address">
+            <div class="row my-address">
+            @foreach($addresses as $address)
               <div class="col-md-4">
                 <div class="box" style="margin-top: 37px;">
                   <div class="edit-button">
                     <a href="#"><img src="./icon/writing@1x.png" alt=""></a>
                   </div>
                   <div class="cust-name">
-                    Dwi Putra Faturrahman
+                    {{ $address->_receiver_name }}
                   </div>
                   <div class="cust-addr">
-                    Kantor Codigo. Graha Mitra Lantai 7 Jl. Jend. Gatot Subroto Kav. 21
+                  {{ $address->_address }}
                   </div>
                   <div class="cust-phone">
-                    08382381908
+                  {{ $address->_receiver_phone }}
                   </div>
                   <a href="#" class="cust-delete">Delete</a>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div class="box" style="margin-top: 37px; ">
-                  <div class="edit-button">
-                    <a href="#"><img src="./icon/writing@1x.png" alt=""></a>
-                  </div>
-                  <div class="cust-name">
-                    Dwi Putra Faturrahman
-                  </div>
-                  <div class="cust-addr">
-                    Jl. Sultan Agung Tirtayasa Gg. Pulomas III Rt. 02 Rw. 02 Ds. Kedawung
-                  </div>
-                  <div class="cust-phone">
-                    08382381908
-                  </div>
-                  <a href="#" class="cust-delete">Delete</a>
-                </div>
-              </div>
-              <div class="col-md-4">
-                <div class="box" style="margin-top: 37px;">
-                  <div class="edit-button">
-                    <a href="#"><img src="./icon/writing@1x.png" alt=""></a>
-                  </div>
-                  <div class="cust-name">
-                      Dwi Putra Faturrahman
-                  </div>
-                  <div class="cust-addr">
-                      Perumahan Bulak Kapal Permai Kel. Margahayu Kec. Bekasi Timur
-                  </div>
-                  <div class="cust-phone">
-                      08382381908
-                  </div>
-                  <a href="#" class="cust-delete">Delete</a>
-                </div>
-              </div>
+              @endforeach
               <div class="col-md-12" style="margin-top: 20px;">
                 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-add-new-address">ADD NEW ADDRESS</button>
               </div>

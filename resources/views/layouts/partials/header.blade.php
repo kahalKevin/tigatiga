@@ -83,12 +83,18 @@
       <div class="mobile-menu d-block d-lg-none">
          <nav>
             <ul>
-               <li>
-                  <a data-toggle="modal" data-target="#modal-login">Login</a>
-               </li>
-               <li>
-                  <a data-toggle="modal" data-target="#modal-register">Register</a>
-               </li>
+               @if(Auth::check())
+                  <li>
+                     <a href="{{ url('/') }}/profile">Hi, {{ Auth::user()->_first_name }}</a>
+                  </li>
+               @else
+                  <li>
+                     <a data-toggle="modal" data-target="#modal-login">Login</a>
+                  </li>
+                  <li>
+                     <a data-toggle="modal" data-target="#modal-register">Register</a>
+                  </li>
+               @endif
                {!! json_decode(cache('navigation'), true)['navigation_mobile'] !!}
             </ul>
          </nav>

@@ -12,13 +12,10 @@
 */
 Auth::routes();
 
-\Route::group(['middleware' => 'auth'], function () {
-Route::get('logout', 'Auth\LoginController@logout');
-Route::post('/users/update-profile/{id}', 'UserController@update');
-Route::post('/users/change-password/{id}', 'UserController@changePassword');
-Route::get('/', function () {
-            return view('index');
-        });
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('logout', 'Auth\LoginController@logout');
+    Route::post('/users/update-profile/{id}', 'UserController@update');
+    Route::post('/users/change-password/{id}', 'UserController@changePassword');
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');
@@ -37,7 +34,6 @@ Route::prefix('shop')->group(function () {
     Route::get('cart/decrease-stock/{id}', 'ShopController@decreaseStockCart');
     Route::get('checkout', 'ShopController@checkout');
     Route::get('checkoutGuest', 'ShopController@checkoutGuest');
-    Route::view('shoppingcart', 'shop.cart');
     Route::post('addToCart/{product_id}', 'ShopController@addToCart');
     Route::post('add-new-addres', 'ShopController@addNewAddress');
     Route::post('set-default-addres', 'ShopController@setDefaultAddress');
@@ -51,7 +47,7 @@ Route::view('/order/search', 'order.search');
 Route::view('/order/thanks', 'order.thanks');
 Route::view('/order/thanks-cc', 'order.thanks-cc');
 
-Route::prefix('profile')->group(function () {
+Route::group(['prefix' => 'profile',  'middleware' => 'auth'], function () {
     Route::get('/', 'ProfileController@index');
     Route::get('order/history', 'ProfileController@orderHistory');
     Route::view('order/history/detail', 'order.detail');

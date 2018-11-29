@@ -185,7 +185,7 @@
                 <p class="modal-title">Add New Address</p>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="/shop/add-new-addres" method="post">
+                <form class="form-horizontal" action="{{ url('/') }}/shop/add-new-addres" method="post">
                     @csrf
                     <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
                     <div class="form-group">
