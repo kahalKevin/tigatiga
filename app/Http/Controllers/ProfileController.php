@@ -11,14 +11,32 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        // $profile = Auth::user()->with('addresses', 'orders')->first();
+        $user_id = Auth::user()->id;
+        $total_order = Order::where([
+            ['user_id', '=', $user_id]
+        ])->count();
 
-        return view('profile.index');
+        $total_delivery = Order::where([
+            ['user_id', '=', $user_id],
+            ['status_id', '=', 'STATUSORDER4']
+        ])->count();
+
+        $total_received = Order::where([
+            ['user_id', '=', $user_id],
+            ['status_id', '=', 'STATUSORDER9']
+        ])->count();
+
+        return view('profile.index', compact(
+              'total_order',
+              'total_delivery',
+              'total_received'
+            )
+        );
     }
 
     public function orderHistory()
     {
-        // $order = Auth::user()->with('orders')->first();
+        $order = Auth::user()->with('orders')->get();
 
         return view('order.index');
     }

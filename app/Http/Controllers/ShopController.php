@@ -572,28 +572,28 @@ class ShopController extends Controller
         foreach ($clubs as $club) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "club-".$club->id;
-            $arr_tags[$index]->name = "club - ".$club->_name;
+            $arr_tags[$index]->name = $club->_name;
             $index++;            
         }
 
         foreach ($leagues as $league) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "league-".$league->id;
-            $arr_tags[$index]->name = "league - ".$league->_name;
+            $arr_tags[$index]->name = $league->_name;
             $index++;            
         }
 
         foreach ($sleeves as $sleeve) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "sleeve-".$sleeve->id;
-            $arr_tags[$index]->name = "sleeve - ".$sleeve->_name;
+            $arr_tags[$index]->name = $sleeve->_name;
             $index++;            
         } 
 
         foreach ($players as $player) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "player-".$player->id;
-            $arr_tags[$index]->name = "player - ".$player->_name;
+            $arr_tags[$index]->name = $player->_name;
             $index++;            
         } 
         return $arr_tags;

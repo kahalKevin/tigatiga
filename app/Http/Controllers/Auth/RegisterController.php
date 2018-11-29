@@ -53,7 +53,8 @@ class RegisterController extends Controller
     {
         Session::put('last_modal', "register");
         return Validator::make($data, [
-            'name' => 'required|string|max:255',
+            '_first_name' => 'required|string|max:255',
+            '_last_name' => 'required|string|max:255',
             '_email' => 'required|string|email|max:255|unique:fe_tm_user',
             'password' => 'required|string|min:6|confirmed',
         ]);
@@ -68,8 +69,8 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            '_first_name' => $data['name'],
-            '_last_name' => $data['name'],
+            '_first_name' => $data['_first_name'],
+            '_last_name' => $data['_last_name'],
             '_email' => $data['_email'],
             '_password' => Hash::make($data['password']),
             '_phone' => $data['phone']            

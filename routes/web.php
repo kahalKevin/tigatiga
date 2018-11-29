@@ -15,6 +15,7 @@ Auth::routes();
 \Route::group(['middleware' => 'auth'], function () {
 Route::get('logout', 'Auth\LoginController@logout');
 Route::post('/users/update-profile/{id}', 'UserController@update');
+Route::post('/users/change-password/{id}', 'UserController@changePassword');
 Route::get('/', function () {
             return view('index');
         });

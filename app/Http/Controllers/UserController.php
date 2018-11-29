@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Model\User as User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Hash;
+
 use Redirect;
+use Session;
+use Auth;
 
 class UserController extends Controller
 {
@@ -15,6 +19,12 @@ class UserController extends Controller
             'email'       => 'required|email',
             'phone' => 'required|numeric',
             'first_name' => 'required'
+    );
+
+    //For Validation
+    protected $rulesChangePassword = array(
+        'old_password' => 'required|string|min:6',
+        'password' => 'required|string|min:6|confirmed',
     );
     
     /**
@@ -36,6 +46,25 @@ class UserController extends Controller
         $user->save();
         //PUT HERE AFTER YOU SAVE
         \Session::flash('success_update_profile','You have just update your profile.');
-        return redirect('/');
+        return redirect('/profile');
+    }
+
+    public function changePassword(Request $request) 
+    {
+        Session::put('last_modal', "change_password");
+        $this->validate($request, $this->rulesChangePassword);
+
+        $user_id = Auth::user()->id;
+
+        $user = User::find($user_id);
+
+        if(!Hash::check($request->old_password, $user->_password)) {
+            return redirect('/profile')->withErrors(['old_password' =>'Wrong Old Password !']);
+        }
+        
+        $user->_password = Hash::make($request->password);
+        $user->save();
+        
+        return redirect('/profile');
     }
 }

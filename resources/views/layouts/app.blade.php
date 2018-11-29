@@ -8,10 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <meta name="description" content="@yield('description')">
+
     <!-- Favicons -->
     <link rel="shortcut icon" href="/icon/superstor-favicon.png">
 
-    <title>{{ config('app.name', 'SUPERSTORE') }}</title>
+    <title>{{ env('APP_NAME', 'Supershop') }} @yield('title')</title>
 
     <!-- Styles -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -82,17 +84,26 @@
                     <form class="form-horizontal" name="register-form" action="{{ route('register') }}" method="post">
                         @csrf
                         <div class="form-group">
-                            <label class="label-form" for="name">Name</label>
-                            <input class="form-control auth" type="text" name="name" value="" placeholder="Type your name">
-                             @if ($errors->has('name'))
+                            <label class="label-form" for="name">First Name</label>
+                            <input class="form-control auth" type="text" name="_first_name" value="" placeholder="Type your first name" required>
+                             @if ($errors->has('_first_name'))
                                 <span class="" role="alert">
-                                    <strong><font color="red">{{ $errors->first('name') }}</font></strong>
+                                    <strong><font color="red">{{ $errors->first('_first_name') }}</font></strong>
+                                </span>
+                            @endif  
+                        </div>
+                        <div class="form-group">
+                            <label class="label-form" for="name">Last Name</label>
+                            <input class="form-control auth" type="text" name="_last_name" value="" placeholder="Type your last name" required>
+                             @if ($errors->has('_last_name'))
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('_last_name') }}</font></strong>
                                 </span>
                             @endif  
                         </div>
                         <div class="form-group">
                             <label class="label-form" for="email">Email</label>
-                            <input class="form-control auth" type="email" name="_email" value="" placeholder="example@gmail.com">
+                            <input class="form-control auth" type="email" name="_email" value="" placeholder="example@gmail.com" required>
                              @if ($errors->has('_email'))
                                 <span class="" role="alert">
                                     <strong><font color="red">{{ $errors->first('_email') }}</font></strong>
@@ -101,11 +112,11 @@
                         </div>
                         <div class="form-group">
                             <label class="label-form" for="phone">Phone</label>
-                            <input class="form-control auth" type="number" name="phone" value="" placeholder="+6281908xxxx">                            
+                            <input class="form-control auth" type="number" name="phone" value="" placeholder="+6281908xxxx" required>                            
                         </div>
                         <div class="form-group">
                             <label class="label-form" for="password">Password</label>
-                            <input class="form-control auth" type="password" name="password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                            <input class="form-control auth" type="password" name="password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required>
                             @if ($errors->has('password'))
                                 <span class="" role="alert">
                                     <strong><font color="red">{{ $errors->first('password') }}</font></strong>
@@ -115,7 +126,7 @@
                         <div class="form-group">
                             <label class="label-form" for="retype-password">Re Type Password</label>
                             <input class="form-control auth" type="password" name="password_confirmation" value=""
-                                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                                placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" required>
                         </div>
                         <input class="btn btn-info btn-lg" type="submit" name="register" value="Register">
                         <div class="form-group caption-after-submit data-toggle="modal" data-target="#modal-login" data-dismiss="modal">
@@ -169,19 +180,37 @@
                     <h4 class="modal-title">Change Password</h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" action="" method="post">
+                    @if(Auth::check())
+                        <form class="form-horizontal" action="{{ url('/') }}/users/change-password/{{ Auth::user()->id }}" method="post">
+                    @endif
+                        @csrf
                         <div class="form-group">
                             <label class="label-form" for="email">Type Old Password</label>
-                            <input class="form-control auth" type="password" name="old-password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                            <input class="form-control auth" type="password" name="old_password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                            @if ($errors->has('old_password'))
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('old_password') }}</font></strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label class="label-form" for="username">Type New Password</label>
-                            <input class="form-control auth" type="password" name="new-password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                            <input class="form-control auth" type="password" name="password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                            @if ($errors->has('password'))
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('password') }}</font></strong>
+                                </span>
+                            @endif
                         </div>
                         <div class="form-group">
                             <label class="label-form" for="username">Re Type New Password</label>
-                            <input class="form-control auth" type="password" name="retypenew-password" value=""
+                            <input class="form-control auth" type="password" name="password_confirmation" value=""
                                 placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
+                            @if ($errors->has('password_confirmation'))
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('password_confirmation') }}</font></strong>
+                                </span>
+                            @endif
                         </div>
                         <input class="btn btn-info btn-lg" type="submit" name="submit" value="SAVE">
                     </form>
@@ -203,7 +232,7 @@
                     <p class="modal-title">Edit Profile</p>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" action="/users/update-profile/{{ Auth::user()->id }}" method="post">
+                    <form class="form-horizontal" action="{{ url('/') }}/users/update-profile/{{ Auth::user()->id }}" method="post">
                     @csrf
                       <div class="form-group">
                           <label class="label-form" for="name">First Name</label>
@@ -214,8 +243,8 @@
                           <input class="form-control auth" type="text" name="last_name" value="{{ Auth::user()->_last_name }}" placeholder="Type your name">
                       </div>
                       <div class="form-group">
-                          <label class="label-form" for="email">Email</label>
-                          <input class="form-control auth" type="text" name="email" value="{{ Auth::user()->_email }}" placeholder="example@gmail.com">
+                          <label class="label-form" for="email">Email (email can't change)</label>
+                          <input class="form-control auth" type="text" name="email" value="{{ Auth::user()->_email }}" placeholder="example@gmail.com" readonly>
                       </div>
                       <div class="form-group">
                           <label class="label-form" for="phone">Phone</label>
@@ -280,6 +309,9 @@
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
         crossorigin="anonymous"></script>
+    <script>
+        var URL = "{{ url('/') }}";
+    </script>
     <script src="{{ asset('js/app.js') }}"></script>
 @if(Session::has('success_register'))
       <script type="text/javascript">
@@ -311,7 +343,14 @@
             $('#modal-login').modal('show');
         });
       </script>
-      @endif      
+      @endif    
+    @if (Session::get('last_modal') == "change_password")
+    <script type="text/javascript">
+      $(document).ready(function(){
+            $('#modal-change-password').modal('show');
+      });
+    </script>
+    @endif      
   @endif    
 </body>
 

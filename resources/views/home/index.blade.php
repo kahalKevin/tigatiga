@@ -24,8 +24,7 @@
         <!-- Section Title Start Here -->
         <div class="section-title">
           <h1> Get The Latest </h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua.</p>
+          <p>Discover the latest of our must-have items.</p>
         </div>
         <!-- Section Title End Here -->
         <br>
@@ -44,7 +43,7 @@
               <div class="pro-content">
                 <div class="pro-info">
                   <h4><a href="{{ url('/') }}/shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
-                  <p><span class="special-price">Rp. {{ number_format($pr->_price, 2) }}</span></p>
+                  <p><span class="special-price">Rp. {{ number_format($pr->_price,0, '.', '.') }}</span></p>
                 </div>
               </div>
               <!-- Product Content End -->
@@ -70,8 +69,7 @@
         <!-- Section Title Start Here -->
         <div class="section-title">
           <h1> Best Product </h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua.</p>
+          <p>Discover the best in best you must have.</p>
         </div>
         <!-- Section Title End Here -->
         <br>
@@ -91,7 +89,7 @@
               <div class="pro-content">
                 <div class="pro-info">
                   <h4><a href="{{ url('/') }}/shop/detail/{{ $pr->_slug }}">{{ $pr->_name }}</a></h4>
-                  <p><span class="special-price">Rp. {{ number_format($pr->_price, 2) }}</span></p>
+                  <p><span class="special-price">Rp. {{ number_format($pr->_price, 0, '.', '.') }}</span></p>
                   <!-- <del class="old-price">$80.50</del> -->
                 </div>
               </div>
@@ -139,7 +137,7 @@
         </div>
         <!-- Section Title End Here -->
         <div class="partner-icons">
-          <img src="./img/partner/rebook.png" alt="rebook" width="200" height="80">
+          <img src="{{ url('/') }}/icon/logo_lotto.svg" alt="rebook" width="200" height="80">
           <img src="./img/partner/puma.png" alt="puma" width="180" height="100">
           <img src="./img/partner/nike.png" alt="nike" width="180" height="80">
           <img src="./img/partner/converse.png" alt="converse" width="180" height="60">

@@ -80,6 +80,7 @@ function addToCart(product_id) {
       type: "POST",
       data: {_token:$('#token').val(), size_id:size, quantity:qty}, 
       url: '/shop/addToCart/' + product_id,
+      // url: URL + '/shop/addToCart/' + product_id,
       success: function(result) {
          alert("Success add to cart");
          location.reload();

@@ -125,7 +125,7 @@
                                             <div class="pro-content">
                                                 <div class="pro-info">
                                                     <h4><a href="{{ url('/') }}/shop/detail/{{$product->_slug}}">{{ $product->_name }}</a></h4>
-                                                    <p><span class="special-price">Rp. {{ number_format($product->_price, 2) }}</span></p>
+                                                    <p><span class="special-price">Rp. {{ number_format($product->_price, 0, '.', '.') }}</span></p>
                                                 </div>
                                             </div>
                                         </div>

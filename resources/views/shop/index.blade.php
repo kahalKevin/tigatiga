@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- " . $category->_meta_title)
+@section('description', $category->_meta_desc)
 @section('content')
 <div class="service-area ptb-80" id="shop">
             <div class="container">
@@ -206,12 +208,17 @@
                                             <div class="pro-content">
                                                 <div class="pro-info">
                                                     <h4><a href="{{ url('/') }}/shop/detail/{{$product->_slug}}">{{ $product->_name }}</a></h4>
-                                                    <p><span class="special-price">Rp. {{ number_format($product->_price, 2) }}</span></p>
+                                                    <p><span class="special-price">Rp. {{ number_format($product->_price, 0, '.', '.') }}</span></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
+                                @if (count($products) == 0)
+                                    <div>
+                                        <h1 class="text-white text-capitalize">Oops, Result is empty...</h1>
+                                    </div>
+                                @endif
                             </div>
                             @include('layouts.pagination.default', ['paginator' => $products->appends(Input::except('page'))])
                         </div>

@@ -8,16 +8,13 @@
         <div class="col-md-3">
           <div class="box">
             <p class="mp-name">
-              Hi, Dwi Putra Fath
-            </p>
-            <p class="mp-subname">
-              lorem ipsum dolar sit amet
+              Hi, {{ Auth::user()->full_name }}
             </p>
             <a href="#"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
             <hr>
             <a href="#"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order History</a>
             <hr>
-            <a href="#"><span class="icon icon-ClosedLock" style="padding-right: 13px;"></span>Logout</a>
+            <a href="{{ url('/') }}/logout"><span class="icon icon-ClosedLock" style="padding-right: 13px;"></span>Logout</a>
           </div>
         </div>
         <div class="col-md-9">
@@ -37,27 +34,29 @@
                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-edit-profile">EDIT</button>
                   </div>
                   <div class="col-md-6">
-                    <p class="myaccount-right-side">Dwi</p>
-                    <p class="myaccount-right-side">Putra Faturrahman</p>
-                    <p class="myaccount-right-side">ipoet@gmail.com</p>
-                    <p class="myaccount-right-side">089578555645</p>
-                    <p class="myaccount-right-side">Male</p>
+                    <p class="myaccount-right-side">{{ Auth::user()->_first_name }}</p>
+                    <p class="myaccount-right-side">{{ Auth::user()->_last_name }}</p>
+                    <p class="myaccount-right-side">{{ Auth::user()->_email }}</p>
+                    <p class="myaccount-right-side">{{ Auth::user()->_phone }}</p>
+                    <p class="myaccount-right-side">
+                      @php
+                        if(Auth::user()->gender_id != null) {
+                          echo Auth::user()->gender->_name;
+                        } else {
+                          echo "-";
+                        }
+                      @endphp
+                    </p>
                     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#modal-change-password">CHANGE PASSWORD</button>
                   </div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="row">
-                  <div class="col-md-6">
+                  <div class="col-md-12">
                     <div class="box-report">
                       <p class="title">Total Order</p>
-                      <p class="value">18</p>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <div class="box-report">
-                      <p class="title">Total in Delivery</p>
-                      <p class="value">9</p>
+                      <p class="value">{{ $total_order }}</p>
                     </div>
                   </div>
                 </div>
@@ -66,13 +65,13 @@
                   <div class="col-md-6">
                     <div class="box-report">
                       <p class="title">Total Received</p>
-                      <p class="value">10</p>
+                      <p class="value">{{ $total_received }}</p>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="box-report">
-                      <p class="title">Transaction Complete</p>
-                      <p class="value">9</p>
+                      <p class="title">Total in Delivery</p>
+                      <p class="value">{{ $total_delivery }}</p>
                     </div>
                   </div>
                 </div>

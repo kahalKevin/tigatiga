@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- " . $product->_meta_title)
+@section('description', $product->_meta_desc)
 @section('content')
 
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
@@ -12,7 +14,7 @@
                 <!-- Sidebar Shopping Option Start -->
                 <div class="col-lg-6 col-md-6 mb-all-40">
                     <!-- Thumbnail Large Image start -->
-                    <div class="tab-content">
+                    <div class="tab-content image-gallery">
                         @for($i = 0; $i < $products_galleries->count(); $i++)
                         <div id="thumb{{ $i }}" class="tab-pane fade {{ $i === 0 ? "show active" : "" }}">
                             <a data-fancybox="images" href="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
@@ -37,7 +39,7 @@
                         <h3 class="product-header">{{ $product->_name }}</h3>
                         <div class="pro-thumb-price mt-20">
                             <p>
-                                <span class="special-price">Rp. {{ number_format($product->_price, 2) }}</span>
+                                <span class="special-price">Rp. {{ number_format($product->_price, 0, '.', '.') }}</span>
                             </p>
                         </div>
                         @if($products_sizes->count() > 0)
@@ -159,7 +161,7 @@
                                                     <div class="pro-content">
                                                         <div class="pro-info">
                                                             <h4><a href="/shop/detail/{{$related_product->_slug}}">{{ $related_product->_name }}</a></h4>
-                                                            <p><span class="price">Rp. {{ number_format($related_product->_price, 2) }}</span></p>
+                                                            <p><span class="price">Rp. {{ number_format($related_product->_price, 0, '.', '.') }}</span></p>
                                                         </div>
                                                     </div>
                                                 </div>

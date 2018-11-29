@@ -29,7 +29,7 @@ class Navigation extends Model
     public static function setNavigation(){
         $cacheName = "navigation";
         if (!\Cache::has($cacheName)) {
-            $navigation = Navigation::generatePageTree();
+            $navigation = json_encode(Navigation::generatePageTree());
             \Cache::forever($cacheName, $navigation);
         }
     }
@@ -67,13 +67,47 @@ class Navigation extends Model
         return $fill;
     }
 
+    public static function createMenuMobile($datas, $parent = 0, $depth=0){
+        $ni=count($datas);
+        $tree = '';
+        $end_tree = '';
+
+        if ($depth > 0) {
+            $tree = '<ul>';
+            $end_tree = '</ul>';
+        }
+
+        if($ni === 0 || $depth > 1000) return $trees;
+
+        for($i=0; $i < $ni; $i++) {
+            if($datas[$i]['parent_category_id'] == $parent){
+                $tree .= '<li>';
+                $tree .= '<a href=' .  url('/') . '/shop/index/' . $datas[$i]['_slug'] . '>';
+                $tree .= $datas[$i]['_name'];
+                $tree .= '</a>';
+                $tree .= Navigation::createMenuMobile($datas, $datas[$i]['id'], $depth+1);
+                $tree .= '</li>';
+            }
+        }
+        
+        $tree .= $end_tree;
+
+        return $tree;
+    }
+
     private static function generatePageTree()
     {
-        $tree = "";
         $items = Navigation::all();
-        $tree = '<div class="collapse navbar-collapse" id="navbarNavDropdown">';
-        $tree .= Navigation::createMenu($items);
-        $tree .= '</div>';
-        return $tree;
+        
+        $menu_desktop = '<div class="collapse navbar-collapse" id="navbarNavDropdown">';
+        $menu_desktop .= Navigation::createMenu($items);
+        $menu_desktop .= '</div>';
+
+        $menu_mobile = Navigation::createMenuMobile($items);
+
+        return [
+            'navigation_desktop' => $menu_desktop,
+            'navigation_mobile' => $menu_mobile
+        ];
     }    
 }
