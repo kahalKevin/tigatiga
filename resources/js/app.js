@@ -92,21 +92,50 @@ function addToCart(product_id) {
 
 function paymentLoggedIn() {
     // var grandTotal = $("#grand_total").val();
-    var shippingCost = $('#total-shipping-cost-usage').val();
-    console.log(shippingCost);
-    var orderId = $('#order-id').val();
     // var shippingCost = 70000;
+    var shippingCost = $('#total-shipping-cost-usage').val();
+    if(shippingCost==""){
+        return 0;
+    }
+    var orderId = $('#order-id').val();    
     snap.show();
     $.ajax({
       type: "POST",
       data: {_token:$('#token').val(), shipping:shippingCost, orderId:orderId},
       url: '/payment/newToken/',
       success: function(result) {
-        snap.pay(result);
+        processSnap(result, orderId);
       },
       error: function (request, status, error) {
         snap.hide();
         alert("Fail get Token, " + error);
+      }
+    });
+}
+
+function processSnap(token, orderId){
+    snap.pay(token, {
+      onSuccess: function(result){console.log('success');console.log(result);},
+      onPending: function(result){
+        processPendingVA(result, orderId);
+      }
+    })
+}
+
+function processPendingVA(resultSnap, orderId){
+    //"bank_transfer"
+    console.log(resultSnap);
+    var paymentType = resultSnap.payment_type;
+    var accountVa = resultSnap.bca_va_number;
+    $.ajax({
+      type: "POST",
+      data: {_token:$('#token').val(), accountVa:accountVa, paymentType:paymentType, orderId:orderId},
+      url: '/payment/pending/',
+      success: function(result) {
+        console.log("updated va request");
+      },
+      error: function (request, status, error) {
+        console.log("Fail get update pending, " + error);
       }
     });
 }

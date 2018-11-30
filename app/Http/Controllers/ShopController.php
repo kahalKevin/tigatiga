@@ -172,6 +172,7 @@ class ShopController extends Controller
         }
         $currentOrder = Order::query()
             ->where('cart_no', $key)
+            ->where('status_id', 'STATUSORDER0')
             ->first();
 
         if(isset($cart) && !$currentOrder){
@@ -245,7 +246,7 @@ class ShopController extends Controller
             }
             Cart::where('cart_no', '=', $order->cart_no)->delete();
             \Session::forget($session_list_cart_user);
-        } else {
+        } else if($currentOrder) {
             $order = $currentOrder;
             $orderItems = OrderDetail::query()
                 ->where('order_id', $order->id)
@@ -269,21 +270,15 @@ class ShopController extends Controller
                 $order->save();
                 $shippingDetail = $this->getCost($order->ro_city_id, 'jne', $totalOrder['weight']);
             }
+        } else {
+            return redirect('/')->with('error', 'Your session cart is expired');
         }
 
         $province = RajaOngkir::getProvince();
 
         $list_user_address = UserAddress::where('user_id', '=', Auth::user()->id)->get();
-        $order_detail = array(
-            "customer_name" => "puspo",
-            "customer_email" => "puspo@team-company.asia",
-            "customer_phone" => "082231782659",
-            "order_id" => rand(),
-            "amount" => 10000,
-        );
-        $token = MidtransHelper::purchase($order_detail);
 
-        return view('shop.checkout', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder', 'list_user_address'));
+        return view('shop.checkout', compact('shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder', 'list_user_address'));
     }
 
     private function validateProductStock($cart){
