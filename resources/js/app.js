@@ -91,9 +91,7 @@ function addToCart(product_id) {
 }
 
 function paymentLoggedIn() {
-    // var grandTotal = $("#grand_total").val();
     var shippingCost = $('#total-shipping-cost-usage').val();
-    console.log(shippingCost);
     var orderId = $('#order-id').val();
     // var shippingCost = 70000;
     snap.show();

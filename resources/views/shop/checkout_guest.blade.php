@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
 
 <div class="service-area ptb-80" id="checkout">
     <div class="container">
@@ -19,68 +20,82 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Name</label>
-                                    <input type="text" class="form-control" placeholder="Type Your Name">
+                                    <input type="text" class="form-control" placeholder="" value="{{ $order->_receiver_name }}">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputPassword4">Email</label>
-                                    <input type="email" class="form-control" placeholder="example@gmail.com">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" placeholder="" value="{{ $order->_email }}">
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputEmail4">Phone</label>
-                                    <input type="email" class="form-control" placeholder="+6281908xxxx">
+                                    <input type="email" class="form-control" placeholder="" value="{{ $order->_receiver_phone }}" >
+                                </div>                                
+                                <div class="form-group col-md-6">
+                                    <label for="address">Address</label>
+                                    <textarea class="form-control" name="address" rows="3" cols="80" disabled="disabled">{{ $order->_address }}</textarea>
                                 </div>
-                                <div class="form-group col-md-6 d-flex align-items-sm-end">
-                                    <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">ENTER SHIPPING ADDRESS</button>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
                                 </div>
+                                @if(!empty($order->ro_city_id))
+                                    <div class="form-group col-md-6 d-flex align-items-sm-end">
+                                        <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">CHANGE SHIPPING ADDRESS</button>
+                                    </div>
+                                @else
+                                    <div class="form-group col-md-6 d-flex align-items-sm-end">
+                                        <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">ENTER SHIPPING ADDRESS</button>
+                                    </div>
+                                @endif
                             </div>
                         </form>
                     </div>
                     <p class="title-shipping mt-30">Shipping Courier</p>
                     <div class="box-shipping-courier">
+                        @foreach($orderItems as $item)
                         <div class="row mb-20">
                             <div class="col-sm-12 col-md-4 d-inline-block">
-                                <img class="product-image" src="/img/product/adidas-gazelle2.png" width="61" height="63"/>
+                                <img class="product-image" src="{{ env('IMG_URL_PREFIX') . $item->products->_image_url }}" width="61" height="63"/>
                                 <div class="comment-desc">
-                                    <p>Adidas Gazelle II Orange</p>
+                                    <p>{{ $item->products->_name }}</p>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-5 d-inline-block">
                                 <div class="input-group justify-content-sm-center mb-3" style="margin-top:10px;">
                                     <label for="quantity" class="mr-20 align-self-center">Quantity :</label>
                                     <span class="input-group-prepend">
-                                        <button class="btn btn-dark btn-sm" id="minus-btn">
-                                            <img src="/icon/ico-min.svg" class="ico_minus">
-                                        </button>
                                     </span>
-                                    <input type="text" id="qty_input" name="quantity" value="1" min="1">
+                                    <input type="text" id="qty_input" name="quantity" value="{{ $item->_qty }}" min="1">
                                     <span class="input-group-prepend">
-                                        <button class="btn btn-dark btn-sm" id="plus-btn">
-                                            <img src="/icon/ico-plus.svg" class="ico_plus">
-                                        </button>
                                     </span>
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3 d-inline-block">
                                 <div class="price" name="price">
                                     <p>Total Price</p>
-                                    <p><b>Rp. 500.0000</b></p>
+                                    <p><b>Rp. {{ number_format($item->_qty * $item->product_price, 2) }}</b></p>
                                 </div>
                             </div>
                         </div>
+                        @endforeach
                         <div class="row">
                             <div class="col-md-3">
                                 <label class="align-content-center">Shipping Courier</label>
                             </div>
                             <div class="col-md-9">
                             <div class="nice-select sorter wide" tabindex="0">
-                                <span class="current">JNE Regular ( 2 Day )</span>
-                                <ul class="list">
-                                    <li data-value="Position" class="option">JNE Regular ( 2 Day )</li>
-                                    <li data-value="Product Name" class="option">TIKI</li>
-                                    <li data-value="Product Name" class="option">POS Indonesia</li>
-                                </ul>
+                                @if(!empty($order->ro_city_id))
+                                    <span class="current">Select Shipping Courier</span>
+                                    <ul class="list list-shipping-courier-checkout">
+                                    @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
+                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . " IDR ".number_format($service["cost"][0]["value"]).".00" }}</li>
+                                    @endforeach                                    
+                                    </ul>
+                                @else
+                                    <span class="current">Please Add address first</span>
+                                @endif
                             </div>
                             </div>
                         </div>
@@ -92,25 +107,33 @@
                         <form class="price" action="index.html" method="post">
                             <div class="form-group">
                                 <label for="total-price">Total Price</label>
-                                <input class="form-control" type="text" name="total-price" value="Rp. 1.000.000"
+                                <input class="form-control" type="text" name="total-price" value="Rp. {{ number_format($totalOrder['price'], 2) }}"
                                     disabled>
+                                <input type="hidden" name="total-price-checkout-usage" value="{{ $totalOrder['price'] }}"
+                                    disabled id="total-price-checkout-usage">
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="total-shipping">Total Shipping</label>
-                                <input class="form-control" type="text" name="total-shipping" value="Rp. 9.000"
-                                    disabled>
+                                <input class="form-control" type="text" name="total-shipping" value=""
+                                    disabled id="total-shipping-cost-checkout">
+                                <input type="hidden" name="total-shipping-cost-usage" value=""
+                                    disabled id="total-shipping-cost-usage">    
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="grand-price">Grand Price</label>
-                                <input id="grand-price" class="form-control" type="text" name="grand-price" value="Rp. 1.009.000"
+                                <input id="grand-price-checkout" class="form-control" type="text" name="grand-price-checkout" value="Rp. {{ number_format($totalOrder['price'], 2) }}"
                                     disabled>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-lg-12 form-btn">
-                                        <input id="pay" class="btn btn-info btn-lg" type="submit" name="apply" value="Pay">
+                                        @if(isset($defaultAddress))
+                                            <button class="btn btn-info btn-lg" name="apply" id="pay" type="button">Pay</button>
+                                        @else
+                                            <button class="btn btn-info btn-lg" name="apply" id="pay" type="submit" disabled>Pay</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -198,22 +221,40 @@
                                 <p class="modal-title">Add New Address</p>
                             </div>
                             <div class="modal-body">
-                                <form class="form-horizontal" action="" method="post">
+                                <form class="form-horizontal" action="{{ url('/') }}/shop/add-new-addres-guest" method="post">
+                                    @csrf
+                                    <input class="form-control auth" type="hidden" name="order_id" id="order-id" value="{{ $order->id }}">
                                     <div class="form-group">
                                         <label class="label-form" for="receiver-name">Receiver Name</label>
-                                        <input class="form-control auth" type="text" name="receiver-name" value="" placeholder="Type your name">
+                                        <input class="form-control auth" type="text" name="receiver_name" value="" placeholder="Type your name">
                                     </div>
                                     <div class="form-group">
                                         <label class="label-form" for="phone">Phone</label>
                                         <input class="form-control auth" type="text" name="phone" value="" placeholder="+6281908xxxx">
                                     </div>
                                     <div class="form-group">
-                                        <label class="label-form" for="city-distinct">City or Distinct</label>
-                                        <input class="form-control auth" type="text" name="city-distinct" value="" placeholder="Search City or District">
+                                        <label class="label-form" for="phone">Email</label>
+                                        <input class="form-control auth" type="text" name="email" value="" placeholder="">
+                                    </div>                                    
+                                    <div class="form-group">
+                                        <label class="label-form" for="provinsi">Province</label>
+                                        <select name="provinsi" id="provinsi" class="form-control auth provinsi">
+                                            <option value="">Select Province</option>
+                                            @foreach($province->rajaongkir->results as $prov)
+                                                <option value='{{ $prov->province_id }}'>{{ $prov->province }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>                    
+                                    <div class="form-group">
+                                        <label class="label-form" for="city">City or Distinct</label>
+                                        <div id="lappetkali">
+                                            <select name="city" id="city" class="form-control auth city">
+                                            </select>                            
+                                        </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="label-form" for="postal-code">Postal Code</label>
-                                        <input class="form-control auth" type="text" name="postal-code" value="" placeholder="Type your postal Code">
+                                        <input class="form-control auth" type="text" name="postal_code" value="" placeholder="Type your postal Code">
                                     </div>
                                     <div class="form-group">
                                         <label class="label-form" for="address">Address</label>
@@ -229,5 +270,10 @@
         </div>
     </div>
 </div>
-
+<script src="{{env('MIDTRANS_SNAP_JS_URL')}}" data-client-key="{{ env('MIDTRANS_CLIENT_KEY') }}"></script>
+<script type="text/javascript">
+  document.getElementById('pay').onclick = function(){
+    paymentLoggedIn();
+  };
+</script>
 @endsection

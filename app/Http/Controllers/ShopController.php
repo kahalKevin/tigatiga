@@ -151,6 +151,110 @@ class ShopController extends Controller
                            'related_products'));
     }
 
+    public function checkoutGuest(Request $request)
+    {
+        $order = new Order();
+        $orderItems = array();
+        $shippingDetail = -1;
+        $defaultAddress = -1;
+
+        $session_user_cart = "user_cart";
+        $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
+        $cart = \Session::get($session_list_cart_user);
+        if(isset($cart) && 0 == $cart[0]->count()){
+            return redirect('/')->with('error', 'Your session cart is expired');
+        }
+
+        $cart = $cart[0];
+        $key = \Session::get($session_user_cart);
+        if(isset($request->order_id)){
+            $key = $request->order_id;
+        }
+        $currentOrder = Order::query()
+            ->where('cart_no', $key)
+            ->first();
+
+        if(isset($cart) && !$currentOrder){
+            $errorMessage = $this->validateProductStock($cart);
+            if($errorMessage!=""){
+                return redirect::back()->with('error', $errorMessage);
+            }
+            $totalOrder = $this->totalPriceAndWeight($cart);
+            $orderId = DB::select("select nextseq('fe_tx_order','') as id FROM DUAL;");
+            $order->id = $orderId[0]->id;
+            $order->cart_no =$cart[0]->cart_no;
+            $order->_total_amount = $totalOrder['price'];
+            $order->_grand_total = $totalOrder['price'];
+            $order->status_id = 'STATUSORDER0';
+            $order->guest_no = \Session::get($session_user_cart);
+            $order->_email = "";
+            $order->freight_provider_id = 'FREIGHTPROVIDER01';
+            $order->_address = "";
+            $order->_receiver_name = "";
+            $order->_receiver_phone = "";
+            $order->_kota = "";
+            $order->_kode_pos = "";            
+
+            if(!empty($order->ro_city_id)){
+                $shippingDetail = $this->getCost($order->ro_city_id, 'jne', $totalOrder['weight']);
+            }
+
+            $order->save();
+
+            $idx = 0;       
+
+            foreach($cart as $item){
+                $detail = new OrderDetail();
+                $detail->order_id = $order->id;
+                $detail->cart_id = $item->id;
+                $detail->product_id = $item->product_id;
+                $detail->product_stock_id = $item->product_stock_id;
+                $detail->_qty = $item->_qty;
+                $detail->_note = $item->_note;
+                $detail->product_name = $item->products->_name;
+                $detail->product_image_url = $item->products->_image_url;
+                $detail->product_price = $item->products->_price;
+                $detail->product_fixed_price = $item->products->_price;
+                $detail->product_packaging_price = $item->products->_packaging_price;
+                $detail->product_weight = $item->products->_weight;
+                $orderItems[$idx] = $detail;
+                $detail->save();
+                $idx++;
+
+                $product_stock = ProductStock::query()
+                    ->where('product_id', $item->product_id)
+                    ->where('size_id', $item->productStocks->size_id)
+                    ->first();
+                $product_stock->_stock = $product_stock->_stock - $item->_qty;
+                $product_stock->save();
+            }
+            Cart::where('cart_no', '=', $order->cart_no)->delete();
+            \Session::forget($session_list_cart_user);
+        } else {
+            $order = $currentOrder;
+            $orderItems = OrderDetail::query()
+                ->where('order_id', $order->id)
+                ->get();
+            $totalOrder = $this->totalPriceAndWeight($orderItems);
+
+            if(!empty($order->ro_city_id)){
+                $shippingDetail = $this->getCost($order->ro_city_id, 'jne', $totalOrder['weight']);
+            }
+        }
+
+
+        $province = RajaOngkir::getProvince();
+        $order_detail = array(
+            "customer_name" => "puspo",
+            "customer_email" => "puspo@team-company.asia",
+            "customer_phone" => "082231782659",
+            "order_id" => rand(),
+            "amount" => 10000,
+        );
+        $token = MidtransHelper::purchase($order_detail);
+        return view('shop.checkout_guest', compact('token', 'shippingDetail', 'order', 'orderItems', 'defaultAddress', 'province', 'totalOrder'));
+    }
+
     public function checkout(Request $request)
     {
         $order = new Order();
@@ -312,24 +416,6 @@ class ShopController extends Controller
         $result['price'] = $price;
         $result['weight'] = $weight;
         return $result;
-    }
-
-    public function checkoutGuest(Request $request)
-    {
-        $province = RajaOngkir::getProvince();
-        
-        $order_detail = array(
-            "customer_name" => "puspo",
-            "customer_email" => "puspo@team-company.asia",
-            "customer_phone" => "082231782659",
-            "order_id" => rand(),
-            "amount" => 10000,
-        );
-
-        $token = "test";
-        // $token = MidtransHelper::purchase($order_detail);
-        // $orderId = DB::select("select nextseq('fe_tx_order','') FROM DUAL;");
-        return view('shop.checkout_guest', compact('token'));
     }
 
     public function cart(){
@@ -522,6 +608,21 @@ class ShopController extends Controller
         $user_address->save();
 
         return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
+    }
+
+    public function addNewAddressGuest(Request $request)
+    {
+        $order = Order::where('id', '=', $request->order_id)->first();
+        $order->_address = $request->address;
+        $order->_email = $request->email;
+        $order->_receiver_name = $request->receiver_name;
+        $order->_receiver_phone = $request->phone;
+        $order->ro_city_id = $request->city;
+        $order->ro_province_id = $request->provinsi;
+        $order->_kode_pos = $request->postal_code;
+        $order->save();
+
+        return Redirect::to('shop/checkoutGuest')->with('order_id', $request->order_id);
     } 
 
     public function setDefaultAddress(Request $request)
