@@ -53,7 +53,7 @@
                             <div class="nice-select sorter wide" tabindex="0">
                                 @if(isset($defaultAddress))
                                     <span class="current">Select Shipping Courier</span>
-                                    <ul class="list">
+                                    <ul class="list list-shipping-courier-checkout">
                                     @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
                                     <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . " IDR ".number_format($service["cost"][0]["value"]).".00" }}</li>
                                     @endforeach                                    
@@ -99,17 +99,21 @@
                                 <label for="total-price">Total Price</label>
                                 <input class="form-control" type="text" name="total-price" value="Rp. {{ number_format($totalOrder['price'], 2) }}"
                                     disabled>
+                                <input type="hidden" name="total-price-checkout-usage" value="{{ $totalOrder['price'] }}"
+                                    disabled id="total-price-checkout-usage">
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="total-shipping">Total Shipping</label>
-                                <input class="form-control" type="text" name="total-shipping" value="Rp. 9.000"
-                                    disabled>
+                                <input class="form-control" type="text" name="total-shipping" value=""
+                                    disabled id="total-shipping-cost-checkout">
+                                <input type="hidden" name="total-shipping-cost-usage" value=""
+                                    disabled id="total-shipping-cost-usage">    
                             </div>
                             <hr>
                             <div class="form-group">
                                 <label for="grand-price">Grand Price</label>
-                                <input id="grand-price" class="form-control" type="text" name="grand-price" value="Rp. 1.009.000"
+                                <input id="grand-price-checkout" class="form-control" type="text" name="grand-price-checkout" value="Rp. {{ number_format($totalOrder['price'], 2) }}"
                                     disabled>
                             </div>
                             <div class="form-group">
@@ -138,7 +142,7 @@
                             <div class="modal-body">
                             <form class="form-horizontal" action="/shop/set-default-addres" method="post">
                             @csrf
-                            <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
+                            <input class="form-control auth" type="hidden" name="order_id" id="order-id" value="{{ $order->id }}">
                             <div class="row">
                                 @foreach($list_user_address as $lua)
                                     <div class="col-md-4">

@@ -92,8 +92,10 @@ function addToCart(product_id) {
 
 function paymentLoggedIn() {
     // var grandTotal = $("#grand_total").val();
-    var shippingCost = 70000;
-    var orderId = "ORDER20181128000000142";
+    var shippingCost = $('#total-shipping-cost-usage').val();
+    console.log(shippingCost);
+    var orderId = $('#order-id').val();
+    // var shippingCost = 70000;
     snap.show();
     $.ajax({
       type: "POST",
@@ -128,13 +130,6 @@ $(document).ready(function() {
                     $.each(data["rajaongkir"]["results"], function(key, value, x){
                         option = option + '<option value="'+ value["city_id"] +'">' + value["city_name"] + '</option>';
                         li = li + '<li data-value="'+ value["city_id"] +'" class="option">' + value["city_name"] + '</li>';
-                        // var x = document.getElementById("city");
-                        // var option = document.createElement("option");
-                        // option.text = value["city_name"];
-                        // option.value = value["city_id"];
-                        // x.add(option);
-
-                        // $('select[name="city"]').append('<option value="'+ value["city_id"] +'">' + value["city_name"] + '</option>');
                     });
                     document.getElementById("lappetkali").innerHTML = '<select name="city" id="city" class="form-control auth city" style="display: none;"> '+option+' </select> <div class="nice-select form-control auth city" tabindex="0"> <span class="current"></span> <ul class="list"> '+li+' </ul> </div>';
                 },
@@ -146,5 +141,27 @@ $(document).ready(function() {
             $('select[name="club_id"]').empty();
         }
 
+    });
+
+    $('ul.list-shipping-courier-checkout li').on('click',function(){ 
+        var shippingCost = $(this).attr('data-value');
+
+        var reverseshippingCost = shippingCost.toString().split('').reverse().join(''),
+        ribuanshippingCost  = reverseshippingCost.match(/\d{1,3}/g);
+        ribuanshippingCost  = ribuanshippingCost.join('.').split('').reverse().join('');
+
+        var shippingCostInCurrencyString = 'Rp '+ribuanshippingCost;
+        $('#total-shipping-cost-checkout').val(shippingCostInCurrencyString);
+        $('#total-shipping-cost-usage').val(shippingCost);
+        
+        var totalPrice = $('#total-price-checkout-usage').val();
+        var grandPrice = parseFloat(totalPrice) + parseFloat(shippingCost);
+
+        var reverseGrandPrice = grandPrice.toString().split('').reverse().join(''),
+        ribuanGrandPrice  = reverseGrandPrice.match(/\d{1,3}/g);
+        ribuanGrandPrice  = ribuanGrandPrice.join('.').split('').reverse().join('');
+
+        var GrandPriceInCurrencyString = 'Rp '+ribuanGrandPrice;
+        $('#grand-price-checkout').val(GrandPriceInCurrencyString);
     });
 });
