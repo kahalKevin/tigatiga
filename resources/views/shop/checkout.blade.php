@@ -55,7 +55,7 @@
                                     <span class="current">Select Shipping Courier</span>
                                     <ul class="list">
                                     @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
-                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] }}</li>
+                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . " IDR ".number_format($service["cost"][0]["value"]).".00" }}</li>
                                     @endforeach                                    
                                     </ul>
                                 @else
@@ -200,8 +200,8 @@
                         <label class="label-form" for="provinsi">Province</label>
                         <select name="provinsi" id="provinsi" class="form-control auth provinsi">
                             <option value="">Select Province</option>
-                            @foreach($province["rajaongkir"]["results"] as $prov)
-                                <option value='{{ $prov["province_id"] }}'>{{ $prov["province"] }}</option>
+                            @foreach($province->rajaongkir->results as $prov)
+                                <option value='{{ $prov->province_id }}'>{{ $prov->province }}</option>
                             @endforeach
                         </select>
                     </div>                    

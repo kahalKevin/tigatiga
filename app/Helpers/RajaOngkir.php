@@ -10,7 +10,7 @@ class RajaOngkir
     public static function getProvince($query = [])
     {
         if (Cache::has('rajaongkir:province')) {
-            return json_decode(Cache::get('rajaongkir:province'), true);
+            return Cache::get('rajaongkir:province');
         }
 
         $client = new HttpRequest;
@@ -27,10 +27,9 @@ class RajaOngkir
         $res = json_decode($res->getBody());
 
         Cache::put('rajaongkir:province', 
-            json_encode(
-                $res
-            ), 
-        180);
+            $res,
+            180
+        );
 
         return $res;
     }

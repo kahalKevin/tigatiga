@@ -161,8 +161,11 @@ class ShopController extends Controller
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
-        $cart = $cart[0];
+        if(isset($cart) && 0 == $cart[0]->count()){
+            return redirect('/')->with('error', 'Your session cart is expired');
+        }
 
+        $cart = $cart[0];
         $key = \Session::get($session_user_cart);
         if(isset($request->order_id)){
             $key = $request->order_id;
@@ -174,7 +177,7 @@ class ShopController extends Controller
         if(isset($cart) && !$currentOrder){
             $errorMessage = $this->validateProductStock($cart);
             if($errorMessage!=""){
-                throw new Exception($errorMessage);
+                return redirect::back()->with('error', $errorMessage);
             }
             $totalOrder = $this->totalPriceAndWeight($cart);
             $orderId = DB::select("select nextseq('fe_tx_order','') as id FROM DUAL;");
@@ -333,6 +336,9 @@ class ShopController extends Controller
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
+        if($cart == null){
+            return redirect('/')->with('error', 'Your session cart is expired');
+        }
         $cart = $cart[0];
         $cart = $this->syncSessionCartToProductStock($cart);
         \Session::forget($session_list_cart_user);
@@ -425,9 +431,9 @@ class ShopController extends Controller
             ->first();
         $grandTotal = $currentOrder->_total_amount + $request->shipping;
         $order_detail = array(
-            "customer_name" => $request->name,
+            "customer_name" => $currentOrder->_receiver_name,
             "customer_email" => $currentOrder->_email,
-            "customer_phone" => $request->phone,
+            "customer_phone" => $currentOrder->_receiver_phone,
             "order_id" => $currentOrder->id,
             "amount" => $grandTotal,
         );

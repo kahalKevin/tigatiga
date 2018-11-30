@@ -104,7 +104,6 @@ class Navigation extends Model
         $menu_desktop .= '</div>';
 
         $menu_mobile = Navigation::createMenuMobile($items);
-
         return [
             'navigation_desktop' => $menu_desktop,
             'navigation_mobile' => $menu_mobile
