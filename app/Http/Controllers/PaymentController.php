@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Model\Order;
 use App\Model\OrderDetail;
 use App\Model\OrderPaymentGatewayHistory;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -71,6 +72,21 @@ class PaymentController extends Controller
         return null;
     }
 
+    public function pendingPayment(Request $request){
+        $currentOrder = Order::query()
+            ->where('id', $request->orderId)
+            ->where('status_id', 'STATUSORDER0')
+            ->first();
+        $paymentMethod = ($request->paymentType=="bank_transfer") ? "PAYMENTMETHOD01" : "PAYMENTMETHOD02";
+        $currentOrder->status_id = 'STATUSORDER10';
+        $currentOrder->payment_gateway_trx_ref_no = $request->accountVa;
+        $currentOrder->payment_method_id = $paymentMethod;
+        $currentOrder->payment_gateway_id = "PAYMENTGW01";
+        $currentOrder->_payment_at = Carbon::now();
+
+        $currentOrder->save();
+    }
+    
     private function getStatusPayment($notification)
     {
         $status = "STATUSORDER0";
