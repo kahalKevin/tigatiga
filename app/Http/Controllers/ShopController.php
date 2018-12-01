@@ -130,11 +130,16 @@ class ShopController extends Controller
         $products_sizes = ProductStock::where('product_id', '=', $product->id)->get();
         $products_galleries = ProductGallery::where('product_id', '=', $product->id)->get();
         $product_tags = $this->getTagsSelected($product->id);
-        $related_products =  Product::where('category_id', '=' , $product->category_id)->limit(4)->get();
+        $related_products =  Product::where([
+                ['category_id', '=' , $product->category_id],
+                ['id', '!=' , $product->id]
+            ]
+        )->limit(4)->get();
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
 
-            $session_counter_view_product = "counter_view_product-". $product->id;
-            if (!\Session::has($session_counter_view_product)) {
+        $session_counter_view_product = "counter_view_product-". $product->id;
+
+        if (!\Session::has($session_counter_view_product)) {
             $product->_count_view = $product->_count_view + 1;
             $product->save();
             \Session::put($session_counter_view_product, "");

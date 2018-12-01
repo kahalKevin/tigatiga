@@ -38,7 +38,7 @@
                   <li class="drodown-show">
                      <a href="#"><span class="icon icon-Search"></span></a>
                      <div class="dropdown categorie-search-box">
-                        <form id="form-header-search" action="/shop/index-search" method="get">
+                        <form id="form-header-search" action="{{ url('/') }}/shop/index-search" method="get">
                            <div class="container">
                               <div class=row>
                                  <div class="col-md-2">
@@ -52,7 +52,7 @@
                                  <div class="col-md-10">
                                     <input id="search-item" type="text" name="searchItem" placeholder="I want to shop">
                                     <input id="track-order" type="text" disabled="true" name="searchOrder" placeholder="Track My order">
-                                    <button type="submit" >
+                                    <button type="submit">
                                     <span class="icon icon-Search"></span>
                                     </button>
                                  </div>
