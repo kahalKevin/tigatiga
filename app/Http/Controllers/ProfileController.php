@@ -107,5 +107,13 @@ class ProfileController extends Controller
         $user_address->save();
 
         return redirect()->back();
-    }    
+    }
+
+    public function  deleteAddress(Request $request)
+    {
+        $user_address = UserAddress::find($request->id);
+        $user_address->delete();
+
+        return redirect()->back();
+    }
 }

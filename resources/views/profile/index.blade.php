@@ -119,7 +119,7 @@
                 <p class="modal-title">Add New Address</p>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="{{ url('/') }}/profile/add-address" method="post">
+                <form class="form-horizontal" action="{{ url('/') }}/shop/add-new-address" method="post">
                     @csrf
                     <div class="form-group">
                         <label class="label-form" for="receiver-name">Receiver Name</label>
@@ -141,7 +141,7 @@
                     <div class="form-group">
                         <label class="label-form" for="city">City or Distinct</label>
                         <div>
-                            <select name="city" id="city" class="form-control auth city">
+                            <select name="city" class="form-control auth city">
                             </select>                            
                         </div>
                     </div>

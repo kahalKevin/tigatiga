@@ -602,7 +602,9 @@ class ShopController extends Controller
         $user_address->created_at = Carbon::now();
         $user_address->save();
 
-        return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
+        return redirect()
+            ->back()
+            ->with('order_id', $request->order_id);
     }
 
     public function addNewAddressGuest(Request $request)

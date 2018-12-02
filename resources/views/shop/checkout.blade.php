@@ -140,7 +140,7 @@
                                 <h4 class="modal-title">CHANGE ADDRESS</h4>
                             </div>
                             <div class="modal-body">
-                            <form class="form-horizontal" action="/shop/set-default-address" method="post">
+                            <form class="form-horizontal" action="{{ url('/') }}/shop/set-default-address" method="post">
                             @csrf
                             <input class="form-control auth" type="hidden" name="order_id" id="order-id" value="{{ $order->id }}">
                             <div class="row">
@@ -211,8 +211,8 @@
                     </div>                    
                     <div class="form-group">
                         <label class="label-form" for="city">City or Distinct</label>
-                        <div id="cityLabel">
-                            <select name="city" id="city" class="form-control auth city">
+                        <div>
+                            <select name="city" class="form-control auth city">
                             </select>                            
                         </div>
                     </div>

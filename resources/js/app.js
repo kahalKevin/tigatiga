@@ -7,7 +7,6 @@
 //=include ./vendor/owl.carousel.min.js
 //=include ./vendor/bootstrap.min.js
 //=include ./vendor/plugins.js
-//=include ./vendor/slugify.js
 //=include ./vendor/main.js
 
 $(document).ready(function () {
@@ -100,7 +99,7 @@ function paymentLoggedIn() {
     $.ajax({
       type: "POST",
       data: {_token:$('#token').val(), shipping:shippingCost, orderId:orderId},
-      url: '/payment/newToken/',
+      url: URL + '/payment/newToken',
       success: function(result) {
         processSnap(result, orderId);
       },
@@ -165,7 +164,8 @@ $(document).ready(function() {
                         option = option + '<option value="'+ value["city_id"] +'">' + value['type'] + ' ' + value["city_name"] + '</option>';
                         li = li + '<li data-value="'+ value["city_id"] +'" class="option">' + value['type'] + ' ' + value["city_name"] + '</li>';
                     });
-                    document.getElementById("cityLabel").innerHTML = '<select name="city" id="city" class="form-control auth city" style="display: none;"> '+option+' </select> <div class="nice-select form-control auth city" tabindex="0"> <span class="current"></span> <ul class="list"> '+li+' </ul> </div>';
+
+                    $('select[name="city"]').parent().html('<select name="city" class="form-control auth city" style="display: none;"> '+option+' </select> <div class="nice-select form-control auth city" tabindex="0"> <span class="current"></span> <ul class="list"> '+li+' </ul> </div>');
                 },
                 complete: function(){
                     $('#loader').css("visibility", "hidden");
