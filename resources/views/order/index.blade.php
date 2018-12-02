@@ -58,7 +58,10 @@
                                 @if(!empty($odlh->order->payment_gateway_id))
                                 <div class="title-payment">
                                     Payment Method<br>
-                                    <span class="payment-method">{{ $odlh->order->typePaymentMethod->_name }}</span>
+                                    <span class="payment-method">{{ $odlh->order->typePaymentMethod->_name }}</span><br>
+                                    @if(!empty($odlh->order->payment_gateway_va_number))
+                                    <span class="payment-method">VA BCA({{ $odlh->order->payment_gateway_va_number }})</span>
+                                    @endif
                                 </div>                                
                                 @endif
                             </div>
@@ -76,8 +79,9 @@
                         </div>
                         <hr>
                     @endforeach
-                    </div>
-                </div>
+                    </div><br>
+                    @include('layouts.pagination.default', ['paginator' => $order_detail_list_history->appends(Input::except('page'))]) 
+                </div>                
             </div>
         </div>
     </div>

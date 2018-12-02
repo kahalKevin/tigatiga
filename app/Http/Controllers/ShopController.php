@@ -51,6 +51,17 @@ class ShopController extends Controller
             $priceTo = $request->priceTo;
             $products_query = $products_query->where('_price', '<=', $request->priceTo);
         }
+        if(!empty($request->sortBy)) {
+            if($request->sortBy == "nameDesc"){
+                $products_query = $products_query->orderBy('_name', 'desc');
+            } else if($request->sortBy == "nameAsc"){
+                $products_query = $products_query->orderBy('_name', 'asc');
+            } else if($request->sortBy == "priceDesc"){
+                $products_query = $products_query->orderBy('_price', 'desc');
+            } else if($request->sortBy == "priceAsc"){
+                $products_query = $products_query->orderBy('_price', 'asc');
+            }
+        }
         $products = $products_query->paginate(2);
 
         $tags = $this->getAllTags();
@@ -59,7 +70,7 @@ class ShopController extends Controller
         $sizes_selected = $request->sizeIndex;
         $sizes = Size::where('_active', '=', "1")->get();
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
-        return view('shop.index')->with(compact('products', 'category', 'genders', 'sizes', 'category_parent', 'cmsUrl', 'tags', 'genders_selected', 'priceFrom', 'priceTo', 'sizes_selected'));
+        return view('shop.index')->with(compact('products', 'category', 'genders', 'sizes', 'category_parent', 'cmsUrl', 'tags', 'genders_selected', 'priceFrom', 'priceTo', 'sizes_selected', 'sort_by'));
     }
 
     public function indexSearch(Request $request) 

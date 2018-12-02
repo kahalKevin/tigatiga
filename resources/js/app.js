@@ -198,4 +198,9 @@ $(document).ready(function() {
         var GrandPriceInCurrencyString = 'Rp '+ribuanGrandPrice;
         $('#grand-price-checkout').val(GrandPriceInCurrencyString);
     });
+
+    $('ul.list-sorting-index-product li').on('click',function(){ 
+        var sorting = $(this).attr('data-value');
+        window.location.href = sorting;
+    });
 });

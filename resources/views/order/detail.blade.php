@@ -61,9 +61,15 @@
                         </div>
                     @endforeach
                     <br><br>
+                    @if($order->status_id == 'STATUSORDER0')
                     <div class="title-upload">
-                        <a href="#" class="btn btn-info btn-lg">GO TO CHECKOUT</a>
-                    </div>
+                        <form class="form-horizontal" action="/shop/checkout" method="get">
+                            @csrf
+                            <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
+                            <button class="btn btn-info btn-lg" type="submit">GO TO CHECKOUT</button>
+                        </form>
+                    </div>                    
+                    @endif
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="title-address">

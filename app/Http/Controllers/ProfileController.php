@@ -40,16 +40,10 @@ class ProfileController extends Controller
         );
     }
 
-    public function orderHistory()
-    {
-        $orders = Order::where('user_id', '=', Auth::user()->id)->get();
-        $order_detail_list_history = collect();
-        foreach ($orders as $order) {
-            $order_details = OrderDetail::where('order_id', '=', $order->id)->get();
-            foreach ($order_details as $order_detail) {
-                $order_detail_list_history->push($order_detail);
-            }
-        }
+    public function orderHistory(Request $request)
+    {   
+        $order_detail_list_history = OrderDetail::join('fe_tx_order', 'fe_tx_order_detail.order_id', '=', 'fe_tx_order.id')
+        ->where('fe_tx_order.user_id', '=', Auth::user()->id)->paginate(5);
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
         return view('order.index')->with(compact('order_detail_list_history', 'cmsUrl'));
     } 

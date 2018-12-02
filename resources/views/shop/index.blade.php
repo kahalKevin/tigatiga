@@ -4,6 +4,15 @@
 @section('description', $category->_meta_desc)
 @section('content')
 <div class="service-area ptb-80" id="shop">
+@php
+    unset($_GET['sortBy']);
+    $current_url = Request::fullUrl();
+        if (strpos($current_url, '?')) {
+            $current_url = $current_url."&";
+        } else {
+            $current_url = $current_url."?";
+        }
+@endphp
             <div class="container">
                 <div class="box" action="index.html" method="post">
                     @if(isset($category_parent))
@@ -27,7 +36,7 @@
                                     @if($input != null)
                                         @foreach($input as $key => $val)
                                             @if($key != 'sizeIndex')                                        
-                                                @if($key == 'priceFrom' || $key == 'priceTo' || $key == 'page')
+                                                @if($key == 'priceFrom' || $key == 'priceTo' || $key == 'page' || $key == 'sortBy')
                                                     <input type="hidden" name="{{ $key }}" value="{{ $val }}" /> 
                                                 @else
                                                     @foreach($val as $value)
@@ -77,7 +86,7 @@
                                                 
                                                 @if($input != null)
                                                     @foreach($input as $key => $val)
-                                                            @if($key != 'priceFrom' && $key != 'priceTo' && $key != 'page')
+                                                            @if($key != 'priceFrom' && $key != 'priceTo' && $key != 'page' && $key != 'sortBy')
                                                                 @foreach($val as $value)
                                                                 <input type="hidden" name="{{ $key }}[]" value="{{ $value }}" />
                                                                 @endforeach
@@ -127,7 +136,7 @@
                                     @if($input != null)
                                         @foreach($input as $key => $val)
                                             @if($key != 'genderIndex')                                        
-                                                @if($key == 'priceFrom' || $key == 'priceTo' || $key == 'page')
+                                                @if($key == 'priceFrom' || $key == 'priceTo' || $key == 'page' || $key == 'sortBy')
                                                     <input type="hidden" name="{{ $key }}" value="{{ $val }}" /> 
                                                 @else
                                                     @foreach($val as $value)
@@ -184,12 +193,12 @@
                                         <label class="d-none d-sm-block">Sort By:</label>
                                         <div class="nice-select sorter wide" tabindex="0">
                                             <span class="current">Position</span>
-                                            <ul class="list">
-                                                <li data-value="Position" class="option">Position</li>
-                                                <li data-value="Product Name" class="option">Neme, A to Z</li>
-                                                <li data-value="Product Name" class="option">Neme, Z to A</li>
-                                                <li data-value="Price" class="option">Price low to heigh</li>
-                                                <li data-value="Price" class="option">Price heigh to low</li>
+                                            <ul class="list list-sorting-index-product">
+                                                <li data-value="{{ $current_url }}sortBy=position" class="option">Position</li>
+                                                <li data-value="{{ $current_url }}sortBy=nameAsc" class="option">Name, A to Z</li>
+                                                <li data-value="{{ $current_url }}sortBy=nameDesc" class="option">Name, Z to A</li>
+                                                <li data-value="{{ $current_url }}sortBy=priceAsc" class="option">Price low to high</li>
+                                                <li data-value="{{ $current_url }}sortBy=priceDesc" class="option">Price high to low</li>
                                             </ul>
                                         </div>
                                     </div>
