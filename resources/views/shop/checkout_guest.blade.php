@@ -247,7 +247,7 @@
                                     </div>                    
                                     <div class="form-group">
                                         <label class="label-form" for="city">City or Distinct</label>
-                                        <div id="lappetkali">
+                                        <div id="cityLabel">
                                             <select name="city" id="city" class="form-control auth city">
                                             </select>                            
                                         </div>
