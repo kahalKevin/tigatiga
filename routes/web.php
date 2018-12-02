@@ -65,4 +65,5 @@ Route::get('shipping/city', 'ShopController@getCity');
 Route::get('shipping/cost', 'ShopController@calculateCost');
 Route::post('payment/newToken', 'ShopController@newToken');
 Route::post('payment/pending', 'PaymentController@pendingPayment');
+Route::get('payment/success', 'PaymentController@ccSuccess');
 

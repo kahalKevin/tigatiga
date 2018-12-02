@@ -10,9 +10,9 @@
                 <div class="box-title">
                     <p class="to-title">Thanks Your Order</p>
                 </div>
-                <p class="to-caption">ORDER ID : 2342343422</p>
+                <p class="to-caption">ORDER ID : {{ $orderId }}</p>
                 <p class="to-caption2">We Always try to  get your order to arrive as soon as possible</p>
-                <a class="btn btn-info btn-lg" href="#">Check your order</a>
+                <a class="btn btn-info btn-lg" href="/order">Check your order</a>
             </div>
             </div>
         </div>

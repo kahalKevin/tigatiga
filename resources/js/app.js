@@ -113,7 +113,9 @@ function paymentLoggedIn() {
 
 function processSnap(token, orderId){
     snap.pay(token, {
-      onSuccess: function(result){console.log('success');console.log(result);},
+      onSuccess: function(result){
+        successSnap(orderId);
+      },
       onPending: function(result){
         processPendingVA(result, orderId);
       }
@@ -131,11 +133,16 @@ function processPendingVA(resultSnap, orderId){
       url: '/payment/pending/',
       success: function(result) {
         console.log("updated va request");
+        successSnap(orderId);
       },
       error: function (request, status, error) {
         console.log("Fail get update pending, " + error);
       }
     });
+}
+
+function successSnap(orderId){
+    location.href = '/payment/success?orderId='+orderId;
 }
 
 $(document).ready(function() {
@@ -158,7 +165,7 @@ $(document).ready(function() {
                         option = option + '<option value="'+ value["city_id"] +'">' + value["city_name"] + '</option>';
                         li = li + '<li data-value="'+ value["city_id"] +'" class="option">' + value["city_name"] + '</li>';
                     });
-                    document.getElementById("lappetkali").innerHTML = '<select name="city" id="city" class="form-control auth city" style="display: none;"> '+option+' </select> <div class="nice-select form-control auth city" tabindex="0"> <span class="current"></span> <ul class="list"> '+li+' </ul> </div>';
+                    document.getElementById("cityLabel").innerHTML = '<select name="city" id="city" class="form-control auth city" style="display: none;"> '+option+' </select> <div class="nice-select form-control auth city" tabindex="0"> <span class="current"></span> <ul class="list"> '+li+' </ul> </div>';
                 },
                 complete: function(){
                     $('#loader').css("visibility", "hidden");
