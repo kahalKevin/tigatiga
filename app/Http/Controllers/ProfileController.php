@@ -8,6 +8,8 @@ use App\Model\User;
 use App\Model\UserAddress;
 use App\Model\Order;
 use App\Model\OrderDetail;
+use App\Helpers\RajaOngkir;
+use Carbon\Carbon;
 
 class ProfileController extends Controller
 {
@@ -29,13 +31,18 @@ class ProfileController extends Controller
             ['status_id', '=', 'STATUSORDER9']
         ])->count();
 
-        $addresses = UserAddress::where('user_id', $user_id)->get();
+        $addresses = UserAddress::where('user_id', $user_id)->limit(3)->get();
+
+        $province = RajaOngkir::getProvince();
+        $city = RajaOngkir::getCity();
 
         return view('profile.index', compact(
               'total_order',
               'total_delivery',
               'total_received',
-              'addresses'
+              'addresses',
+              'province',
+              'city'
             )
         );
     }
@@ -68,5 +75,39 @@ class ProfileController extends Controller
             $last_status = 6;
         } 
         return view('order.detail')->with(compact('order', 'order_detail', 'cmsUrl', 'last_status'));
-    }    
+    }
+
+    public function editAddress(Request $request)
+    {
+        $user_address = UserAddress::find($request->id);
+        $user_address->_address = $request->address;
+
+        $counter_default_address = UserAddress::where('user_id', '=', Auth::user()->id)->where('_default', '=', '1')->count();
+        if($counter_default_address == 0){
+            $user_address->_default = '1';            
+        } else {
+            $user_address->_default = '0';
+        }
+
+        $user_address->_title = "Rumah";
+        $user_address->_receiver_name = $request->receiver_name;
+        $user_address->_receiver_phone = $request->phone;
+        $user_address->ro_city_id = $request->city;
+        $user_address->ro_province_id = $request->provinsi;
+        $user_address->_kota = $request->city;
+        $user_address->_kode_pos = $request->postal_code;
+        $user_address->_active = '1';
+        $user_address->updated_at = Carbon::now();
+        $user_address->save();
+
+        return redirect()->back();
+    }
+
+    public function  deleteAddress(Request $request)
+    {
+        $user_address = UserAddress::find($request->id);
+        $user_address->delete();
+
+        return redirect()->back();
+    }
 }

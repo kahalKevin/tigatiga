@@ -596,7 +596,7 @@ class ShopController extends Controller
         $user_address->_address = $request->address;
 
         $counter_default_address = UserAddress::where('user_id', '=', Auth::user()->id)->where('_default', '=', '1')->count();
-        if($counter_default_address = 0){
+        if($counter_default_address == 0){
             $user_address->_default = '1';            
         } else {
             $user_address->_default = '0';
@@ -613,7 +613,9 @@ class ShopController extends Controller
         $user_address->created_at = Carbon::now();
         $user_address->save();
 
-        return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
+        return redirect()
+            ->back()
+            ->with('order_id', $request->order_id);
     }
 
     public function addNewAddressGuest(Request $request)

@@ -77,7 +77,9 @@
                                 </div>
                             </div>
                         </div>
-                        <hr>
+                        @if(!$loop->last)
+                            <hr>
+                        @endif
                     @endforeach
                     </div><br>
                     @include('layouts.pagination.default', ['paginator' => $order_detail_list_history->appends(Input::except('page'))]) 

@@ -1,0 +1,21 @@
+#pages input,
+#pages textarea {
+    border-color: transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #16161a;
+    box-shadow: 0 0 11px 0 #000000;
+}
+
+#pages .btn-submit-contactus {
+    border-radius: 4px;
+    background-color: #a9091d;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: 500;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: 1px;
+    color: #ffffff;
+}
