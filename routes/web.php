@@ -40,6 +40,10 @@ Route::prefix('shop')->group(function () {
     Route::post('add-new-addres-guest', 'ShopController@addNewAddressGuest');
 });
 
+Route::prefix('order')->group(function () {
+    Route::get('history', 'OrderController@index');
+});
+
 Route::view('/order', 'order.index');
 Route::view('/order/detail', 'order.detail');
 Route::view('/order/tracking', 'order.tracking');
@@ -51,7 +55,7 @@ Route::view('/order/thanks-cc', 'order.thanks-cc');
 Route::group(['prefix' => 'profile',  'middleware' => 'auth'], function () {
     Route::get('/', 'ProfileController@index');
     Route::get('order/history', 'ProfileController@orderHistory');
-    Route::view('order/history/detail', 'order.detail');
+    Route::get('order/history/detail/{id}', 'ProfileController@orderDetail');
 });
 
 Route::view('forgot-password', 'profile.forgot-password');

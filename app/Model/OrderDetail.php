@@ -16,5 +16,10 @@ class OrderDetail extends Model
     public function productStocks()
     {
     	return $this->hasOne('App\Model\ProductStock', 'id', 'product_stock_id');
+    }
+
+    public function order()
+    {
+    	return $this->hasOne('App\Model\Order', 'id', 'order_id');
     }    
 }

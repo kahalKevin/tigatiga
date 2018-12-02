@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Model\User;
 use App\Model\UserAddress;
 use App\Model\Order;
+use App\Model\OrderDetail;
 
 class ProfileController extends Controller
 {
@@ -41,8 +42,37 @@ class ProfileController extends Controller
 
     public function orderHistory()
     {
-        $order = Auth::user()->with('orders')->get();
+        $orders = Order::where('user_id', '=', Auth::user()->id)->get();
+        $order_detail_list_history = collect();
+        foreach ($orders as $order) {
+            $order_details = OrderDetail::where('order_id', '=', $order->id)->get();
+            foreach ($order_details as $order_detail) {
+                $order_detail_list_history->push($order_detail);
+            }
+        }
+        $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
+        return view('order.index')->with(compact('order_detail_list_history', 'cmsUrl'));
+    } 
 
-        return view('order.index');
-    }
+    public function orderDetail($id)
+    {
+        $order = Order::where('id', '=', $id)->first();
+        $order_detail = OrderDetail::where('order_id', '=', $order->id)->get();        
+        $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
+        $last_status = 0;
+        if($order->status_id == 'STATUSORDER0' || $order->status_id == 'STATUSORDER10'){
+            $last_status = 1;
+        } else if ($order->status_id == 'STATUSORDER1' || $order->status_id == 'STATUSORDER7'){
+            $last_status = 2;
+        } else if ($order->status_id == 'STATUSORDER2'){
+            $last_status = 3;
+        } else if ($order->status_id == 'STATUSORDER3' || $order->status_id == 'STATUSORDER4'){
+            $last_status = 4;
+        } else if ($order->status_id == 'STATUSORDER9'){
+            $last_status = 5;
+        } else {
+            $last_status = 6;
+        } 
+        return view('order.detail')->with(compact('order', 'order_detail', 'cmsUrl', 'last_status'));
+    }    
 }
