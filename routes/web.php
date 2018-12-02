@@ -19,6 +19,9 @@ Route::group(['middleware' => 'auth'], function () {
 });
 
 Route::get('/', 'HomeController@index')->name('home.index');
+Route::get('page/{type}', 'PageController@index');
+Route::get('contactus', 'ContactUsController@index');
+Route::post('contactus', 'ContactUsController@store');
 
 Route::prefix('payment')->group(function () {
     Route::post('notification', 'PaymentController@paymentNotification');
@@ -56,6 +59,9 @@ Route::group(['prefix' => 'profile',  'middleware' => 'auth'], function () {
     Route::get('/', 'ProfileController@index');
     Route::get('order/history', 'ProfileController@orderHistory');
     Route::get('order/history/detail/{id}', 'ProfileController@orderDetail');
+    Route::get('delete-address/{id}', 'ProfileController@deleteAddress');
+    Route::post('add-address', 'ProfileController@addAddress');
+    Route::post('edit-address', 'ProfileController@editAddress');
 });
 
 Route::view('forgot-password', 'profile.forgot-password');

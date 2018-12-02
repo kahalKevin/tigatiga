@@ -12,8 +12,8 @@
               <h4 class="footer-title">CUSTOMER SERVICE</h4>
               <div class="footer-content">
                 <ul class="footer-list">
-                  <li><a href="#">CONTACT US</a></li>
-                  <li><a href="account.html">ABOUT US</a></li>
+                  <li><a href="{{ url('/') }}/contactus">CONTACT US</a></li>
+                  <li><a href="{{ url('/') }}/page/about">ABOUT US</a></li>
                 </ul>
               </div>
             </div>
@@ -27,8 +27,8 @@
               <h4 class="footer-title">ONLINE SECURITY</h4>
               <div class="footer-content">
                 <ul class="footer-list">
-                  <li><a href="#">PRIVACY</a></li>
-                  <li><a href="#">TERM & CONDITIONS</a></li>
+                  <li><a href="{{ url('/') }}/page/privacy">PRIVACY</a></li>
+                  <li><a href="{{ url('/') }}/page/term">TERM & CONDITIONS</a></li>
                 </ul>
               </div>
             </div>

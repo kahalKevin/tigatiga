@@ -87,7 +87,7 @@
               <div class="col-md-4">
                 <div class="box" style="margin-top: 37px;">
                   <div class="edit-button">
-                    <a href="#"><img src="./icon/writing@1x.png" alt=""></a>
+                    <a data-toggle="modal" data-target="#modal-edit-address-{{ $address->id }}"><img src="./icon/writing@1x.png" alt=""></a>
                   </div>
                   <div class="cust-name">
                     {{ $address->_receiver_name }}
@@ -98,7 +98,7 @@
                   <div class="cust-phone">
                   {{ $address->_receiver_phone }}
                   </div>
-                  <a href="#" class="cust-delete">Delete</a>
+                  <a href="{{ url('/') }}/profile/delete-address/{{ $address->id }}" class="cust-delete">Delete</a>
                 </div>
               </div>
               @endforeach
@@ -112,39 +112,114 @@
     </div>
 </div>
 <div class="modal fade" id="modal-add-new-address" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <p class="modal-title">Add New Address</p>
-                </div>
-                <div class="modal-body">
-                    <form class="form-horizontal" action="" method="post">
-                        <div class="form-group">
-                            <label class="label-form" for="receiver-name">Receiver Name</label>
-                            <input class="form-control auth" type="text" name="receiver-name" value="" placeholder="Type your name">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <p class="modal-title">Add New Address</p>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" action="{{ url('/') }}/profile/add-address" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label class="label-form" for="receiver-name">Receiver Name</label>
+                        <input class="form-control auth" type="text" name="receiver_name" value="" placeholder="Type your name">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="phone">Phone</label>
+                        <input class="form-control auth" type="text" name="phone" value="" placeholder="+6281908xxxx">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="provinsi">Province</label>
+                        <select name="provinsi" id="provinsi" class="form-control auth provinsi">
+                            <option value="">Select Province</option>
+                            @foreach($province->rajaongkir->results as $prov)
+                                <option value='{{ $prov->province_id }}'>{{ $prov->province }}</option>
+                            @endforeach
+                        </select>
+                    </div>                    
+                    <div class="form-group">
+                        <label class="label-form" for="city">City or Distinct</label>
+                        <div>
+                            <select name="city" id="city" class="form-control auth city">
+                            </select>                            
                         </div>
-                        <div class="form-group">
-                            <label class="label-form" for="phone">Phone</label>
-                            <input class="form-control auth" type="text" name="phone" value="" placeholder="+6281908xxxx">
-                        </div>
-                        <div class="form-group">
-                            <label class="label-form" for="city-distinct">City or Distinct</label>
-                            <input class="form-control auth" type="text" name="city-distinct" value="" placeholder="Search City or District">
-                        </div>
-                        <div class="form-group">
-                            <label class="label-form" for="postal-code">Postal Code</label>
-                            <input class="form-control auth" type="text" name="postal-code" value="" placeholder="Type your postal Code">
-                        </div>
-                        <div class="form-group">
-                            <label class="label-form" for="address">Address</label>
-                            <textarea class="form-control auth" name="address" rows="8" cols="80"></textarea>
-                        </div>
-                        <input class="btn btn-info btn-lg" type="submit" name="submit" value="SAVE">
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="postal-code">Postal Code</label>
+                        <input class="form-control auth" type="text" name="postal_code" value="" placeholder="Type your postal Code">
+                    </div>
+                    <div class="form-group">
+                        <label class="label-form" for="address">Address</label>
+                        <textarea class="form-control auth" name="address" rows="8" cols="80"></textarea>
+                    </div>
+                    <button class="btn btn-info btn-lg" type="submit" name="submit">SAVE</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+@foreach($addresses as $address)
+  <div class="modal fade" id="modal-edit-address-{{ $address->id }}" role="dialog">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <p class="modal-title">Edit Address</p>
+              </div>
+              <div class="modal-body">
+                  <form class="form-horizontal" action="{{ url('/') }}/profile/edit-address" method="post">
+                      @csrf
+                      <input type="hidden" name="id" value="{{ $address->id }}">
+                      <div class="form-group">
+                          <label class="label-form" for="receiver-name">Receiver Name</label>
+                          <input class="form-control auth" type="text" name="receiver_name" value="{{ $address->_receiver_name }}" placeholder="Type your name">
+                      </div>
+                      <div class="form-group">
+                          <label class="label-form" for="phone">Phone</label>
+                          <input class="form-control auth" type="text" name="phone" value="{{ $address->_receiver_phone }}" placeholder="+6281908xxxx">
+                      </div>
+                      <div class="form-group">
+                          <label class="label-form" for="provinsi">Province</label>
+                          <select name="provinsi" class="form-control auth provinsi">
+                              <option value="">Select Province</option>
+                              @foreach($province->rajaongkir->results as $prov)
+                                @if($prov->province_id == $address->ro_province_id)
+                                  <option value='{{ $prov->province_id }}' selected>{{ $prov->province }}</option>
+                                @else
+                                  <option value='{{ $prov->province_id }}'>{{ $prov->province }}</option>
+                                @endif
+                              @endforeach
+                          </select>
+                      </div>                    
+                      <div class="form-group">
+                          <label class="label-form" for="city">City or Distinct</label>
+                            <div>
+                              <select name="city" class="form-control auth city">
+                                @foreach($city["rajaongkir"]["results"] as $cit)
+                                  @if($cit["city_id"] == $address->ro_city_id)
+                                    <option value='{{ $cit["city_id"] }}' selected>{{ $cit["type"] . ' ' . $cit["city_name"] }}</option>
+                                  @else
+                                    <option value='{{ $cit["city_id"] }}'>{{ $cit["type"] . ' ' . $cit["city_name"] }}</option>
+                                  @endif
+                                @endforeach
+                              </select>
+                            </div>
+                      </div>
+                      <div class="form-group">
+                          <label class="label-form" for="postal-code">Postal Code</label>
+                          <input class="form-control auth" type="text" name="postal_code" value="{{ $address->_kode_pos }}" placeholder="Type your postal Code">
+                      </div>
+                      <div class="form-group">
+                          <label class="label-form" for="address">Address</label>
+                          <textarea class="form-control auth" name="address" rows="8" cols="80">{{ trim($address->_address) }}</textarea>
+                      </div>
+                      <button class="btn btn-info btn-lg" type="submit" name="submit">SAVE</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+@endforeach
 
 @endsection

@@ -585,7 +585,7 @@ class ShopController extends Controller
         $user_address->_address = $request->address;
 
         $counter_default_address = UserAddress::where('user_id', '=', Auth::user()->id)->where('_default', '=', '1')->count();
-        if($counter_default_address = 0){
+        if($counter_default_address == 0){
             $user_address->_default = '1';            
         } else {
             $user_address->_default = '0';

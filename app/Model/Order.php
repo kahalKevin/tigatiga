@@ -17,5 +17,5 @@ class Order extends Model
     public function typePaymentMethod()
     {
     	return $this->hasOne('App\Model\Type', 'id', 'payment_gateway_id');
-    }    
+    }
 }
