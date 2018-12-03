@@ -272,11 +272,10 @@ class ShopController extends Controller
         $orderItems = array();
         $shippingDetail = -1;
         $defaultAddress = -1;
-
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
-        if(isset($cart) && 0 == $cart[0]->count()){
+        if(isset($cart) && 0 == $cart[0]->count()){ 
             return redirect('/')->with('error', 'Your session cart is expired');
         }
 
@@ -287,9 +286,9 @@ class ShopController extends Controller
         }
         $currentOrder = Order::query()
             ->where('cart_no', $key)
+            ->orWhere('id', $key)
             ->where('status_id', 'STATUSORDER0')
             ->first();
-
         if(isset($cart) && !$currentOrder){
             $errorMessage = $this->validateProductStock($cart);
             if($errorMessage!=""){
@@ -630,8 +629,8 @@ class ShopController extends Controller
         $order->_kode_pos = $request->postal_code;
         $order->save();
 
-        return Redirect::to('shop/checkoutGuest')->with('order_id', $request->order_id);
-    } 
+        return redirect()->route('checkoutGuest',['order_id'=>$request->order_id]);
+    }
 
     public function setDefaultAddress(Request $request)
     {
@@ -640,7 +639,7 @@ class ShopController extends Controller
         $user_address = UserAddress::where('id', '=', $request->address)->first();
         $user_address->_default = '1';
         $user_address->save();
-        return Redirect::to('shop/checkout')->with('order_id', $request->order_id);
+        return redirect()->route('checkoutLogin',['order_id'=>$request->order_id]);
     }
 
     private function getTagsSelected($id)

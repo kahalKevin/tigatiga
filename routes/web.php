@@ -35,17 +35,23 @@ Route::prefix('shop')->group(function () {
     Route::get('cart', 'ShopController@cart');
     Route::get('cart/increase-stock/{id}', 'ShopController@increaseStockCart');
     Route::get('cart/decrease-stock/{id}', 'ShopController@decreaseStockCart');
-    Route::get('checkout', 'ShopController@checkout');
-    Route::get('checkoutGuest', 'ShopController@checkoutGuest');
+    Route::get('checkout', [
+        'as' => 'checkoutLogin',
+        'uses' => 'ShopController@checkout'
+    ]);
+    Route::get('checkoutGuest', [
+        'as' => 'checkoutGuest',
+        'uses' => 'ShopController@checkoutGuest'
+    ]);
     Route::post('addToCart/{product_id}', 'ShopController@addToCart');
     Route::post('add-new-address', 'ShopController@addNewAddress');
     Route::post('set-default-address', 'ShopController@setDefaultAddress');
     Route::post('add-new-addres-guest', 'ShopController@addNewAddressGuest');
 });
 
-Route::prefix('order')->group(function () {
-    Route::get('history', 'OrderController@index');
-});
+// Route::prefix('order')->group(function () {
+//     Route::get('history', 'OrderController@index');
+// });
 
 Route::view('/order', 'order.index');
 Route::view('/order/detail', 'order.detail');
