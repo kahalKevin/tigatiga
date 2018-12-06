@@ -138,7 +138,9 @@ class ShopController extends Controller
         $product = Product::where('_slug', '=', $slug)->first();
         $category = Category::where('id', '=', $product->category_id)->first();
         $category_parent = Category::where('id', '=', $category->parent_category_id)->first();
-        $products_sizes = ProductStock::where('product_id', '=', $product->id)->get();
+        $products_sizes = ProductStock::where('product_id', '=', $product->id)
+            ->where('_stock', '>', 0)
+            ->get();
         $products_galleries = ProductGallery::where('product_id', '=', $product->id)->get();
         $product_tags = $this->getTagsSelected($product->id);
         $related_products =  Product::where([
@@ -188,6 +190,7 @@ class ShopController extends Controller
         }
         $currentOrder = Order::query()
             ->where('cart_no', $key)
+            ->orWhere('id', $key)            
             ->where('status_id', 'STATUSORDER0')
             ->first();
 

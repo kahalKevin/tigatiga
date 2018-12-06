@@ -74,7 +74,7 @@
                                         @if(isset($defaultAddress))
                                         <div class="col-md-12">
                                             <p class="cust-name">{{ $defaultAddress->_receiver_name }}</p>
-                                            <p class="cust-address">{{ $defaultAddress->_address }}<br>{{ $defaultAddress->_kota }}, {{ $defaultAddress->_kecamatan }}, {{ $defaultAddress->_kode_pos }}</p>
+                                            <p class="cust-address">{{ $defaultAddress->_address }}<br>, {{ $defaultAddress->_kode_pos }}</p>
                                             <p class="cust-phone">{{ $defaultAddress->_receiver_phone }}</p>
                                         </div>
                                         @endif

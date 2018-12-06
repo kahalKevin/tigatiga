@@ -50,7 +50,10 @@ class ProfileController extends Controller
     public function orderHistory(Request $request)
     {   
         $order_detail_list_history = OrderDetail::join('fe_tx_order', 'fe_tx_order_detail.order_id', '=', 'fe_tx_order.id')
-        ->where('fe_tx_order.user_id', '=', Auth::user()->id)->paginate(5);
+            ->where('fe_tx_order.user_id', '=', Auth::user()->id)
+            ->orderBy('fe_tx_order.created_at', 'DESC')
+            ->paginate(5);
+
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
         return view('order.index')->with(compact('order_detail_list_history', 'cmsUrl'));
     } 
@@ -82,13 +85,6 @@ class ProfileController extends Controller
         $user_address = UserAddress::find($request->id);
         $user_address->_address = $request->address;
 
-        $counter_default_address = UserAddress::where('user_id', '=', Auth::user()->id)->where('_default', '=', '1')->count();
-        if($counter_default_address == 0){
-            $user_address->_default = '1';            
-        } else {
-            $user_address->_default = '0';
-        }
-
         $user_address->_title = "Rumah";
         $user_address->_receiver_name = $request->receiver_name;
         $user_address->_receiver_phone = $request->phone;
@@ -96,7 +92,6 @@ class ProfileController extends Controller
         $user_address->ro_province_id = $request->provinsi;
         $user_address->_kota = $request->city;
         $user_address->_kode_pos = $request->postal_code;
-        $user_address->_active = '1';
         $user_address->updated_at = Carbon::now();
         $user_address->save();
 

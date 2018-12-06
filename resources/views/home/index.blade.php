@@ -132,16 +132,18 @@
         <!-- Section Title Start Here -->
         <div class="section-title">
           <h1> Brand </h1>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-            labore et dolore magna aliqua.</p>
+          <p>Choose your brand.</p>
         </div>
         <!-- Section Title End Here -->
         <div class="partner-icons">
-          <img src="{{ url('/') }}/icon/logo_lotto.svg" alt="rebook" width="200" height="80">
-          <img src="./img/partner/puma.png" alt="puma" width="180" height="100">
-          <img src="./img/partner/nike.png" alt="nike" width="180" height="80">
-          <img src="./img/partner/converse.png" alt="converse" width="180" height="60">
-          <img src="./img/partner/vans.png" alt="vans" width="180" height="150">
+          <img src="{{ url('/') }}/icon/adidas-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/lotto-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/mizuno-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/nike-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/piero-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/puma-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/specs-logo.png" width="200">
+          <img src="{{ url('/') }}/icon/umbro-logo.png" width="200">
         </div>
       </div>
     </div>

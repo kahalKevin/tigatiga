@@ -32,21 +32,20 @@
                                     <label for="inputEmail4">Phone</label>
                                     <input type="email" class="form-control" placeholder="" value="{{ $order->_receiver_phone }}" >
                                 </div>                                
-                                <div class="form-group col-md-6">
-                                    <label for="address">Address</label>
-                                    <textarea class="form-control" name="address" rows="3" cols="80" disabled="disabled">{{ $order->_address }}</textarea>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                </div>
                                 @if(!empty($order->ro_city_id))
-                                    <div class="form-group col-md-6 d-flex align-items-sm-end">
-                                        <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">CHANGE SHIPPING ADDRESS</button>
+                                    <div class="form-group col-md-6">
+                                        {{ $order->_address }}
                                     </div>
                                 @else
                                     <div class="form-group col-md-6 d-flex align-items-sm-end">
                                         <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">ENTER SHIPPING ADDRESS</button>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="form-row">
+                                @if(!empty($order->ro_city_id))
+                                    <div class="form-group col-md-6 d-flex align-items-sm-end">
+                                        <button type="button" class="enter-shipping-address" data-toggle="modal" data-target="#modal-add-new-address">CHANGE SHIPPING ADDRESS</button>
                                     </div>
                                 @endif
                             </div>

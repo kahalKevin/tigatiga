@@ -45,8 +45,8 @@
                             <label class="label-form" for="email">Email</label>
                             <input class="form-control auth" type="text" name="_email" value="" placeholder="example@gmail.com">
                             @if ($errors->has('_email'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('_email') }}</strong>
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('_email') }}</font></strong>
                                 </span>
                             @endif
                         </div>
@@ -54,16 +54,16 @@
                             <label class="label-form" for="username">Password</label>
                             <input class="form-control auth" type="password" name="password" value="" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;">
                             @if ($errors->has('password'))
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $errors->first('password') }}</strong>
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('password') }}</font></strong>
                                 </span>
                             @endif
                         </div>
                         <div class="form-group forgot-password">
-                            <a href="forgot-password.html">Forgot Password</a>
+                            <a href="{{ url('forgot-password') }}">Forgot Password</a>
                         </div>
                         <input class="btn btn-info btn-lg" type="submit" name="login" value="Login">
-                        <div class="form-group caption-after-submit" data-toggle="modal" data-target="#modal-register" data-dismiss="modal>
+                        <div class="form-group caption-after-submit" data-toggle="modal" data-target="#modal-register" data-dismiss="modal">
                             Not a member yet? <a href="#">Register</a>
                         </div>
                     </form>
@@ -104,7 +104,7 @@
                         <div class="form-group">
                             <label class="label-form" for="email">Email</label>
                             <input class="form-control auth" type="email" name="_email" value="" placeholder="example@gmail.com" required>
-                             @if ($errors->has('_email'))
+                            @if ($errors->has('_email'))
                                 <span class="" role="alert">
                                     <strong><font color="red">{{ $errors->first('_email') }}</font></strong>
                                 </span>

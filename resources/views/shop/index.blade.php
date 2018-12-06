@@ -28,7 +28,7 @@
                             <div class="size mb-30" id="size">
                                 <h3 class="sidebar-title">SIZE</h3>
                                 <ul class="size-list sidbar-style">
-                                    <form action="/shop/index/{{ $category->_slug }}" method="get">
+                                    <form action="{{ url('/') }}/shop/index/{{ $category->_slug }}" method="get">
                                     @php 
                                         $input = Input::get();
                                     @endphp
@@ -97,19 +97,19 @@
                                                 @endif
                                                 <div class="form-group row">
                                                     <!-- <div class="col-lg-3"> -->
-                                                        <label for="from" class="col-lg-3 col-md-3 col-sm-3 col-form-label">From</label>
+                                                        <label for="priceFrom" class="col-lg-3 col-md-3 col-sm-3 col-form-label">From</label>
                                                     <!-- </div> -->
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <input class="form-control" type="number" name="priceFrom" value="{{ isset($priceFrom) ? $priceFrom : '' }}">
+                                                        <input class="form-control" type="number" id="priceFrom" name="priceFrom" value="{{ isset($priceFrom) ? $priceFrom : '' }}">
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="form-group row">
                                                     <!-- <div class="col-lg-3"> -->
-                                                        <label for="to" class="col-lg-3 col-md-3 col-sm-3 col-form-label">To</label>
+                                                        <label for="priceTo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">To</label>
                                                     <!-- </div> -->
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <input class="form-control" type="number" name="priceTo" value="{{ isset($priceTo) ? $priceTo : '' }}">
+                                                        <input class="form-control" type="number" id="priceTo" name="priceTo" value="{{ isset($priceTo) ? $priceTo : '' }}">
                                                     </div>
                                                 </div>
                                                 <hr>
@@ -127,7 +127,7 @@
                             </div>
                             <div class="size mb-30">
                                 <h3 class="sidebar-title">GENDER</h3>
-                                <form action="/shop/index/{{ $category->_slug }}" method="get">
+                                <form action="{{ url('/') }} /shop/index/{{ $category->_slug }}" method="get">
                                 <ul class="size-list sidbar-style">
                                     @php 
                                         $input = Input::get();
@@ -178,7 +178,7 @@
                                 <h3 class="sidebar-title">TAG</h3>
                                 <!-- <ul class="instagram-img"> -->
                                     @foreach($tags as $tag)
-                                        <a href="/shop/indexByTag/{{ $tag->id }}+{{ $tag->name }}">#{{ $tag->name }}</a> &nbsp&nbsp
+                                        <a href="{{ url('/') }}/shop/indexByTag/{{ $tag->id }}+{{ $tag->name }}">#{{ $tag->name }}</a> &nbsp&nbsp
                                     @endforeach
 <!--                                 </ul> -->
                             </div>

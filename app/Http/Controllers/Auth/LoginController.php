@@ -73,6 +73,7 @@ class LoginController extends Controller
                 foreach ($order as $data) {
                     $data->guest_no = null;
                     $data->user_id = Auth::user()->id;
+                    $data->_email = Auth::user()->_email;
                     $data->save();
                 }
             }

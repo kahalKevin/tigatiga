@@ -81,19 +81,19 @@
                                                 @endif
                                                 <div class="form-group row">
                                                     <!-- <div class="col-lg-3"> -->
-                                                        <label for="from" class="col-lg-3 col-md-3 col-sm-3 col-form-label">From</label>
+                                                        <label for="priceFrom" class="col-lg-3 col-md-3 col-sm-3 col-form-label">From</label>
                                                     <!-- </div> -->
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <input class="form-control" type="number" name="priceFrom" value="{{ isset($priceFrom) ? $priceFrom : '' }}">
+                                                        <input class="form-control" type="number" id="priceFrom" name="priceFrom" value="{{ isset($priceFrom) ? $priceFrom : '' }}">
                                                     </div>
                                                 </div>
                                                 <hr>
                                                 <div class="form-group row">
                                                     <!-- <div class="col-lg-3"> -->
-                                                        <label for="to" class="col-lg-3 col-md-3 col-sm-3 col-form-label">To</label>
+                                                        <label for="priceTo" class="col-lg-3 col-md-3 col-sm-3 col-form-label">To</label>
                                                     <!-- </div> -->
                                                     <div class="col-lg-6 col-md-6 col-sm-6">
-                                                        <input class="form-control" type="number" name="priceTo" value="{{ isset($priceTo) ? $priceTo : '' }}">
+                                                        <input class="form-control" type="number" id="priceTo" name="priceTo" value="{{ isset($priceTo) ? $priceTo : '' }}">
                                                     </div>
                                                 </div>
                                                 <hr>

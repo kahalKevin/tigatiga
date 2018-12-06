@@ -14,6 +14,7 @@ Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'Auth\LoginController@logout');
+    Route::get('/users/reset-password/{token}', 'UserController@resetPassword');
     Route::post('/users/update-profile/{id}', 'UserController@update');
     Route::post('/users/change-password/{id}', 'UserController@changePassword');
 });
@@ -49,10 +50,6 @@ Route::prefix('shop')->group(function () {
     Route::post('add-new-addres-guest', 'ShopController@addNewAddressGuest');
 });
 
-// Route::prefix('order')->group(function () {
-//     Route::get('history', 'OrderController@index');
-// });
-
 Route::view('/order', 'order.index');
 Route::view('/order/detail', 'order.detail');
 Route::view('/order/tracking', 'order.tracking');
@@ -70,8 +67,10 @@ Route::group(['prefix' => 'profile',  'middleware' => 'auth'], function () {
     Route::post('edit-address', 'ProfileController@editAddress');
 });
 
+Route::post('forgot-password', 'UserController@forgotPassword');
 Route::view('forgot-password', 'profile.forgot-password');
-Route::view('reset-password', 'profile.reset-password');
+Route::get('reset-password/{token}', 'UserController@resetPasswordForm');
+Route::post('reset-password', 'UserController@resetPassword');
 
 Route::get('shipping/city', 'ShopController@getCity');
 Route::get('shipping/cost', 'ShopController@calculateCost');

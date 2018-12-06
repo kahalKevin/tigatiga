@@ -10,7 +10,7 @@
             <p class="mp-name">
               Hi, {{ Auth::user()->full_name }}
             </p>
-            <a href="{{ url('/') }}/profile"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
+            <a href="{{ url('/') }}/profile" class="text-red"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
             <hr>
             <a href="{{ url('/') }}/profile/order/history"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order History</a>
             <hr>

@@ -15,21 +15,23 @@
                 <div class="col-lg-6 col-md-6 mb-all-40">
                     <!-- Thumbnail Large Image start -->
                     <div class="tab-content image-gallery">
-                        @for($i = 0; $i < $products_galleries->count(); $i++)
-                        <div id="thumb{{ $i }}" class="tab-pane fade {{ $i === 0 ? "show active" : "" }}">
-                            <a data-fancybox="images" href="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
-                                    alt="product-view"></a>
-                        </div>                        
-                        @endfor
+                        @foreach($products_galleries as $img)
+                            <div id="thumb{{ $loop->index }}" class="tab-pane fade {{ $loop->first ? 'show active' : '' }}">
+                                <a data-fancybox="images" href="{{ $cmsUrl . $img->_url }}?wid=1400">
+                                    <img src="{{ $cmsUrl . $img->_url }}?wid=1400"
+                                        alt="product-view">
+                                </a>
+                            </div>                        
+                        @endforeach
                     </div>
 
                     <div class="product-thumbnail">
                         <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
-                            @for($i = 0; $i < $products_galleries->count(); $i++)                                
-                                <a {{ $i === 0 ? 'class="active"' : '' }} data-toggle="tab" href="#thumb{{$i}}"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
+                            @foreach($products_galleries as $img)                             
+                                <a {{ $loop->first ? 'show active' : '' }} data-toggle="tab" href="#thumb{{ $loop->index }}"><img src="{{ $cmsUrl . $img->_url }}?wid=1400"
                                     alt="product-thumbnail">
                                 </a>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
                 </div>

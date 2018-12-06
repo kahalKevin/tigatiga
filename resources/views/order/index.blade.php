@@ -12,7 +12,7 @@
             </p>
             <a href="{{ url('/') }}/profile"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
             <hr>
-            <a href="{{ url('/') }}/profile/order/history"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order History</a>
+            <a href="{{ url('/') }}/profile/order/history" class="text-red"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order History</a>
             <hr>
             <a href="{{ url('/') }}/logout"><span class="icon icon-ClosedLock" style="padding-right: 13px;"></span>Logout</a>
           </div>

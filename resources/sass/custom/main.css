@@ -1,4 +1,21 @@
 /* HEADER - START */
+
+/* START REMOVE INDIHOME TAG */
+
+iframe#ifrm {
+    display: none;
+}
+
+/* END REMOVE INDIHOME TAG */
+
+/* START PAGINATION STYLE */
+
+.shop-breadcrumb-area li.active a {
+    color: #a9091d !important;
+}
+
+/* END PAGINATION STYLE */
+
 .dropdown-item:focus,
 .dropdown-item:hover {
     background-color: #16161a !important;
@@ -596,6 +613,10 @@ footer {
 
 .border-red {
     border-color: #a9091d !important;
+}
+
+.text-red {
+    color: #a9091d !important;   
 }
 
 input {

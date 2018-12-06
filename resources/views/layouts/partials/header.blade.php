@@ -66,7 +66,12 @@
                      <a href="{{ url('/shop/cart') }}"><span class="icon icon-FullShoppingCart"></span>
                      <span class="total-pro">
                         @if(Session::has('user_cart_list-'. Session::get('user_cart')))
-                          {{ Session::get('user_cart_list-'. Session::get('user_cart'))[0]->count() }}
+                           @php
+                              $cart = Session::get('user_cart_list-'. Session::get('user_cart'))[0];
+                              echo array_sum(array_map(function($item) { 
+                                 return $item['_qty']; 
+                              }, $cart->toArray()));
+                           @endphp
                         @else
                           0
                         @endif

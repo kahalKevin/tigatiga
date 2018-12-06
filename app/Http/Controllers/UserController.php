@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Redirect;
 use Session;
 use Auth;
+use Mail;
 
 class UserController extends Controller
 {
@@ -25,6 +26,11 @@ class UserController extends Controller
     protected $rulesChangePassword = array(
         'old_password' => 'required|string|min:6',
         'password' => 'required|string|min:6|confirmed',
+    );
+
+    //For Validation
+    protected $rulesResetPassword = array(
+        'password' => 'required|string|min:6|confirmed'
     );
     
     /**
@@ -66,5 +72,55 @@ class UserController extends Controller
         $user->save();
         
         return redirect('/profile');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $user = User::where('_email', '=', $request->email)->first();
+        $payload = $user->_email . date('Y-m-d H:i:s');
+
+        $token = sha1($payload);
+        $url = env('APP_URL') . '/reset-password/' . $token;
+        $arg = [
+            'email' => $user->_email,
+            'url' => $url
+        ];
+
+        $test = Mail::send('emails.forgot_password', $arg, function ($m) use ($arg) {
+            $m->from(env('MAIL_FROM'), 'supershop');
+            $m->subject('Reset your password.');
+
+            $m->to($arg['email']);
+        });
+
+        $user->_forgot_token_password = $token;
+        $user->save();
+
+        return redirect('/');
+    }
+
+    public function resetPasswordForm($token)
+    {
+        $user = User::where('_forgot_token_password', $token)->first();
+
+        if (empty($user)) {
+            return redirect('/');
+        }
+
+        return view('profile.reset-password', compact('token'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        Session::put('last_modal', null);
+        $this->validate($request, $this->rulesResetPassword);
+        
+        $user = User::where('_forgot_token_password', $request->token)->first();
+        
+        $user->_password = Hash::make($request->password);
+        $user->_forgot_token_password = null;
+        $user->save();
+        
+        return redirect('/');
     }
 }
