@@ -232,19 +232,22 @@
     color: #ffffff;
 }
 
-#modal-add-new-address .modal-content {
+#modal-add-new-address .modal-content,
+[id^='modal-edit-address-'] .modal-content {
     background-color: #1e1e1e;
     box-shadow: 0 0 11px 0 #000000;
     border: none !important;
 }
 
-#modal-add-new-address .modal-header {
+#modal-add-new-address .modal-header,
+[id^='modal-edit-address-'] .modal-header {
     margin-top: 26px;
     display: inline-block;
     text-align: center;
 }
 
-#modal-add-new-address .modal-content .modal-title {
+#modal-add-new-address .modal-content .modal-title,
+[id^='modal-edit-address-'] .modal-content .modal-title {
     font-family: Roboto;
     font-size: 24px;
     font-weight: 500;
@@ -255,28 +258,45 @@
     color: #ffffff;
 }
 
-#modal-add-new-address .modal-body {
+#modal-add-new-address .modal-body,
+[id^='modal-edit-address-'] .modal-body {
     margin-top: 55px;
 }
 
-#modal-add-new-address input {
-    border-color: transparent;
-    border-radius: 4px;
-    background-color: #16161a;
-    box-shadow: 0 0 11px 0 #000000;
+#modal-add-new-address input,
+#modal-add-new-address input:focus,
+#modal-add-new-address .nice-select,
+#modal-add-new-address .nice-select .list,
+#modal-add-new-address .nice-select .option:hover,
+[id^='modal-edit-address-'] input, 
+[id^='modal-edit-address-'] .nice-select,
+[id^='modal-edit-address-'] .nice-select .list,
+[id^='modal-edit-address-'] .nice-select .option:hover {
+    border-color: transparent !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    background-color: #16161a !important;
+    box-shadow: 0 0 11px 0 #000000 !important;
 }
 
-#modal-add-new-address textarea {
-    border-color: transparent;
-    border-radius: 4px;
-    background-color: #16161a;
-    box-shadow: 0 0 11px 0 #000000;
+#modal-add-new-address textarea,
+#modal-add-new-address textarea:focus,
+[id^='modal-edit-address-'] textarea,
+[id^='modal-edit-address-'] textarea:focus {
+    border-color: transparent !important;
+    border-radius: 4px !important;
+    color: #fff !important;
+    background-color: #16161a !important;
+    box-shadow: 0 0 11px 0 #000000 !important;
 }
 
-#modal-add-new-address .btn-info {
+#modal-add-new-address .btn-info,
+[id^='modal-edit-address-'] .btn-info {
     width: 100%;
     border-radius: 4px;
     background-color: #a9091d;
+    border-color: transparent !important;
+    box-shadow: 0 0 11px 0 #000000 !important;
     font-family: Roboto;
     font-size: 14px;
     font-weight: 500;
@@ -288,7 +308,7 @@
     margin-top: 20px;
 }
 
-#my-address .col-md-4 .box {
+.my-address .col-md-4 .box {
     height: 196px;
 }
 

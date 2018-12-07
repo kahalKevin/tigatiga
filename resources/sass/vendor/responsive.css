@@ -400,7 +400,7 @@
     }
 
     .sticky .mean-container a.meanmenu-reveal {
-        top: -43px;
+        top: -28px;
     }
 
     .cam-content p {
@@ -1442,8 +1442,7 @@
     }
 
     .newsletter-box .subscribe {
-        padding: 10px 103px 10px 15px;
-        height: 50px;
+        width: 300px !important;
     }
 
     .ride-content {
@@ -1618,7 +1617,12 @@
         margin-top: 50px !important;
     }
 
+    /* 
     .mean-container a.meanmenu-reveal {
         top: -43 !important;
+    } */
+
+    .padding-area {
+        padding: 14px 0;
     }
 }

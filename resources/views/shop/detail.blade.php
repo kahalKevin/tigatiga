@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', "- " . $product->_meta_title)
+@section('description', $product->_meta_desc)
 @section('content')
 
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
@@ -12,22 +14,24 @@
                 <!-- Sidebar Shopping Option Start -->
                 <div class="col-lg-6 col-md-6 mb-all-40">
                     <!-- Thumbnail Large Image start -->
-                    <div class="tab-content">
-                        @for($i = 0; $i < $products_galleries->count(); $i++)
-                        <div id="thumb{{ $i }}" class="tab-pane fade {{ $i === 0 ? "show active" : "" }}">
-                            <a data-fancybox="images" href="./img/product/tumblr/1.png"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
-                                    alt="product-view"></a>
-                        </div>                        
-                        @endfor
+                    <div class="tab-content image-gallery">
+                        @foreach($products_galleries as $img)
+                            <div id="thumb{{ $loop->index }}" class="tab-pane fade {{ $loop->first ? 'show active' : '' }}">
+                                <a data-fancybox="images" href="{{ $cmsUrl . $img->_url }}?wid=1400">
+                                    <img src="{{ $cmsUrl . $img->_url }}?wid=1400"
+                                        alt="product-view">
+                                </a>
+                            </div>                        
+                        @endforeach
                     </div>
 
                     <div class="product-thumbnail">
                         <div class="thumb-menu owl-carousel nav tabs-area" role="tablist">
-                            @for($i = 0; $i < $products_galleries->count(); $i++)                                
-                                <a {{ $i === 0 ? 'class="active"' : '' }} data-toggle="tab" href="#thumb{{$i}}"><img src="{{ $cmsUrl . $products_galleries[$i]->_url }}?wid=1400"
+                            @foreach($products_galleries as $img)                             
+                                <a {{ $loop->first ? 'show active' : '' }} data-toggle="tab" href="#thumb{{ $loop->index }}"><img src="{{ $cmsUrl . $img->_url }}?wid=1400"
                                     alt="product-thumbnail">
                                 </a>
-                            @endfor
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -37,7 +41,7 @@
                         <h3 class="product-header">{{ $product->_name }}</h3>
                         <div class="pro-thumb-price mt-20">
                             <p>
-                                <span class="special-price">Rp. {{ number_format($product->_price, 2) }}</span>
+                                <span class="special-price">Rp. {{ number_format($product->_price, 0, '.', '.') }}</span>
                             </p>
                         </div>
                         @if($products_sizes->count() > 0)
@@ -50,23 +54,9 @@
                         </div>                        
                         @endif
                         <div id="tag-detail">
-                            <ul class="instagram-img">
-                                <li>
-                                    <a href="#">#adidas</a>
-                                </li>
-                                <li>
-                                    <a href="#">#orange</a>
-                                </li>
-                                <li>
-                                    <a href="#">#gazelle</a>
-                                </li>
-                                <li>
-                                    <a href="#">#sneaker</a>
-                                </li>
-                                <li>
-                                    <a href="#">#shoes</a>
-                                </li>
-                            </ul>
+                            @foreach($product_tags as $tag)
+                                <a href="/shop/indexByTag/{{ $tag->id }}+{{ $tag->name }}">#{{ $tag->name }}</a> &nbsp&nbsp
+                            @endforeach
                         </div>
 
                         <br>
@@ -93,14 +83,14 @@
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-dark btn-sm" id="minus-btn">
-                                        <img src="/icon/ico-min.svg" class="ico_minus">
+                                        <img src="{{ asset('/icon/ico-min.svg') }}" class="ico_minus">
                                     </button>
                                 </div>
                                 <input type="text" id="qty_input" name="quantity" value="1" min="1">
                                 <input type="hidden" id="price_per_item" name="price_per_item" value="{{ $product->_price }}" min="1">
                                 <div class="input-group-prepend">
                                     <button class="btn btn-dark btn-sm" id="plus-btn">
-                                        <img src="/icon/ico-plus.svg" class="ico_plus">
+                                        <img src="{{ asset('/icon/ico-plus.svg') }}" class="ico_plus">
                                     </button>
                                 </div>
                             </div>
@@ -173,7 +163,7 @@
                                                     <div class="pro-content">
                                                         <div class="pro-info">
                                                             <h4><a href="/shop/detail/{{$related_product->_slug}}">{{ $related_product->_name }}</a></h4>
-                                                            <p><span class="price">Rp. {{ number_format($related_product->_price, 2) }}</span></p>
+                                                            <p><span class="price">Rp. {{ number_format($related_product->_price, 0, '.', '.') }}</span></p>
                                                         </div>
                                                     </div>
                                                 </div>

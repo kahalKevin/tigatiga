@@ -4,9 +4,13 @@ namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Scopes\ActiveScope;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+    use SoftDeletes;
+
+    protected $dates = ['delete_at'];
     protected $table = 'cms_tm_product';
 
     protected static function boot()
@@ -24,6 +28,11 @@ class Product extends Model
     public function productStocks()
     {
         return $this->hasMany('App\Model\ProductStock', 'product_id', 'id');
+    }
+
+    public function productTags()
+    {
+        return $this->hasMany('App\Model\ProductTag', 'product_id', 'id');
     }
 
     public function carts()

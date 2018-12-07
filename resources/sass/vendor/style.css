@@ -543,14 +543,13 @@ p:last-child {
 
 .sticky .header-menu-list>li,
 .sticky .cart-box>ul>li {
-    padding: 15px 0;
+    padding: 3px 0;
 }
 
 .sticky .cart-box>ul>li>a span+span.total-pro {
     font-size: 10px;
     height: 16px;
     line-height: 16px;
-    top: 6px;
     width: 16px;
 }
 
@@ -749,7 +748,7 @@ p:last-child {
 .categorie-search-box input,
 .subscribe-box input {
     background: #f7f7f7 none repeat scroll 0 0;
-    color: #555;
+    color: #555 !important;
     font-size: 16px;
     font-style: italic;
     height: 45px;
@@ -979,7 +978,7 @@ p:last-child {
     line-height: 18px;
     position: absolute;
     text-align: center;
-    top: 14px;
+    top: -5px;
     width: 18px;
 }
 

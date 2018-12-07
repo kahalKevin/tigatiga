@@ -316,6 +316,8 @@ NOTE: main.js, All custom script and plugin activation script in this file.
         $('.thumb-menu a').removeClass('active');
     })
 
+    $('.thumb-menu .owl-nav').removeClass('disabled');
+
     /*-----------------------------
     13. Recent Post Activation
     -----------------------------*/

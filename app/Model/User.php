@@ -11,6 +11,7 @@ class User extends Authenticatable
     use Notifiable;
     
     protected $table = 'fe_tm_user';
+    protected $appends = ['full_name'];
 
     /**
      * The attributes that are mass assignable.
@@ -33,6 +34,16 @@ class User extends Authenticatable
     protected $hidden = [
         '_password', '_remember_token',
     ];
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['_first_name'] . ' ' . $this->attributes['_last_name'];
+    }
+
+    public function gender()
+    {
+        return $this->hasOne('App\Model\Type', 'id', 'gender_id');
+    }
 
     public function addresses()
     {

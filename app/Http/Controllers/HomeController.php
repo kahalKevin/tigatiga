@@ -6,19 +6,11 @@ use Illuminate\Http\Request;
 use App\Model\HomeBanner;
 use App\Model\Product;
 use App\Model\InventoryAds;
+use Carbon\Carbon;
+use DB;
 
 class HomeController extends Controller
 {
-    // /**
-    //  * Create a new controller instance.
-    //  *
-    //  * @return void
-    //  */
-    public function __construct()
-    {
-        //$this->middleware('guest');
-    }
-
     /**
      * Show the application dashboard.
      *
@@ -34,8 +26,11 @@ class HomeController extends Controller
         $best_products = Product::orderBy('_count_view', 'desc')
             ->limit(4)
             ->get();
-        $inventory_ads = InventoryAds::latest()
+        $inventory_ads = InventoryAds::query()
+            ->where('_start_date', '<', Carbon::now())
+            ->where('_end_date', '>', Carbon::now())
             ->first();
+            
         $cmsUrl = env("IMG_URL_PREFIX", "http://localhost:8080");
         return view('home.index', compact(
             'home_banners', 

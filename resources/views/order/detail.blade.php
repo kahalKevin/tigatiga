@@ -8,17 +8,13 @@
             <div class="col-md-3">
                 <div class="box">
                     <p class="mp-name">
-                        Hi, Dwi Putra Fath
+                      Hi, {{ Auth::user()->full_name }}
                     </p>
-                    <p class="mp-subname">
-                        lorem ipsum dolar sit amet
-                    </p>
-                    <a href="#"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
+                    <a href="{{ url('/') }}/profile"><span class="icon icon-User" style="padding-right: 13px;"></span>My Profile</a>
                     <hr>
-                    <a href="#"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order
-                        History</a>
+                    <a href="{{ url('/') }}/profile/order/history" class="text-red"><span class="icon icon-FullShoppingCart" style="padding-right: 13px;"></span>Order History</a>
                     <hr>
-                    <a href="#"><span class="icon icon-ClosedLock" style="padding-right: 13px;"></span>Logout</a>
+                    <a href="{{ url('/') }}/logout"><span class="icon icon-ClosedLock" style="padding-right: 13px;"></span>Logout</a>
                 </div>
             </div>
             <div class="col-md-9">
@@ -26,86 +22,96 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="order-title">
-                                <p>Order ID 094564234</p>
+                                <p>Order ID : {{ $order->id }}</p>
                             </div>
                         </div>
                     </div><br>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <img src="/img/product/adidas-gazelle2.png" alt="blg11" width="75px" height="75">
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="comment-desc">
-                                        <p>Adidas Gazelle II Orange</p>
+                    @foreach($order_detail as $od)
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src="{{ $cmsUrl . $od->product_image_url }}" alt="$od->product_name" width="75px" height="75">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="comment-desc">
+                                            <p>{{ $od->product_name }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div><br>
-                            <div class="title-upload">
-                                Upload bukti pembayaran<br><br>
-                                <a href="#" class="btn btn-info btn-lg">UPLOAD IMAGE</a>
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <!-- <div class="title">
-                                <p>Order ID</p>
-                            </div><br> -->
-                            <div class="quantity">
-                                <p>Quantity<br>1</p>
-                            </div>
+                            <div class="col-md-4">
+                                <!-- <div class="title">
+                                    <p>Order ID</p>
+                                </div><br> -->
+                                <div class="quantity">
+                                    <p>Quantity<br>{{ $od->_qty }}</p>
+                                </div>
 
-                        </div>
-                        <div class="col-md-4">
-                            <div class="title">
-                                <p>Total Price</p>
                             </div>
-                            <p class="price">Rp. 500.000</p>
+                            <div class="col-md-4">
+                                <div class="title">
+                                    <p>Total Price</p>
+                                </div>
+                                @php
+                                    $total_product_price = $od->_qty * $od->product_price;
+                                @endphp
+                                <p class="price">Rp. {{ number_format($total_product_price, 0, '.', '.') }}</p>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
                     <br><br>
+                    @if($order->status_id == 'STATUSORDER0')
+                    <div class="title-upload">
+                        <form class="form-horizontal" action="/shop/checkout" method="get">
+                            @csrf
+                            <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
+                            <button class="btn btn-info btn-lg" type="submit">GO TO CHECKOUT</button>
+                        </form>
+                    </div>                    
+                    @endif
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="title-address">
                                 Shipping Address<br>
-                                <span class="address">Kantor Codigo. Graha Mitra Lantai 7 Jl. Jend. Gatot Subroto
-                                    Kav.21</span>
+                                <span class="address">{{ $order->_address }}</span>
                             </div><br><br>
 
+                            <!-- Check every condition from order status -->
                             <div class="">
                                 <div class="track-order-circle">
-                                    <div class="active">
-                                        <div class="circle-track">
+                                    <div class="{{ $last_status >= 1 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 1 ? 'active' : '' }}">
                                             <span>1</span>
                                             <p>Payment Confirmation</p>
                                         </div>
                                     </div>
-                                    <div class="active">
-                                        <div class="circle-track active">
+                                    <div class="{{ $last_status >= 2 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 2 ? 'active' : '' }}">
                                             <span>2</span>
                                             <p>Payment Verification</p>
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <div class="circle-track active">
+                                    <div class="{{ $last_status >= 3 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 3 ? 'active' : '' }}">
                                             <span>3</span>
                                             <p>In Process</p>
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <div class="circle-track">
+                                    <div class="{{ $last_status >= 4 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 4 ? 'active' : '' }}">
                                             <span>4</span>
                                             <p>In Delivery</p>
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <div class="circle-track">
+                                    <div class="{{ $last_status >= 5 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 5 ? 'active' : '' }}">
                                             <span>5</span>
                                             <p>Packet Received</p>
                                         </div>
                                     </div>
-                                    <div class="">
-                                        <div class="circle-track" style="border-left: none; border-top: none;">
+                                    <div class="{{ $last_status >= 6 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 6 ? 'active' : '' }}" style="border-left: none; border-top: none;">
                                             <span>6</span>
                                             <p>Transaction Complete</p>
                                         </div>
@@ -121,15 +127,15 @@
                     <div class="row">
                         <div class="col-lg-3">
                             <p>Price</p>
-                            <p class="harga">Rp. 500.000</p>
+                            <p class="harga">Rp. {{ number_format($order->_total_amount, 0, '.', '.') }}</p>
                         </div>
                         <div class="col-lg-6">
                             <p>Shipping</p>
-                            <p class="harga">Rp. 9.000</p>
+                            <p class="harga">Rp. {{ number_format($order->_freight_amount, 0, '.', '.') }}</p>
                         </div>
                         <div class="col-lg-3">
                             <p>Grand Price</p>
-                            <p class="harga">Rp. 509.000</p>
+                            <p class="harga">Rp. {{ number_format($order->_grand_total, 0, '.', '.') }}</p>
                         </div>
                     </div>
                 </div>

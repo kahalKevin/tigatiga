@@ -299,14 +299,14 @@
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3),
         0 3px 21px 0 rgba(0, 0, 0, 0.3);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3), 0 3px 21px 0 rgba(0, 0, 0, 0.3);
-    color: #1b1b1c;
+    color: #ab0316 !important;
     display: inline-block;
     font-size: 13px;
     font-weight: 400;
     height: 54px;
     line-height: 30px;
     padding: 10px 25px 10px 25px;
-    width: 300px;
+    width: 350px;
     margin-right: 0;
 }
 

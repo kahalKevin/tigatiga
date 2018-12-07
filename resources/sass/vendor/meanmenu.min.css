@@ -9,44 +9,48 @@
 a.meanmenu-reveal {
     display: none
 }
-.main-header,.mobile-menu{
+
+.main-header,
+.mobile-menu {
     position: relative;
 }
+
 .mean-container .mean-bar {
-  background: #000 none repeat scroll 0 0;
-  float: left;
-  left: 0;
-  min-height: 0;
-  padding: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-  z-index: 999;
+    background: #000 none repeat scroll 0 0;
+    float: left;
+    left: 0;
+    min-height: 0;
+    padding: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 999;
 }
+
 .mean-container a.meanmenu-reveal {
-  background: transparent none repeat scroll 0 0;
-  color: #fff;
-  cursor: pointer;
-  display: block;
-  font-family: Arial,Helvetica,sans-serif;
-  font-size: 1px;
-  font-weight: 700;
-  height: auto;
-  line-height: 22px;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  text-decoration: none;
-  text-indent: -9999em;
-  top: -41px;
-  width: 22px;
+    background: transparent none repeat scroll 0 0;
+    color: #fff;
+    cursor: pointer;
+    display: block;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1px;
+    font-weight: 700;
+    height: auto;
+    line-height: 22px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-decoration: none;
+    text-indent: -9999em;
+    top: -28px;
+    width: 22px;
 }
 
 .mean-container a.meanmenu-reveal span {
-  background: #fff none repeat scroll 0 0;
-  display: block;
-  height: 2px;
-  margin-top: 4px;
+    background: #fff none repeat scroll 0 0;
+    display: block;
+    height: 2px;
+    margin-top: 4px;
 }
 
 .mean-container .mean-nav {
@@ -70,13 +74,13 @@ a.meanmenu-reveal {
 }
 
 .mean-container .mean-nav ul li a {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  display: block;
-  font-size: 13px;
-  margin: 0;
-  padding: 15px 5%;
-  text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    display: block;
+    font-size: 13px;
+    margin: 0;
+    padding: 15px 5%;
+    text-transform: uppercase;
 }
 
 
@@ -115,26 +119,26 @@ a.meanmenu-reveal {
 }
 
 .mean-container .mean-nav ul li a.mean-expand {
-  -moz-border-bottom-colors: none;
-  -moz-border-left-colors: none;
-  -moz-border-right-colors: none;
-  -moz-border-top-colors: none;
-  background: transparent none repeat scroll 0 0;
-  border-color: currentcolor currentcolor rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.2);
-  -o-border-image: none;
-  border-image: none;
-  border-style: none none solid solid;
-  border-width: 0 0 0 1px;
-  font-weight: 600;
-  height: 23px;
-  line-height: 25px;
-  padding: 12px;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  top: 0;
-  width: 26px;
-  z-index: 2;
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: transparent none repeat scroll 0 0;
+    border-color: currentcolor currentcolor rgba(255, 255, 255, 0.2) rgba(255, 255, 255, 0.2);
+    -o-border-image: none;
+    border-image: none;
+    border-style: none none solid solid;
+    border-width: 0 0 0 1px;
+    font-weight: 600;
+    height: 23px;
+    line-height: 25px;
+    padding: 12px;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 26px;
+    z-index: 2;
 }
 
 .mean-container .mean-nav ul li a.mean-expand:hover {
@@ -162,5 +166,5 @@ a.meanmenu-reveal {
 }
 
 .mean-remove {
-    display: none!important
+    display: none !important
 }

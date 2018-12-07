@@ -3,9 +3,13 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Cart extends Model
 {
+	use SoftDeletes;
+
+	protected $dates = ['delete_at'];
     protected $table = "fe_tx_cart";
 
     public function products()
