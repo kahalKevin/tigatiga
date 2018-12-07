@@ -179,7 +179,7 @@ class ShopController extends Controller
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
-        if(isset($cart) && 0 == $cart[0]->count()){
+        if(isset($cart) && 0 == $cart[0]->count() && !isset($request->order_id)){
             return redirect('/')->with('error', 'Your session cart is expired');
         }
 
@@ -278,7 +278,7 @@ class ShopController extends Controller
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
-        if(isset($cart) && 0 == $cart[0]->count()){ 
+        if(isset($cart) && 0 == $cart[0]->count() && !isset($request->order_id)){
             return redirect('/')->with('error', 'Your session cart is expired');
         }
 
@@ -657,9 +657,15 @@ class ShopController extends Controller
         $order_id = $request->order_id;
 
         $order = Order::where('id', '=', $order_id)->first();
+        if($order == null) return view('order.tracking-default')->with(compact('order_id'))->with('message','Order ID tidak ditemukan');
 
-        $status_delivery = $this->getStatusDelivery("SOCAG00183235715", "jne");
-        dd($status_delivery['rajaongkir']['result']);
+        if(empty($order->_freight_awb_no)) return view('order.tracking-default')->with(compact('order_id'))->with('message','Resi pada Order ID tidak ditemukan');
+
+        $type_provider_courier = Type::where('id', '=', $order->freight_provider_id)->first();
+
+        $awb_no = $order->_freight_awb_no;
+        $courier = strtolower($type_provider_courier->_name);
+        $status_delivery = $this->getStatusDelivery($awb_no, $courier);
         return view('order.tracking')->with(compact('status_delivery', 'order_id'));
     }
 
