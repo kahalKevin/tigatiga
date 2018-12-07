@@ -666,6 +666,8 @@ class ShopController extends Controller
         $awb_no = $order->_freight_awb_no;
         $courier = strtolower($type_provider_courier->_name);
         $status_delivery = $this->getStatusDelivery($awb_no, $courier);
+        if($status_delivery['rajaongkir']['result']['manifest'] == null) return view('order.tracking-default')->with(compact('order_id'))->with('message','Resi tidak valid');
+
         return view('order.tracking')->with(compact('status_delivery', 'order_id'));
     }
 

@@ -59,14 +59,36 @@
                                 <p class="price">Rp. {{ number_format($total_product_price, 0, '.', '.') }}</p>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="comment-desc">
+                                            <br>
+                                            <p>{{ !empty($order->_freight_awb_no) ? "No. Resi : ".$order->_freight_awb_no : ''}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endforeach
                     <br><br>
                     @if($order->status_id == 'STATUSORDER0')
                     <div class="title-upload">
                         <form class="form-horizontal" action="/shop/checkout" method="get">
-                            @csrf
                             <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
                             <button class="btn btn-info btn-lg" type="submit">GO TO CHECKOUT</button>
+                        </form>
+                    </div>                    
+                    @endif
+                    @if(!empty($order->_freight_awb_no))
+                    <div class="title-upload">
+                        <form class="form-horizontal" action="/shop/tracking-order" method="get">
+                            @csrf
+                            <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
+                            <button class="btn btn-info btn-lg" type="submit">TRACK ORDER</button>
                         </form>
                     </div>                    
                     @endif
