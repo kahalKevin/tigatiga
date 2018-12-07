@@ -516,6 +516,13 @@ class ShopController extends Controller
         $formParam['courier'] = $courier;
         $formParam['weight'] = $weight;
         return RajaOngkir::calculateCost($formParam);
+    }
+
+    public function getStatusDelivery($waybill, $courier){
+        $formParam = array();
+        $formParam['courier'] = $courier;
+        $formParam['waybill'] = $waybill;
+        return RajaOngkir::getStatusDelivery($formParam);
     }    
 
     public function newToken(Request $request){
@@ -643,6 +650,17 @@ class ShopController extends Controller
         $user_address->_default = '1';
         $user_address->save();
         return redirect()->route('checkoutLogin',['order_id'=>$request->order_id]);
+    }
+
+    public function trackingOrder(Request $request) 
+    {
+        $order_id = $request->order_id;
+
+        $order = Order::where('id', '=', $order_id)->first();
+
+        $status_delivery = $this->getStatusDelivery("SOCAG00183235715", "jne");
+        dd($status_delivery['rajaongkir']['result']);
+        return view('order.tracking')->with(compact('status_delivery', 'order_id'));
     }
 
     private function getTagsSelected($id)

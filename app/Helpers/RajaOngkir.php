@@ -75,12 +75,13 @@ class RajaOngkir
         $key = getenv("RAJAONGKIR_API_KEY");
 
         $res = $client->request('POST', $url, [
-            $form_params,
+            'form_params' => $form_params,
             'headers' => [
+                'content-type' => 'application/x-www-form-urlencoded',
                 'key' => $key
             ]
         ]);
 
-        return json_decode($res->getBody(), true);
+        return json_decode($res->getBody(), true); 
     }
 }

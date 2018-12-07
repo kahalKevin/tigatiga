@@ -51,7 +51,7 @@
                                  </div>
                                  <div class="col-md-10">
                                     <input id="search-item" type="text" name="searchItem" placeholder="I want to shop">
-                                    <input id="track-order" type="text" disabled="true" name="searchOrder" placeholder="Track My order">
+                                    <input id="track-order" type="text" disabled="true" name="order_id" placeholder="Track My order">
                                     <button type="submit">
                                     <span class="icon icon-Search"></span>
                                     </button>

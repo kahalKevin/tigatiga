@@ -55,7 +55,7 @@ $(document).ready(function () {
         $('#track-order').css('display', 'block');
         $("#track-order").prop('disabled', false);
         $("#search-item").prop('disabled', true);
-        $('#form-header-search').attr('action', '#');
+        $('#form-header-search').attr('action', 'shop/tracking-order');
     });
 
     $('#search-item-title').click(function () {

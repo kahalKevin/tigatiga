@@ -33,6 +33,7 @@ Route::prefix('shop')->group(function () {
     Route::get('index-search', 'ShopController@indexSearch');
     Route::get('indexByTag/{id}', 'ShopController@indexByTag');    
     Route::get('detail/{slug}', 'ShopController@detail');
+    Route::get('tracking-order', 'ShopController@trackingOrder');
     Route::get('cart', 'ShopController@cart');
     Route::get('cart/increase-stock/{id}', 'ShopController@increaseStockCart');
     Route::get('cart/decrease-stock/{id}', 'ShopController@decreaseStockCart');

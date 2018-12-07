@@ -9,8 +9,8 @@
                 <div class="header">
                     <p class="title">Order Tracking</p>
                     <p class="sub-title">Track your order history here</p><br>
-                    <form class="form-horizontal" action="/" method="post">
-                        <input type="text" name="order-id" class="form-control auth" placeholder="Order Id">
+                    <form class="form-horizontal" action="/shop/tracking-order" method="get">
+                        <input type="text" name="order_id" value="" class="form-control auth" placeholder="Order Id">
                         <input type="submit" name="submit" class="btn btn-info" value="VIEW DETAIL">
                     </form>
                     <hr>
@@ -30,11 +30,11 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>09899896756</td>
-                                    <td>REG</td>
-                                    <td>07 Des 2017 14:00</td>
-                                    <td>JAKARTA</td>
-                                    <td>BANDUNG</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['summary']['waybill_number'] }}</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['summary']['service_code'] }}</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['details']['waybill_date'] }} {{ $status_delivery['rajaongkir']['result']['details']['waybill_time'] }}</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['details']['origin'] }}</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['details']['destination'] }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -50,12 +50,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>PT. Superstore</td>
-                                    <td>Dedi Iswadi</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['summary']['shipper_name'] }}</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['summary']['receiver_name'] }}</td>
                                 </tr>
                                 <tr>
-                                    <td>Jakarta</td>
-                                    <td>Bandung</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['summary']['origin'] }}</td>
+                                    <td>{{ $status_delivery['rajaongkir']['result']['summary']['destination'] }}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -64,6 +64,9 @@
                     <div class="table-content">
                         <table>
                             <tbody>
+                                @foreach($status_delivery['rajaongkir']['result']['manifest'] as $prov)
+                                    <option value='{{ $prov->province_id }}'>{{ $prov->province }}</option>
+                                @endforeach
                                 <tr>
                                     <td>09 Des 2017 13:00</td>
                                     <td>GATEWAY JAKARTA</td>
