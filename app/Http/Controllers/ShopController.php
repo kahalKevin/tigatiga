@@ -179,7 +179,7 @@ class ShopController extends Controller
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
-        if(isset($cart) && 0 == $cart[0]->count()){
+        if(isset($cart) && 0 == $cart[0]->count() && !isset($request->order_id)){
             return redirect('/')->with('error', 'Your session cart is expired');
         }
 
@@ -278,7 +278,7 @@ class ShopController extends Controller
         $session_user_cart = "user_cart";
         $session_list_cart_user = "user_cart_list-". \Session::get($session_user_cart);
         $cart = \Session::get($session_list_cart_user);
-        if(isset($cart) && 0 == $cart[0]->count()){ 
+        if(isset($cart) && 0 == $cart[0]->count() && !isset($request->order_id)){
             return redirect('/')->with('error', 'Your session cart is expired');
         }
 

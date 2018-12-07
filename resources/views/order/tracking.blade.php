@@ -10,8 +10,8 @@
                     <p class="title">Order Tracking</p>
                     <p class="sub-title">Track your order history here</p><br>
                     <form class="form-horizontal" action="/shop/tracking-order" method="get">
-                        <input type="text" name="order_id" value="" class="form-control auth" placeholder="Order Id">
-                        <input type="submit" name="submit" class="btn btn-info" value="VIEW DETAIL">
+                        <input type="text" name="order_id" value="{{ $order_id != null ? $order_id : '' }}" class="form-control auth" placeholder="Order Id">
+                        <button type="submit" class="btn btn-info">VIEW DETAIL</button>
                     </form>
                     <hr>
                 </div>
@@ -64,19 +64,13 @@
                     <div class="table-content">
                         <table>
                             <tbody>
-                                @foreach($status_delivery['rajaongkir']['result']['manifest'] as $prov)
-                                    <option value='{{ $prov->province_id }}'>{{ $prov->province }}</option>
+                                @foreach($status_delivery['rajaongkir']['result']['manifest'] as $manifest)
+                                    <tr>
+                                        <td>{{ $manifest['manifest_date'] }} {{ $manifest['manifest_time'] }}</td>
+                                        <td>{{ $manifest['city_name'] }}</td>
+                                        <td>{{ $manifest['manifest_description'] }}</td>
+                                    </tr>
                                 @endforeach
-                                <tr>
-                                    <td>09 Des 2017 13:00</td>
-                                    <td>GATEWAY JAKARTA</td>
-                                    <td>On Transit</td>
-                                </tr>
-                                <tr>
-                                    <td>Jakarta</td>
-                                    <td>JAKARTA</td>
-                                    <td>Manifasted</td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
