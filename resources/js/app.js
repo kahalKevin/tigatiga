@@ -55,7 +55,7 @@ $(document).ready(function () {
         $('#track-order').css('display', 'block');
         $("#track-order").prop('disabled', false);
         $("#search-item").prop('disabled', true);
-        $('#form-header-search').attr('action', 'shop/tracking-order');
+        $('#form-header-search').attr('action', '/shop/tracking-order');
     });
 
     $('#search-item-title').click(function () {
@@ -66,7 +66,7 @@ $(document).ready(function () {
         $('#search-item').css('display', 'block');
         $("#track-order").prop('disabled', true);
         $("#search-item").prop('disabled', false);
-        $('#form-header-search').attr('action', 'shop/index-search');
+        $('#form-header-search').attr('action', '/shop/index-search');
         
     });
 });
