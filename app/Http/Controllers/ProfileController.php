@@ -36,13 +36,21 @@ class ProfileController extends Controller
         $province = RajaOngkir::getProvince();
         $city = RajaOngkir::getCity();
 
+        $city_collection = collect($city["rajaongkir"]["results"]);
+        $lappet = $city_collection->where('province_id', 21);
+        $i = 0;
+        foreach ($addresses as $address) {
+            $city_address = $city_collection->where('province_id', $address->ro_province_id);
+            $address['city_address'] = $city_address;
+        }
         return view('profile.index', compact(
               'total_order',
               'total_delivery',
               'total_received',
               'addresses',
               'province',
-              'city'
+              'city',
+              'city_address'
             )
         );
     }

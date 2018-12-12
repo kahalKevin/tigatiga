@@ -153,7 +153,7 @@
                                             <div class="cust-addr-phone">
                                                 {{ $lua->_receiver_phone }}
                                             </div>
-                                            <a href="shop/address/delete/{{ $lua->id }}">Delete</a>
+                                            <a href="shop/address/delete/{{ $lua->id }}" onclick="return confirm('Are you sure?')">Delete</a>
                                         </div>
                                     </div>
                                 @endforeach                                
