@@ -2,12 +2,6 @@
 
 @section('content')
 <input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-<style type="text/css">
-.modal-body {
-    max-height: calc(100vh - 210px);
-    overflow-y: auto;
-}
-</style>
 <div class="service-area ptb-80" id="checkout">
     <div class="container">
         <div class="box" action="index.html" method="post">
@@ -55,7 +49,7 @@
                                     <span class="current">Select Shipping Courier</span>
                                     <ul class="list list-shipping-courier-checkout">
                                     @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
-                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . " IDR ".number_format($service["cost"][0]["value"]).".00" }}</li>
+                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . "(". $service["cost"][0]["etd"] ." Day) IDR ".number_format($service["cost"][0]["value"]).".00" }}</li>
                                     @endforeach                                    
                                     </ul>
                                 @else
@@ -145,7 +139,7 @@
                             <input class="form-control auth" type="hidden" name="order_id" id="order-id" value="{{ $order->id }}">
                             <div class="row">
                                 @foreach($list_user_address as $lua)
-                                    <div class="col-md-4">
+                                    <div class="col-md-4 col-xs-12">
                                         <div class="box">
                                             <div class="round">
                                             <input type="radio" name="address" value="{{ $lua->id }}" {{ $lua->_default == '1' ? "checked" : "" }}/>
@@ -159,17 +153,19 @@
                                             <div class="cust-addr-phone">
                                                 {{ $lua->_receiver_phone }}
                                             </div>
-                                            <a href="shop/address/delete/{{ $lua->id }}">Delete</a>
+<<<<<<< .mine
+                                            <a href="shop/address/delete/{{ $lua->id }}" onclick="return confirm('Are you sure?')">Delete</a>
+=======
+                                            <a href="/profile/delete-address/{{ $lua->id }}">Delete</a>
+>>>>>>> .theirs
                                         </div>
                                     </div>
                                 @endforeach                                
                             </div>
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <a id="add-new-address" data-dismiss="modal" data-toggle="modal" data-target="#modal-add-new-address" href="#" class="btn btn-info">ADD NEW ADDRESS</a>
-                                    @if(isset($defaultAddress))
+                                    <a id="add-new-address" data-dismiss="modal" data-toggle="modal" data-target="#modal-add-new-address" class="btn btn-info">ADD NEW ADDRESS</a>
                                     <button class="btn btn-info" name="apply" id="choose-address" type="submit">CHOOSE THIS ADDRESS</button>
-                                    @endif
                                 </div>
                             </div>
                             </form>
@@ -224,7 +220,7 @@
                         <label class="label-form" for="address">Address</label>
                         <textarea class="form-control auth" name="address" rows="8" cols="80"></textarea>
                     </div>
-                    <input class="btn btn-info btn-lg" type="submit" name="submit" value="SAVE">
+                    <button class="btn btn-info btn-lg" type="submit" name="submit">SAVE</button>
                 </form>
             </div>
         </div>

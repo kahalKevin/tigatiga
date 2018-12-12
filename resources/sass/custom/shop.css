@@ -16,7 +16,7 @@
     border-radius: 0.3rem;
     outline: 0;
     padding: 26px 72px 56px 71px;
-    margin-top: 100px;
+    margin-top: 30px;
 }
 /* 
 #shop .col-lg-3 {
@@ -103,6 +103,7 @@
     margin-top: 20px;
     width: 220px;
     padding-left: 15px;
+    padding-right: 15px;
 }
 
 #price .price hr {

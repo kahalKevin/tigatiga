@@ -26,55 +26,49 @@
                             </div>
                         </div>
                     </div><br>
-                    @foreach($order_detail_list_history as $odlh)
-                        <div class="row">
+                    @foreach($orders as $order)
+                        <div class="row row-order">
                             <div class="col-md-4">
-                                <div class="title">
-                                    <p>Product Name</p>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <img src="{{ $cmsUrl . $odlh->product_image_url }}" alt="{{ $odlh->product_name }}" width="75px" height="75">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="comment-desc">
-                                            <p>{{ $odlh->product_name }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="quantity">
-                                    <p>Quantity<br>{{ $odlh->_qty }}</p>
-                                </div>
-                            </div>
-                            <div class="col-md-5">
                                 <div class="title">
                                     <p>Order ID</p>
                                 </div>
-                                <p class="order-id">{{ $odlh->order_id }}</p>
+                                <p class="order-id">{{ $order->id }}</p>
                                 <div class="order-date">
-                                    Ordered On {{ $odlh->created_at->format('l') }}<br>
-                                    {{ $odlh->created_at->format('d/m/Y H:i:s') }}
+                                    Ordered On {{ $order->created_at->format('l') }}<br>
+                                    {{ $order->created_at->format('d/m/Y H:i:s') }}
                                 </div>
-                                @if(!empty($odlh->order->payment_gateway_id))
-                                <div class="title-payment">
-                                    Payment Method<br>
-                                    <span class="payment-method">{{ $odlh->order->typePaymentMethod->_name }}</span><br>
-                                    @if(!empty($odlh->order->payment_gateway_va_number))
-                                    <span class="payment-method">VA BCA({{ $odlh->order->payment_gateway_va_number }})</span>
-                                    @endif
-                                </div>                                
-                                @endif
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                                 <div class="title">
                                     <p>Product Price</p>
                                 </div>
-                                <p class="price">Rp. {{ number_format($odlh->product_price, 0, '.', '.') }}</p>
-                                <div class="status">
-                                    Status<br>
-                                    <span class="payment-method">{{ $odlh->order->typeStatus->_name }}</span><br><br>
-                                    <a href="history/detail/{{ $odlh->order_id }}" class="btn btn-info btn-lg">View Detail</a>
+                                <p class="price">Rp. {{ number_format($order->_total_amount, 0, '.', '.') }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="title">
+                                    <p>Status</p>
                                 </div>
+                                <p class="price">{{ $order->typeStatus->_name }}</p>
+                            </div>
+                            <div class="col-md-2">
+                                @if(!empty($order->payment_gateway_id))
+                                    <div class="title">
+                                        Payment Method
+                                    </div>
+                                    <span class="payment-method">{{ $order->typePaymentMethod->_name }}
+                                        @if(!empty($order->payment_gateway_va_number))
+                                            {{ $order->payment_gateway_va_number }}
+                                        @endif
+                                    </span>
+                                @else
+                                    <div class="title">
+                                        Payment Method
+                                    </div>
+                                    <p class="text-white"><b>-</b></p>                                  
+                                @endif
+                            </div>
+                            <div class="col-md-2">
+                                <a href="history/detail/{{ $order->id }}" class="btn btn-info btn-lg">View Detail</a>
                             </div>
                         </div>
                         @if(!$loop->last)
@@ -82,7 +76,7 @@
                         @endif
                     @endforeach
                     </div><br>
-                    @include('layouts.pagination.default', ['paginator' => $order_detail_list_history->appends(Input::except('page'))]) 
+                    @include('layouts.pagination.default', ['paginator' => $orders->appends(Input::except('page'))]) 
                 </div>                
             </div>
         </div>

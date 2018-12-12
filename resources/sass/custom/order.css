@@ -1,3 +1,8 @@
+#order .row-order {
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
+
 #order .box{
 	position: relative;
 	display: -webkit-box;
@@ -110,8 +115,7 @@
 	line-height: normal;
 	letter-spacing: 0.5px;
 	color: #ffffff;
-	margin-bottom: 20px;
-	margin-top: 30px
+	margin-bottom: 10px;
 }
 
 #order .order-title p{
@@ -178,7 +182,6 @@
 	line-height: normal;
 	letter-spacing: 1.5px;
 	color: #ffffff;
-	margin-top: -8px;
 	word-wrap: break-word;
 }
 
@@ -214,7 +217,6 @@
 	line-height: 1.29;
 	letter-spacing: 0.6px;
 	color: #ffffff;
-	margin-top: -8px;
 }
 
 /* .shipping-courier-item {

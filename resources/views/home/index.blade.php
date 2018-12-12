@@ -110,7 +110,7 @@
               <div class="row">
                 <div class="col-xl-4 col-lg-4 col-md-3 col-xs-12 d-none d-sm-block">
                   <!-- <img class="email-submit-image" src="./icon/email-submit.svg" alt="email-submit"> -->
-                  <span class="email-submit-caption-left">SIGN UP<br/>AND SAVE 10%</span>
+                  <span class="email-submit-caption-left">NEWS<br>LETTER</span>
                   <!-- <span class="email-submit-caption-left-background"></span> -->
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-4 col-xs-12">
@@ -120,7 +120,8 @@
                 </div>
                 </div>
                 <div class="col-xl-4 col-lg-4 col-md-5">
-                  <form action="#">
+                  <form action="{{ url('subscribe') }}" method="POST">
+                    @csrf
                     <input class="subscribe" placeholder="Email" name="email" id="subscribe" type="text">
                     <button type="submit" class="submit">SUBMIT</button>
                   </form>

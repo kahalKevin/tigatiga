@@ -98,7 +98,7 @@
                   <div class="cust-phone">
                   {{ $address->_receiver_phone }}
                   </div>
-                  <a href="{{ url('/') }}/profile/delete-address/{{ $address->id }}" class="cust-delete">Delete</a>
+                  <a href="{{ url('/') }}/profile/delete-address/{{ $address->id }}" onclick="return confirm('Are you sure?')" class="cust-delete">Delete</a>
                 </div>
               </div>
               @endforeach
@@ -151,7 +151,7 @@
                     </div>
                     <div class="form-group">
                         <label class="label-form" for="address">Address</label>
-                        <textarea class="form-control auth" name="address" rows="8" cols="80"></textarea>
+                        <textarea class="form-control auth" name="address" rows="8" cols="80" required="true"></textarea>
                     </div>
                     <button class="btn btn-info btn-lg" type="submit" name="submit">SAVE</button>
                 </form>
@@ -196,13 +196,23 @@
                           <label class="label-form" for="city">City or Distinct</label>
                             <div>
                               <select name="city" class="form-control auth city">
+                              @if(!empty($prov->province_id))
+                                @foreach($address['city_address'] as $cit)
+                                  @if($cit["city_id"] == $address->ro_city_id)
+                                    <option value='{{ $cit["city_id"] }}' selected>{{ $cit["type"] . ' ' . $cit["city_name"] }}</option>
+                                  @else
+                                    <option value='{{ $cit["city_id"] }}'>{{ $cit["type"] . ' ' . $cit["city_name"] }}</option>
+                                  @endif
+                                @endforeach                              
+                              @else
                                 @foreach($city["rajaongkir"]["results"] as $cit)
                                   @if($cit["city_id"] == $address->ro_city_id)
                                     <option value='{{ $cit["city_id"] }}' selected>{{ $cit["type"] . ' ' . $cit["city_name"] }}</option>
                                   @else
                                     <option value='{{ $cit["city_id"] }}'>{{ $cit["type"] . ' ' . $cit["city_name"] }}</option>
                                   @endif
-                                @endforeach
+                                @endforeach                              
+                              @endif
                               </select>
                             </div>
                       </div>

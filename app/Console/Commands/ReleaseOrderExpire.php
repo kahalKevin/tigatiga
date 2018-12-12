@@ -15,7 +15,7 @@ class ReleaseOrderExpire extends Command
      *
      * @var string
      */
-    protected $signature = 'release:order:expire';
+    protected $signature = 'order:update:expire';
 
     /**
      * The console command description.

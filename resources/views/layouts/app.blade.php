@@ -248,7 +248,7 @@
                       </div>
                       <div class="form-group">
                           <label class="label-form" for="phone">Phone</label>
-                          <input class="form-control auth" type="text" name="phone" value="{{ Auth::user()->_phone }}" placeholder="+6281908xxxx">
+                          <input class="form-control auth" type="number" name="phone" value="{{ Auth::user()->_phone }}" placeholder="+6281908xxxx">
                       </div>
                       <div class="form-group">
                           <label class="label-form" for="gender[]">Gender</label><br>

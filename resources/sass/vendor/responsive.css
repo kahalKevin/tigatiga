@@ -400,7 +400,7 @@
     }
 
     .sticky .mean-container a.meanmenu-reveal {
-        top: -28px;
+        top: -43px;
     }
 
     .cam-content p {
@@ -1528,6 +1528,9 @@
 
     .partner-icons img {
         padding-right: 0px !important;
+        height: 100px;
+        width: 100px;
+        margin-right: 10px;
     }
 
     .email-submit-caption {
@@ -1583,6 +1586,11 @@
         margin-top: 50px !important;
     }
 
+    .box-total-price .col-lg-3,
+    .box-total-price .col-lg-6 {
+        margin-bottom: 10px;
+    }
+
     #order-detail .col-md-9 .box {
         height: auto !important;
     }
@@ -1617,12 +1625,8 @@
         margin-top: 50px !important;
     }
 
-    /* 
-    .mean-container a.meanmenu-reveal {
-        top: -43 !important;
-    } */
-
-    .padding-area {
-        padding: 14px 0;
+    #modal-change-address .modal-content {
+        width: auto !important;
+        margin-left: 0 !important;
     }
 }

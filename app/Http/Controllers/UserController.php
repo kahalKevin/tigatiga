@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Model\User as User;
+use App\Model\UserSubscribe;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Hash;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Redirect;
 use Session;
 use Auth;
+use Newsletter;
 use Mail;
 
 class UserController extends Controller
@@ -122,5 +124,20 @@ class UserController extends Controller
         $user->save();
         
         return redirect('/');
+    }
+
+    public function subscribe(Request $request)
+    {
+        $subscribed = UserSubscribe::where('_email', $request->email)->first();
+
+        if (!empty($subscribed)) {
+            $subscribe = new UserSubscribe();
+            $subscribe->_email = $request->email;
+            $subscribe->save();
+        }
+
+        Newsletter::subscribe($request->email);
+
+        return redirect()->back();
     }
 }
