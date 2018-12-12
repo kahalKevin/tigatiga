@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 use App\Scopes\ActiveScope;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Size extends Model
+class UserSubscribe extends Model
 {
+
     use SoftDeletes;
-    protected $table = "cms_tm_size";
+    protected $table = "fe_tm_user_subscribe";
 
     protected static function boot()
     {

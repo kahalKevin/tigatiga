@@ -62,7 +62,7 @@ class ShopController extends Controller
                 $products_query = $products_query->orderBy('_price', 'asc');
             }
         }
-        $products = $products_query->paginate(2);
+        $products = $products_query->paginate(9);
 
         $tags = $this->getAllTags();
         $genders = Type::where('category_id', '=', 11)->get();
@@ -94,7 +94,7 @@ class ShopController extends Controller
             $priceTo = $request->priceTo;
             $products_query = $products_query->where('_price', '<=', $request->priceTo);
         }
-        $products = $products_query->paginate(2);
+        $products = $products_query->paginate(9);
 
         $tags = $this->getAllTags();
         $genders = Type::where('category_id', '=', 11)->get();
@@ -124,7 +124,7 @@ class ShopController extends Controller
 
         $query_tag = $query_tag->where('deleted_at', '=', null);
         $id_product =$query_tag->pluck('product_id')->toArray();
-        $products = Product::whereIn('id', $id_product)->paginate(2);
+        $products = Product::whereIn('id', $id_product)->paginate(9);
 
         $tags = $this->getAllTags();
         $genders = Type::where('category_id', '=', 11)->get();
@@ -171,6 +171,14 @@ class ShopController extends Controller
 
     public function checkoutGuest(Request $request)
     {
+        if (Auth::check()) {
+            $newest_order = Order::where('user_id', '=', Auth::user()->id)
+                ->orderBy('created_at', 'DESC')
+                ->first();
+
+            return redirect('shop/checkout?order_id='.$newest_order->id);
+        }
+
         $order = new Order();
         $orderItems = array();
         $shippingDetail = -1;
@@ -785,28 +793,28 @@ class ShopController extends Controller
         foreach ($clubs as $club) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "club-".$club->id;
-            $arr_tags[$index]->name = "club - ".$club->_name;
+            $arr_tags[$index]->name = $club->_name;
             $index++;            
         }
 
         foreach ($leagues as $league) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "league-".$league->id;
-            $arr_tags[$index]->name = "league - ".$league->_name;
+            $arr_tags[$index]->name = $league->_name;
             $index++;            
         }
 
         foreach ($sleeves as $sleeve) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "sleeve-".$sleeve->id;
-            $arr_tags[$index]->name = "sleeve - ".$sleeve->_name;
+            $arr_tags[$index]->name = $sleeve->_name;
             $index++;            
         } 
 
         foreach ($players as $player) {
             $arr_tags[$index] = new Tag();
             $arr_tags[$index]->id = "player-".$player->id;
-            $arr_tags[$index]->name = "player - ".$player->_name;
+            $arr_tags[$index]->name = $player->_name;
             $index++;            
         } 
         return $arr_tags;

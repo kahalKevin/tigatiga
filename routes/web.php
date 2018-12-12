@@ -23,6 +23,7 @@ Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('page/{type}', 'PageController@index');
 Route::get('contactus', 'ContactUsController@index');
 Route::post('contactus', 'ContactUsController@store');
+Route::post('subscribe', 'UserController@subscribe');
 
 Route::prefix('payment')->group(function () {
     Route::post('notification', 'PaymentController@paymentNotification');

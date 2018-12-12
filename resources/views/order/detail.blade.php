@@ -77,15 +77,16 @@
                     <br><br>
                     @if($order->status_id == 'STATUSORDER0')
                     <div class="title-upload">
-                        <form class="form-horizontal" action="/shop/checkout" method="get">
+                        <form class="form-horizontal" action="{{ url('/') }}/shop/checkout" method="get">
                             <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
                             <button class="btn btn-info btn-lg" type="submit">GO TO CHECKOUT</button>
                         </form>
                     </div>                    
                     @endif
+                    <br>
                     @if(!empty($order->_freight_awb_no))
                     <div class="title-upload">
-                        <form class="form-horizontal" action="/shop/tracking-order" method="get">
+                        <form class="form-horizontal" action="{{ url('/') }}/shop/tracking-order" method="get">
                             @csrf
                             <input class="form-control auth" type="hidden" name="order_id" value="{{ $order->id }}">
                             <button class="btn btn-info btn-lg" type="submit">TRACK ORDER</button>
@@ -127,15 +128,9 @@
                                         </div>
                                     </div>
                                     <div class="{{ $last_status >= 5 ? 'active' : '' }}">
-                                        <div class="circle-track {{ $last_status >= 5 ? 'active' : '' }}">
+                                        <div class="circle-track {{ $last_status >= 5 ? 'active' : '' }}" style="border-left: none; border-top: none;">
                                             <span>5</span>
                                             <p>Packet Received</p>
-                                        </div>
-                                    </div>
-                                    <div class="{{ $last_status >= 6 ? 'active' : '' }}">
-                                        <div class="circle-track {{ $last_status >= 6 ? 'active' : '' }}" style="border-left: none; border-top: none;">
-                                            <span>6</span>
-                                            <p>Transaction Complete</p>
                                         </div>
                                     </div>
                                 </div>

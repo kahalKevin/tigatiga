@@ -143,7 +143,7 @@
 
 #checkout form.price .form-group input.form-control#grand-price {
     border-bottom: none;
-} 
+}
 
 #checkout form.price {
     width: 100%;
@@ -508,7 +508,8 @@
     float: left;
 }
 
-.box-shipping-courier input, .box-shipping-courier input:focus  {
+.box-shipping-courier input,
+.box-shipping-courier input:focus {
     border-color: transparent;
     font-size: 14px;
     border-radius: 4px;
