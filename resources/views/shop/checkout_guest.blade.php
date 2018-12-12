@@ -89,8 +89,8 @@
                                     <span class="current">Select Shipping Courier</span>
                                     <ul class="list list-shipping-courier-checkout">
                                     @foreach($shippingDetail["rajaongkir"]["results"][0]["costs"] as $service)
-                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . " IDR ".number_format($service["cost"][0]["value"]).".00" }}</li>
-                                    @endforeach                                    
+                                    <li data-value="{{ $service["cost"][0]["value"] }}" class="option">{{ $service["service"] . "(". $service["cost"][0]["etd"] ." Day) IDR ".number_format($service["cost"][0]["value"]).".00" }}</li> 
+                                    @endforeach
                                     </ul>
                                 @else
                                     <span class="current">Please Add address first</span>

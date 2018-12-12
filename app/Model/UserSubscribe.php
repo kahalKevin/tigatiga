@@ -16,6 +16,6 @@ class UserSubscribe extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new ActiveScope);
+        // static::addGlobalScope(new ActiveScope);
     }
 }
