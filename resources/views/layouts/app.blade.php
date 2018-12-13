@@ -165,7 +165,6 @@
             <p class="lead text-xs-center">See your profile to see the changes</p>
           </div>
           <div class="modal-footer">
-                  :-)
           </div>
         </div>
       </div>

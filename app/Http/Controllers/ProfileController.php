@@ -88,6 +88,9 @@ class ProfileController extends Controller
 
     public function editAddress(Request $request)
     {
+        request()->validate([
+            'phone' => 'required|numeric',
+        ]);
         $user_address = UserAddress::find($request->id);
         $user_address->_address = $request->address;
 

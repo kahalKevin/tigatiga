@@ -21,7 +21,7 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>No. AWS</th>
+                                    <th>No. AWB</th>
                                     <th>Services</th>
                                     <th>Date of Shipment</th>
                                     <th>Orgin</th>
