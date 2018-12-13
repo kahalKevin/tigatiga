@@ -37,7 +37,6 @@ class ProfileController extends Controller
         $city = RajaOngkir::getCity();
 
         $city_collection = collect($city["rajaongkir"]["results"]);
-        $lappet = $city_collection->where('province_id', 21);
         $i = 0;
         foreach ($addresses as $address) {
             $city_address = $city_collection->where('province_id', $address->ro_province_id);
