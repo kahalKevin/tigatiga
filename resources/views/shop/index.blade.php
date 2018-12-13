@@ -127,7 +127,7 @@
                             </div>
                             <div class="size mb-30">
                                 <h3 class="sidebar-title">GENDER</h3>
-                                <form action="{{ url('/') }} /shop/index/{{ $category->_slug }}" method="get">
+                                <form action="{{ url('/') }}/shop/index/{{ $category->_slug }}" method="get">
                                 <ul class="size-list sidbar-style">
                                     @php 
                                         $input = Input::get();

@@ -245,10 +245,20 @@
                       <div class="form-group">
                           <label class="label-form" for="email">Email (email can't change)</label>
                           <input class="form-control auth" type="text" name="email" value="{{ Auth::user()->_email }}" placeholder="example@gmail.com" readonly>
+                          @if ($errors->has('email'))
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('email') }}</font></strong>
+                                </span>
+                            @endif
                       </div>
                       <div class="form-group">
                           <label class="label-form" for="phone">Phone</label>
-                          <input class="form-control auth" type="number" name="phone" value="{{ Auth::user()->_phone }}" placeholder="+6281908xxxx">
+                          <input class="form-control auth" type="text" name="phone" value="{{ Auth::user()->_phone }}" placeholder="+6281908xxxx">
+                            @if ($errors->has('phone'))
+                                <span class="" role="alert">
+                                    <strong><font color="red">{{ $errors->first('phone') }}</font></strong>
+                                </span>
+                            @endif
                       </div>
                       <div class="form-group">
                           <label class="label-form" for="gender[]">Gender</label><br>
@@ -343,7 +353,14 @@
             $('#modal-login').modal('show');
         });
       </script>
-      @endif    
+      @endif
+    @if (Session::get('last_modal') == "edit_profile")
+      <script type="text/javascript">
+        $(document).ready(function(){
+            $('#modal-edit-profile').modal('show');
+        });
+      </script>
+      @endif         
     @if (Session::get('last_modal') == "change_password")
     <script type="text/javascript">
       $(document).ready(function(){

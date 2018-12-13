@@ -21,7 +21,7 @@ class UserController extends Controller
     protected $rules = array(
             'email'       => 'required|email',
             'phone' => 'required|numeric',
-            'first_name' => 'required'
+            'first_name' => 'required',
     );
 
     //For Validation
@@ -44,6 +44,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        Session::put('last_modal', "edit_profile");
         $this->validate($request, $this->rules);
         $user = User::find($id);
         $user->_email = $request->email;
